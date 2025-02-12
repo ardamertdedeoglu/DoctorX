@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'dart:async';
 import 'models/user_model.dart';
 import 'main.dart';
+import 'generated/l10n.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -44,7 +46,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hoş geldin'),
+        title: Text(S.of(context).homePageTitle),
       ),
       body: Center(
         child: Column(

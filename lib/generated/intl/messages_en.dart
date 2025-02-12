@@ -21,5 +21,34 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{};
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "accountSwitcher": MessageLookupByLibrary.simpleMessage("Switch Account"),
+    "accountTypeDialog": MessageLookupByLibrary.simpleMessage(
+      "Select Account Type",
+    ),
+    "appTitle": MessageLookupByLibrary.simpleMessage("DoctorX"),
+    "appointments": MessageLookupByLibrary.simpleMessage("Appointments"),
+    "chat": MessageLookupByLibrary.simpleMessage("Chat"),
+    "familyService": MessageLookupByLibrary.simpleMessage("Family Service"),
+    "home": MessageLookupByLibrary.simpleMessage("Home"),
+    "homePageTitle": MessageLookupByLibrary.simpleMessage("Home"),
+    "hospital": MessageLookupByLibrary.simpleMessage("Hospital"),
+    "login": MessageLookupByLibrary.simpleMessage("Login"),
+    "loginPageTitle": MessageLookupByLibrary.simpleMessage("Login"),
+    "logout": MessageLookupByLibrary.simpleMessage("Logout"),
+    "news": MessageLookupByLibrary.simpleMessage("News"),
+    "newsDetailPageTitle": MessageLookupByLibrary.simpleMessage("News Detail"),
+    "packages": MessageLookupByLibrary.simpleMessage("Packages"),
+    "profile": MessageLookupByLibrary.simpleMessage("Profile"),
+    "profileImage": MessageLookupByLibrary.simpleMessage("Profile Image"),
+    "reports": MessageLookupByLibrary.simpleMessage("Reports"),
+    "search": MessageLookupByLibrary.simpleMessage("Search"),
+    "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+    "signup": MessageLookupByLibrary.simpleMessage("Sign Up"),
+    "signupPageTitle": MessageLookupByLibrary.simpleMessage("Sign Up"),
+    "wallet": MessageLookupByLibrary.simpleMessage("Wallet"),
+    "welcomeMessage": MessageLookupByLibrary.simpleMessage(
+      "Welcome to DoctorX",
+    ),
+  };
 }
