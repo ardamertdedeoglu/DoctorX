@@ -7,6 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
 import 'dart:io';
+import 'generated/l10n.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 // Local imports
 import 'theme_provider.dart';
@@ -61,6 +63,13 @@ class MyApp extends StatelessWidget {
       builder: (context, themeProvider, child) {
         return MaterialApp(
           title: 'DoctorX',
+          localizationsDelegates: [
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: S.delegate.supportedLocales,
           theme: ThemeData(
             primarySwatch: Colors.blue,
             brightness: Brightness.light,
@@ -105,7 +114,8 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _showSearchResults = false;
 
   // Tüm aranabilir öğeleri bir kez oluştur
-  late final List<SearchItem> _searchItems;
+  // Nullable olarak tanımla
+  List<SearchItem>? _searchItems;
 
   final Map<List<String>, String> _aiResponses = {
     ['merhaba', 'selam', 'hello', 'hi', 'mrb', 'slm']: 'Merhaba! Size nasıl yardımcı olabilirim?',
@@ -138,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
         return entry.value;
       }
     }
-    return 'Üzgünüm, bu konuda size yardımcı olamıyorum. Başka nasıl yardımcı olabilirim?';
+    return S.of(context).aiErrorMessage;
   }
 
   void _handleSubmitted(String text) {
@@ -168,56 +178,88 @@ class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _messageController = TextEditingController();
 
 
-  final List<PackageItem> _packages = [
-    PackageItem(
-      title: 'Bağış',
-      description: 'İhtiyacı olan hastalara destek olmak için bağış yapabilirsiniz.',
-      price: 100.0,
-    ),
-    PackageItem(
-      title: 'Diyetisyen',
-      description: 'Uzman diyetisyenlerimizle sağlıklı beslenme planı oluşturun.',
-      price: 500.0,
-    ),
-    PackageItem(
-      title: 'Terapi',
-      description: 'Profesyonel terapistlerimizle mental sağlığınızı koruyun.',
-      price: 600.0,
-    ),
-    PackageItem(
-      title: 'Diyetisyen+Terapi',
-      description: 'Hem fiziksel hem mental sağlığınız için kombine paket.',
-      price: 1000.0,
-    ),
-  ];
+  List<PackageItem>? _packages;
+  List<NewsModel>? _news;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData(); // Her başlangıçta Firebase'den taze veri al
+    _loadProfileImage();
+    _loadThemeMode();
+    _initializeFirebase();
+    _authService.checkEmailVerification().then((isVerified) {
+      if (isVerified) {
+        _startEmailVerificationCheck();
+      }
+    });
+    _userService.syncUserData();
+  }
+
+  void _initializeData(BuildContext context) {
+    _packages = [
+      PackageItem(
+        title: S.of(context).donation,
+        description: S.of(context).donationDesc,
+        price: 100.0,
+      ),
+      PackageItem(
+        title: S.of(context).dietician,
+        description: S.of(context).dieticianDesc,
+        price: 500.0,
+      ),
+      PackageItem(
+        title: S.of(context).therapy,
+        description: S.of(context).therapyDesc,
+        price: 600.0,
+      ),
+      PackageItem(
+        title: S.of(context).dieticianTherapy,
+        description: S.of(context).dieticianTherapyDesc,
+        price: 1000.0,
+      ),
+    ];
+
+    _news = [
+      NewsModel(
+        title: '${S.of(context).newsTitle} 1',
+        description: S.of(context).newsDesc1,
+        content: S.of(context).newsContentPlaceholder,
+        imageUrl: 'https://picsum.photos/200',
+      ),
+      NewsModel(
+        title: '${S.of(context).newsTitle} 2',
+        description: S.of(context).newsDesc2,
+        content: S.of(context).newsContentPlaceholder,
+        imageUrl: 'https://picsum.photos/201',
+      ),
+      NewsModel(
+        title: '${S.of(context).newsTitle} 3',
+        description: S.of(context).newsDesc3,
+        content: S.of(context).newsContentPlaceholder,
+        imageUrl: 'https://picsum.photos/202',
+      ),
+      NewsModel(
+        title: '${S.of(context).newsTitle} 4',
+        description: S.of(context).newsDesc4,
+        content: S.of(context).newsContentPlaceholder,
+        imageUrl: 'https://picsum.photos/203',
+      ),
+    ];
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // BuildContext hazır olduğunda listeleri initialize et
+    _initializeData(context);
+    // Paketler hazır olduktan sonra arama öğelerini initialize et
+    if (_packages != null) {
+      _initializeSearchItems();
+    }
+  }
 
   // News data
-  final List<NewsModel> _news = [
-    NewsModel(
-      title: 'Sağlık Haberi 1',
-      description: 'Yeni tedavi yöntemi geliştirildi.',
-      content: 'Detaylı içerik buraya gelecek...',
-      imageUrl: 'https://picsum.photos/200',
-    ),
-    NewsModel(
-      title: 'Sağlık Haberi 2',
-      description: 'Yeni araştırma sonuçları açıklandı.',
-      content: 'Detaylı içerik buraya gelecek...',
-      imageUrl: 'https://picsum.photos/201',
-    ),
-    NewsModel(
-      title: 'Sağlık Haberi 3',
-      description: 'Grip salgını uyarısı.',
-      content: 'Detaylı içerik buraya gelecek...',
-      imageUrl: 'https://picsum.photos/202',
-    ),
-    NewsModel(
-      title: 'Sağlık Haberi 4',
-      description: 'Beslenme önerileri.',
-      content: 'Detaylı içerik buraya gelecek...',
-      imageUrl: 'https://picsum.photos/203',
-    ),
-  ];
 
   // Randevular listesi güncellemesi
   late Stream<List<AppointmentModel>> _appointmentsStream;
@@ -238,28 +280,12 @@ class _MyHomePageState extends State<MyHomePage> {
   // UserService ekle
   final UserService _userService = UserService();
 
-  @override
-  void initState() {
-    super.initState();
-    _loadUserData(); // Her başlangıçta Firebase'den taze veri al
-    _initializeSearchItems();
-    _loadProfileImage();
-    _loadThemeMode();
-    _initializeFirebase();
-    _authService.checkEmailVerification().then((isVerified) {
-    if (isVerified) {
-      _startEmailVerificationCheck();
-    }
-  });
-    _userService.syncUserData();
-  }
-
   void _startEmailVerificationCheck() {
     _authService.startEmailVerificationCheck((isVerified) {
       if (isVerified) {
         setState(() {}); // UI'ı yenile
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('E-posta adresiniz başarıyla doğrulandı')),
+          SnackBar(content: Text(S.of(context).emailVerificationSuccess)),
         );
       }
     });
@@ -280,6 +306,8 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
   void _initializeSearchItems() {
+    if (_packages == null) return;
+    
     _searchItems = [
       // Diyabet bölümü
       SearchItem(
@@ -315,7 +343,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       // Paketler için öğeler
-      ..._packages.map((package) => SearchItem(
+      ..._packages!.map((package) => SearchItem(
         title: package.title,
         category: 'Paketler',
         description: package.description,
@@ -335,8 +363,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       // Yaklaşan randevular için arama öğeleri
       ..._upcomingAppointments.map((apt) => SearchItem(
-        title: '${apt.doctorType} Randevusu',
-        category: 'Yaklaşan Randevular',
+        title: '${apt.doctorType} ${S.of(context).appointmentKeyword}',
+        category: S.of(context).upcomingAppointments,
         description: '${apt.doctorName} - ${apt.date} ${apt.time}',
         icon: Icons.event,
         onTap: () => Navigator.push(
@@ -383,8 +411,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   List<SearchItem> _getFilteredSearchItems(String query) {
+    if (_searchItems == null) return [];
+    
     final lowercaseQuery = query.toLowerCase();
-    return _searchItems.where((item) {
+    return _searchItems!.where((item) {
       return item.title.toLowerCase().contains(lowercaseQuery) ||
              item.category.toLowerCase().contains(lowercaseQuery) ||
              (item.description?.toLowerCase().contains(lowercaseQuery) ?? false);
@@ -636,11 +666,11 @@ class _MyHomePageState extends State<MyHomePage> {
     String getTitle() {
       switch (_selectedIndex) {
         case 0:
-          return 'Ana Menü';
+          return S.of(context).mainMenuTitle;
         case 1:
-          return 'Sohbetler';
+          return S.of(context).chatsTitle;
         case 2:
-          return 'Paketler';
+          return S.of(context).packagesTitle;
         default:
           return 'DoctorX';
       }
@@ -649,10 +679,7 @@ class _MyHomePageState extends State<MyHomePage> {
       switch (_selectedIndex) {
         case 0:
           return   // Başlıklar büyük harf
-              'Bu bölümde:\n'
-              '• Profil bilgilerinizi görüntüleyebilir ve düzenleyebilirsiniz.\n'
-              '• Güncel sağlık haberlerini takip edebilirsiniz.\n'
-              '• Arama yaparak içeriklere ulaşabilirsiniz.';
+              S.of(context).mainMenuDesc;
         case 1:
           return   // Başlıklar büyük harf
               'Bu bölümde:\n'
@@ -984,7 +1011,7 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Merhaba ${_userData?.firstName}',
+            '${S.of(context).welcomeMainMenu} ${_userData?.firstName ?? ''}',
             textDirection: TextDirection.ltr,
             style: TextStyle(
               fontSize: 20.0,
@@ -1009,7 +1036,7 @@ class _MyHomePageState extends State<MyHomePage> {
           controller: _searchController,
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
-            helperText: 'Aramak istediğiniz bölümü yazın',
+            helperText: S.of(context).searchHelper,
             prefixIcon: Icon(Icons.search),
             suffixIcon: _searchController.text.isNotEmpty 
                 ? IconButton(
@@ -1023,7 +1050,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   )
                 : null,
             border: OutlineInputBorder(),
-            labelText: 'Ara...',
+            labelText: S.of(context).searchLabel,
           ),
           onChanged: (value) {
             setState(() {
@@ -1293,13 +1320,15 @@ void _showAddChildDialog(BuildContext context) {
 }
 
   Widget _buildNewsSection() {
+    if (_news == null) return Container(); // Veriler yüklenene kadar boş container göster
+    
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Sağlık Haberleri',
+            S.of(context).newsContainer,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -1310,11 +1339,11 @@ void _showAddChildDialog(BuildContext context) {
             height: 250,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: _news.length,
+              itemCount: _news!.length,
               itemBuilder: (context, index) {
                 return SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
-                  child: _buildNewsCard(_news[index]),
+                  child: _buildNewsCard(_news![index]),
                 );
               },
             ),
@@ -1414,9 +1443,9 @@ Widget _buildAppointmentCard() {
                 children: [
                   Icon(Icons.event_available, color: Colors.blue, size: 28),
                   const SizedBox(width: 12),
-                  const Expanded(
+                  Expanded(
                     child: Text(
-                      'Yaklaşan Randevular',
+                      S.of(context).upcomingAppointments,
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -1500,7 +1529,7 @@ Widget _buildAppointmentItem(AppointmentModel apt) {
       ],
     ),
     title: Text(
-      '${apt.doctorType} Randevusu',
+      '${apt.doctorType} ${S.of(context).appointmentKeyword}',
       style: const TextStyle(fontWeight: FontWeight.bold),
     ),
     subtitle: Text('${apt.doctorName} - ${apt.date} ${apt.time}'),
@@ -1512,29 +1541,29 @@ Widget _buildAppointmentItem(AppointmentModel apt) {
 String _getMonthAbbreviation(int month) {
   switch (month) {
     case 1:
-      return 'OCA';
+      return S.of(context).january;
     case 2:
-      return 'ŞUB';
+      return S.of(context).february;
     case 3:
-      return 'MAR';
+      return S.of(context).march;
     case 4:
-      return 'NİS';
+      return S.of(context).april;
     case 5:
-      return 'MAY';
+      return S.of(context).may;
     case 6:
-      return 'HAZ';
+      return S.of(context).june;
     case 7:
-      return 'TEM';
+      return S.of(context).july;
     case 8:
-      return 'AĞU';
+      return S.of(context).august;
     case 9:
-      return 'EYL';
+      return S.of(context).september;
     case 10:
-      return 'EKİ';
+      return S.of(context).october;
     case 11:
-      return 'KAS';
+      return S.of(context).november;
     case 12:
-      return 'ARA';
+      return S.of(context).december;
     default:
       return '';
   }
@@ -1583,7 +1612,7 @@ Widget _buildChatSection() {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Hızlı İşlemler',
+              S.of(context).quickAccessTitle,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -1613,19 +1642,19 @@ Widget _buildChatSection() {
     children: [
       _buildQuickActionButton(
         icon: Icons.calendar_today,
-        label: 'Randevu Al',
+        label: S.of(context).quickAppointment,
         onTap: () {}, // Boş bırak, üstteki logic kullanılacak
         color: Colors.blue,
       ),
       _buildQuickActionButton(
         icon: Icons.vaccines,
-        label: 'Diyabet',
+        label: S.of(context).diabetes,
         onTap: () {}, // Boş bırak, üstteki logic kullanılacak
         color: Colors.green,
       ),
       _buildQuickActionButton(
         icon: Icons.account_balance_wallet,
-        label: 'Cüzdanım',
+        label: S.of(context).wallet,
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => WalletPage()),
@@ -1634,7 +1663,7 @@ Widget _buildChatSection() {
       ),
       _buildQuickActionButton(
         icon: Icons.history,
-        label: 'Randevularım',
+        label: S.of(context).quickAppointmentsList,
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => AppointmentsPage()),
@@ -1675,7 +1704,7 @@ Widget _buildChatSection() {
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                       child: Text(
-                        'Nasıl yardımcı olabilirim?',
+                        S.of(context).aiFirstMessage,
                         style: TextStyle(
                           fontSize: 16.0,
                           color: isDarkMode ? Colors.white : Colors.black,
@@ -1756,7 +1785,7 @@ Widget _buildChatSection() {
             color: isDarkMode ? Colors.white : Colors.black,
           ),
           decoration: InputDecoration(
-            hintText: 'Mesajınızı yazın...',
+            hintText: S.of(context).chatsHintText,
             hintStyle: TextStyle(
               color: isDarkMode ? Colors.grey[400] : Colors.grey[600],
             ),
@@ -1784,14 +1813,14 @@ Widget _buildQuickActionButton({
     color: Colors.transparent,
     child: InkWell(
       onTap: () {
-        if (label == 'Randevu Al') {
+        if (label == S.of(context).quickAppointment) {
           _pageController.animateToPage(
             2, // Paketler sekmesi
             duration: Duration(milliseconds: 300),
             curve: Curves.easeInOut,
           );
           setState(() => _selectedIndex = 2);
-        } else if (label == 'Diyabet') {
+        } else if (label == S.of(context).diabetes) {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => DiabetesPage()),
@@ -1839,7 +1868,7 @@ Widget _buildQuickActionButton({
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(package.description),
-          if (package.title != 'Bağış')
+          if (package.title != S.of(context).donation)
             Text(
               '${package.price.toStringAsFixed(2)} TL',
               style: TextStyle(
@@ -1851,14 +1880,14 @@ Widget _buildQuickActionButton({
       ),
       trailing: Icon(Icons.arrow_forward_ios),
       onTap: () {
-        if (package.title == 'Bağış') {
+        if (package.title == S.of(context).donation) {
           _showDonationDialog();
         } else {
           // Email verification check
           final user = FirebaseAuth.instance.currentUser;
           if (user == null || !user.emailVerified) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Lütfen e-posta adresinizi doğrulayın')),
+              SnackBar(content: Text(S.of(context).notVerifiedEmailMessage)),
             );
             return;
           }
@@ -1876,7 +1905,7 @@ Widget _buildQuickActionButton({
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text('Bağış Miktarı'),
+      title: Text(S.of(context).donationAmount),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -1884,13 +1913,13 @@ Widget _buildQuickActionButton({
             controller: donationController,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              labelText: 'Miktar (TL)',
+              labelText: S.of(context).donationAmountLabel,
               border: OutlineInputBorder(),
             ),
           ),
           SizedBox(height: 16),
           Text(
-            'Bağış yaptığınız tutarın %50\'si cüzdanınıza eklenecektir.',
+            S.of(context).donationReward,
             style: TextStyle(
               color: Colors.grey[600],
               fontSize: 12,
@@ -1901,7 +1930,7 @@ Widget _buildQuickActionButton({
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text('İptal'),
+          child: Text(S.of(context).cancel),
         ),
         TextButton(
           onPressed: () async {
@@ -1925,7 +1954,7 @@ Widget _buildQuickActionButton({
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      'Bağışınız için teşekkür ederiz! ₺${(amount * 0.5).toStringAsFixed(2)} tutarında bakiye 7 gün sonra cüzdanınıza eklenecektir.'
+                      '${S.of(context).donationThanks} ₺${(amount * 0.5).toStringAsFixed(2)} ${S.of(context).donationPendingTime}',
                     ),
                     duration: Duration(seconds: 5),
                   ),
@@ -1933,7 +1962,7 @@ Widget _buildQuickActionButton({
               }
             }
           },
-          child: Text('Bağış Yap'),
+          child: Text(S.of(context).donationConfirm),
         ),
       ],
     ),
@@ -1941,24 +1970,33 @@ Widget _buildQuickActionButton({
 }
 
   Widget _buildPackagesSection() {
+    if (_packages == null) return Container(); // Veriler yüklenene kadar boş container göster
+    
     return ListView.builder(
-      itemCount: _packages.length,
-      itemBuilder: (context, index) => _buildPackageCard(_packages[index]),
+      itemCount: _packages!.length,
+      itemBuilder: (context, index) => _buildPackageCard(_packages![index]),
     );
   }
 
   Widget _buildSearchResults(List<SearchItem> items) {
-  if (items.isEmpty) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Text(
-          'Aranan içerik bulunamadı',
-          style: TextStyle(fontSize: 16, color: Colors.grey),
+    // SearchItems henüz oluşturulmadıysa
+    if (_searchItems == null) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    if (items.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            'Aranan içerik bulunamadı',
+            style: TextStyle(fontSize: 16, color: Colors.grey),
+          ),
         ),
-      ),
-    );
-  }
+      );
+    }
   return ListView.builder(
     shrinkWrap: true,
     physics: ClampingScrollPhysics(), // Kaydırma davranışını düzenle
@@ -2026,18 +2064,18 @@ Widget _buildQuickActionButton({
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: isDarkMode ? Colors.grey[900] : Colors.white,
           type: BottomNavigationBarType.fixed,
-          items: const <BottomNavigationBarItem>[
+          items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home, color: Colors.grey),
-              label: 'Ana Menü',
+              label: S.of(context).mainMenuTitle,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.chat, color: Colors.blue),
-              label: 'Sohbetler',
+              label: S.of(context).chatsTitle,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.emoji_emotions, color: Colors.green),
-              label: 'Paketler',
+              label: S.of(context).packagesTitle,
             ),
           ],
           currentIndex: _selectedIndex,
@@ -2215,7 +2253,7 @@ void _showRegularPaymentDialog(PackageItem package, DateTime selectedDateTime, d
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text('İptal'),
+          child: Text(S.of(context).cancel),
         ),
         ElevatedButton(
           onPressed: () async {
@@ -2310,7 +2348,7 @@ void _showChildDetailsDialog(BuildContext context) {
         ),
         actions: [
           TextButton(
-            child: Text('İptal'),
+            child: Text(S.of(context).cancel),
             onPressed: () => Navigator.pop(context),
           ),
           TextButton(
