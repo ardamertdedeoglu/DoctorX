@@ -117,14 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // Nullable olarak tanımla
   List<SearchItem>? _searchItems;
 
-  final Map<List<String>, String> _aiResponses = {
-    ['merhaba', 'selam', 'hello', 'hi', 'mrb', 'slm']: 'Merhaba! Size nasıl yardımcı olabilirim?',
-    ['nasilsin', 'nasılsın', 'naber', 'nbr', 'ne haber']: 'İyiyim, teşekkür ederim. Size nasıl yardımcı olabilirim?',
-    ['randevu', 'randavu', 'randevu almak', 'randevu al']: 'Randevu almak için lütfen paketler sekmesinden bir hizmet seçiniz.',
-    ['doktor', 'doctor', 'dr', 'hekim']: 'Size uygun bir doktor bulmak için lütfen şikayetinizi belirtiniz.',
-    ['fiyat', 'fiyatlar', 'ucret', 'ücret', 'price']: 'Fiyatlarımızı paketler sekmesinde görebilirsiniz.',
-    ['tesekkur', 'teşekkür', 'tesekkurler', 'teşekkürler', 'thanks', 'ty']: 'Rica ederim! Başka bir konuda yardımcı olabilir miyim?',
-  };
+  late Map<List<String>, String> _aiResponses;
 
   String _getAIResponse(String message) {
     String lowercaseMessage = message.toLowerCase()
@@ -188,9 +181,12 @@ class _MyHomePageState extends State<MyHomePage> {
     _loadProfileImage();
     _loadThemeMode();
     _initializeFirebase();
+    _initializeAIResponses();
     _authService.checkEmailVerification().then((isVerified) {
       if (isVerified) {
         _startEmailVerificationCheck();
+        _loadUserData(); // Her başlangıçta Firebase'den taze veri al
+        
       }
     });
     _userService.syncUserData();
@@ -246,6 +242,16 @@ class _MyHomePageState extends State<MyHomePage> {
         imageUrl: 'https://picsum.photos/203',
       ),
     ];
+}
+    void _initializeAIResponses() {
+    _aiResponses = {
+      ['merhaba', 'selam', 'hello', 'hi', 'mrb', 'slm']: S.of(context).AIGreetingResponse,
+      ['nasilsin', 'naber', 'nbr', 'ne haber', 'how are you', 'how you doing', 'whats up']: S.of(context).AIChattingResponse,
+      ['randevu', 'randavu', 'randevu almak', 'randevu al', 'appointment']: S.of(context).AIAppointmentResponse,
+      ['doktor', 'doctor', 'dr', 'hekim']: S.of(context).AIDoctorResponse,
+      ['fiyat', 'fiyatlar', 'ucret', 'price']: S.of(context).AIPriceResponse,
+      ['tesekkur', 'teşekkür', 'tesekkurler', 'teşekkürler', 'thanks', 'ty']: S.of(context).AIThanksResponse,
+    };
   }
 
   @override
@@ -311,9 +317,9 @@ class _MyHomePageState extends State<MyHomePage> {
     _searchItems = [
       // Diyabet bölümü
       SearchItem(
-        title: 'Diyabet Takibi',
-        category: 'Sağlık',
-        description: 'Diyabet değerlerinizi takip edin',
+        title: S.of(context).searchItemDiabetesTitle,
+        category: S.of(context).searchCategoryHealth,
+        description: S.of(context).searchItemDiabetesDesc,
         icon: Icons.vaccines,
         onTap: () => Navigator.push(
           context,
@@ -322,9 +328,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       // Dokümanlar
       SearchItem(
-        title: 'Sağlık Dokümanları',
-        category: 'Dokümanlar',
-        description: 'Sağlık ile ilgili bilgilendirici dokümanlar',
+        title: S.of(context).searchItemDocumentsTitle,
+        category: S.of(context).documents,
+        description: S.of(context).searchItemDocumentsDesc,
         icon: Icons.article,
         onTap: () => Navigator.push(
           context,
@@ -333,9 +339,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       // Raporlar
       SearchItem(
-        title: 'Tıbbi Raporlar',
-        category: 'Raporlar',
-        description: 'Tüm tıbbi raporlarınız',
+        title: S.of(context).searchItemReportsTitle,
+        category: S.of(context).reports,
+        description: S.of(context).searchItemReportsDesc,
         icon: Icons.medical_services,
         onTap: () => Navigator.push(
           context,
@@ -345,16 +351,16 @@ class _MyHomePageState extends State<MyHomePage> {
       // Paketler için öğeler
       ..._packages!.map((package) => SearchItem(
         title: package.title,
-        category: 'Paketler',
+        category: S.of(context).packagesTitle,
         description: package.description,
         icon: Icons.medical_information,
         onTap: () => _showPackageDetails(package),
       )),
       // Randevular için arama öğesi ekle
       SearchItem(
-        title: 'Randevularım',
-        category: 'Randevular',
-        description: 'Tüm geçmiş ve gelecek randevularınızı görüntüleyin',
+        title: S.of(context).quickAppointmentsList,
+        category: S.of(context).appointments,
+        description: S.of(context).searchItemAppointmentDesc,
         icon: Icons.calendar_today,
         onTap: () => Navigator.push(
           context,
@@ -379,22 +385,31 @@ class _MyHomePageState extends State<MyHomePage> {
       )),
       // Sohbetler sekmesi için arama öğesi
       SearchItem(
-        title: 'Sağlık Asistanı',
-        category: 'Sohbet',
-        description: 'Yapay zeka asistanımız ile sağlık konularında sohbet edin',
+        title: S.of(context).searchItemChatsTitle,
+        category: S.of(context).chatsTitle,
+        description: S.of(context).searchItemChatsDesc,
         icon: Icons.chat,
         onTap: () {
-          setState(() => _selectedIndex = 1); // Sohbetler sekmesine geç
-          _searchController.clear();
-          _showSearchResults = false;
+          // PageController ile sayfayı değiştir
+          _pageController.animateToPage(
+            1, // Chats sayfasının indeksi
+            duration: Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
+          // SelectedIndex'i güncelle
+          setState(() {
+            _selectedIndex = 1;
+            _searchController.clear();
+            _showSearchResults = false;
+          });
         },
       ),
       
       // AI yanıtları için arama öğeleri
       ..._aiResponses.entries.map((entry) => SearchItem(
         title: entry.value,
-        category: 'Sık Sorulan Sorular',
-        description: 'Örnek: ${entry.key.first}',
+        category: S.of(context).searchItemQuestionsCategory,
+        description: '${S.of(context).searchItemQuestionDesc} ${entry.key.first}',
         icon: Icons.question_answer,
         onTap: () {
           setState(() {
@@ -439,18 +454,18 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               Text(package.description),
               Text(
-                '\nFiyat: ${package.price.toStringAsFixed(2)} TL',
+                '\n${S.of(context).price} ${package.price.toStringAsFixed(2)} TL',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.blue,
                 ),
               ),
               SizedBox(height: 16),
-              if (package.title != 'Bağış') ...[
+              if (package.title != S.of(context).donation) ...[
                 Divider(),
                 // Hospital and doctor selection
                 Text(
-                  'Hastane ve Doktor Seçimi',
+                  S.of(context).hospitalDoctorTitle,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 8),
@@ -467,7 +482,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   SizedBox(height: 16),
                   Divider(),
                   Text(
-                    'Randevu Tarihi ve Saati',
+                    S.of(context).appointmentDateAndTimeTitle,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
@@ -484,9 +499,9 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Kapat'),
+            child: Text(S.of(context).close),
           ),
-          if (package.title != 'Bağış')
+          if (package.title != S.of(context).donation)
             TextButton(
               onPressed: (selectedDateTime == null || 
                          selectedHospital == null || 
@@ -496,7 +511,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     final user = FirebaseAuth.instance.currentUser;
                     if (user == null || !user.emailVerified) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Lütfen e-posta adresinizi doğrulayın')),
+                        SnackBar(content: Text(S.of(context).emailVerificationRequired)),
                       );
                       return;
                     }
@@ -512,7 +527,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 foregroundColor: Colors.green,
                 disabledForegroundColor: Colors.grey,
               ),
-              child: Text('Satın Al (${package.price.toStringAsFixed(2)} TL)'),
+              child: Text('${S.of(context).buyKeyword} (${package.price.toStringAsFixed(2)} TL)'),
             ),
         ],
       ),
@@ -550,7 +565,7 @@ class _MyHomePageState extends State<MyHomePage> {
   } catch (e) {
     print("Error loading user data: $e");
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Kullanıcı verileri yüklenirken bir hata oluştu.')),
+      SnackBar(content: Text(S.of(context).userDataLoadError)),
     );
   }
 }
@@ -589,7 +604,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             ListTile(
               leading: Icon(Icons.photo_library),
-              title: Text('Galeriden Seç'),
+              title: Text(S.of(context).chooseFromGalleryButton),
               onTap: () async {
                 Navigator.pop(context);
                 final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -600,7 +615,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ListTile(
               leading: Icon(Icons.camera_alt),
-              title: Text('Fotoğraf Çek'),
+              title: Text(S.of(context).cameraButton),
               onTap: () async {
                 Navigator.pop(context);
                 final pickedFile = await picker.pickImage(source: ImageSource.camera);
@@ -612,7 +627,7 @@ class _MyHomePageState extends State<MyHomePage> {
             if (_imagePath != null) // Sadece fotoğraf varsa göster
               ListTile(
                 leading: Icon(Icons.delete_forever, color: Colors.red),
-                title: Text('Fotoğrafı Kaldır', style: TextStyle(color: Colors.red)),
+                title: Text(S.of(context).removePhotoButton, style: TextStyle(color: Colors.red)),
                 onTap: () async {
                   Navigator.pop(context);
                   await _deleteProfileImage();
@@ -682,17 +697,10 @@ class _MyHomePageState extends State<MyHomePage> {
               S.of(context).mainMenuDesc;
         case 1:
           return   // Başlıklar büyük harf
-              'Bu bölümde:\n'
-              '• Yapay zeka asistanımızla sohbet edebilirsiniz.\n'
-              '• Sağlık konularında sorularınızı sorabilirsiniz.\n'
-              '• Randevu ve hizmetler hakkında bilgi alabilirsiniz.';
+              S.of(context).chatsDesc;
         case 2:
           return   // Başlıklar büyük harf
-              'Bu bölümde:\n'
-              '• Sağlık hizmet paketlerimizi inceleyebilirsiniz.\n'
-              '• Online randevu alabilirsiniz.\n'
-              '• Bağış yapabilirsiniz.\n'
-              '• Paket satın alabilirsiniz.';
+              S.of(context).packagesDesc;
         default:
           return 'DOCTORX UYGULAMASI';  // Başlık büyük harf
       }
@@ -869,7 +877,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   ListTile(
                     leading: Icon(Icons.vaccines),
-                    title: Text('Diyabet'),
+                    title: Text(S.of(context).diabetes),
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.push(
@@ -880,7 +888,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   ListTile(
                     leading: Icon(Icons.article),
-                    title: Text('Dokümanlar'),
+                    title: Text(S.of(context).documents),
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.push(
@@ -891,7 +899,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   ListTile(
                     leading: Icon(Icons.medical_services),
-                    title: Text('Raporlar'),
+                    title: Text(S.of(context).reports),
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.push(
@@ -902,7 +910,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   ListTile(
                     leading: Icon(Icons.calendar_today),
-                    title: Text('Randevular'),
+                    title: Text(S.of(context).appointments),
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.push(
@@ -913,7 +921,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   ListTile(
                     leading: Icon(Icons.account_balance_wallet),
-                    title: Text('Cüzdanım'),
+                    title: Text(S.of(context).wallet),
                     onTap: () {
                       Navigator.pop(context);
                       Navigator.push(
@@ -924,7 +932,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   ListTile(
                     leading: Icon(Icons.info, size: 24),
-                    title: Text('Hakkımızda'),
+                    title: Text(S.of(context).aboutUsTitle),
                     onTap: () {
                       Navigator.pop(context);  // Önce Drawer'ı kapat
                       showDialog(
@@ -932,27 +940,27 @@ class _MyHomePageState extends State<MyHomePage> {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: Text(
-                              'HAKKIMIZDA',
+                              S.of(context).aboutUsTitle.toUpperCase(),
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             content: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Yapımcılar:', style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text(S.of(context).producersTitle, style: TextStyle(fontWeight: FontWeight.bold)),
                                 Text('Hüseyin Karateke\nEsma Koca\nBeyza Ak\nArda Mert Dedeoğlu\nReyyan Eskicioğlu'),
                                 SizedBox(height: 16),
-                                Text('Yapım Tarihi:', style: TextStyle(fontWeight: FontWeight.bold)),
-                                Text('Şubat 2025'),
+                                Text(S.of(context).timeOfRelease, style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text(S.of(context).timeOfReleaseValue),
                                 SizedBox(height: 16),
-                                Text('Amaç:', style: TextStyle(fontWeight: FontWeight.bold)),
-                                Text('Bu uygulama, her türlü sağlık hizmetini kullanıcıların istediği zaman ve istediği yerden ulaşabileceği bir seviyeye getirmek için tasarlanmıştır.'),
+                                Text(S.of(context).goal, style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text(S.of(context).goalDesc),
                               ],
                             ),
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.of(context).pop(),
-                                child: Text('Kapat'),
+                                child: Text(S.of(context).close),
                               ),
                             ],
                           );
@@ -962,7 +970,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   Divider(),
                   SwitchListTile(
-                    title: Text(isDarkMode ? 'Koyu Tema' : 'Açık Tema'),
+                    title: Text(isDarkMode ? S.of(context).darkMode : S.of(context).lightMode),
                     value: isDarkMode,
                     onChanged: (bool value) {
                       _saveThemeMode(value);
@@ -1071,17 +1079,17 @@ class _MyHomePageState extends State<MyHomePage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
               content: Text(
-                  'Doğrulama e-postası gönderildi. Lütfen e-postanızı kontrol edin.')),
+                  S.of(context).emailVerificationSent)),
         );
       } else if (user!.emailVerified) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('E-posta zaten doğrulanmış.')),
+          SnackBar(content: Text(S.of(context).emailAlreadyVerified)),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
               content: Text(
-                  'Kullanıcı oturumu bulunamadı. Lütfen tekrar giriş yapın.')),
+                  S.of(context).AccountFindError)),
         );
       }
     } catch (e) {
@@ -1089,7 +1097,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
             content: Text(
-                'Doğrulama e-postası gönderilirken bir hata oluştu: ${e.toString()}')),
+                '${S.of(context).emailVerificationTechnicalError} ${e.toString()}')),
       );
     }
   }
@@ -1101,7 +1109,7 @@ void _showProfileDialog() {
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text('Profil Bilgileri'),
+      title: Text(S.of(context).profileDialogTitle),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -1136,14 +1144,14 @@ void _showProfileDialog() {
             SizedBox(height: 20),
             
             // Kullanıcı bilgileri
-            Text('Ad: ${_userData?.firstName}'),
-            Text('Soyad: ${_userData?.lastName}'),
-            Text('E-posta: ${_userData?.email}'),
+            Text('${S.of(context).firstName} ${_userData?.firstName}'),
+            Text('${S.of(context).lastName} ${_userData?.lastName}'),
+            Text('${S.of(context).emailLabel} ${_userData?.email}'),
             
             // Hesap türü ve yükseltme butonu
             SizedBox(height: 16),
             Text(
-              'Hesap Türü: ${_userData?.accountType == 'parent' ? 'Ebeveyn' : 'Normal Hesap'}',
+              '${S.of(context).accountType} ${_userData?.accountType == 'parent' ? S.of(context).parentAccount : S.of(context).normalAccount}',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             if (_userData?.accountType == 'parent')
@@ -1154,7 +1162,7 @@ void _showProfileDialog() {
                     Navigator.pop(context);
                     _showAddChildDialog(context);
                   },
-                  child: Text('Çocuk Hesabı Ekle'),
+                  child: Text('${S.of(context).addKeyword} ${S.of(context).childAccountTitle}'),
                 ),
               )
             else
@@ -1198,7 +1206,7 @@ void _showProfileDialog() {
                       ),
                     );
                   },
-                  child: Text('Ebeveyn Hesabına Yükselt'),
+                  child: Text(S.of(context).upgradeToParent),
                 ),
               ),
             
@@ -1207,7 +1215,7 @@ void _showProfileDialog() {
             TextField(
               controller: newEmailController,
               decoration: InputDecoration(
-                labelText: 'Yeni E-posta',
+                labelText: S.of(context).newEmailLabel,
                 border: OutlineInputBorder(),
               ),
             ),
@@ -1216,7 +1224,7 @@ void _showProfileDialog() {
               controller: newPasswordController,
               obscureText: true,
               decoration: InputDecoration(
-                labelText: 'Yeni Şifre',
+                labelText: S.of(context).newPassword,
                 border: OutlineInputBorder(),
               ),
             ),
@@ -1250,7 +1258,7 @@ void _showProfileDialog() {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                           content: Text(
-                              'Kullanıcı oturumu bulunamadı. Lütfen tekrar giriş yapın.')),
+                              S.of(context).AccountFindError)),
                     );
                   }
                 } catch (e) {
@@ -1258,14 +1266,14 @@ void _showProfileDialog() {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                         content: Text(
-                            'Şifre güncellenirken bir hata oluştu: ${e.toString()}')),
+                            '${S.of(context).passwordUpdateError} ${e.toString()}')),
                   );
                 }
               }
               _loadUserData();
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Bilgiler güncellendi')),
+                SnackBar(content: Text(S.of(context).passwordUpdateSuccess)),
               );
             }
           },
@@ -1287,7 +1295,7 @@ void _showProfileDialog() {
         if (!_isEmailVerified)
           TextButton(
             onPressed: _sendVerificationEmail,
-            child: Text('E-postayı Doğrula'),
+            child: Text(S.of(context).emailVerificitaionButton),
           ),
       ],
     ),
@@ -1299,15 +1307,15 @@ void _showAddChildDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text('Çocuk Hesabı'),
-      content: Text('Çocuklarınızın hesabını eklemek ister misiniz?'),
+      title: Text(S.of(context).childAccountTitle),
+      content: Text(S.of(context).childAccountConnectionQuestion),
       actions: [
         TextButton(
-          child: Text('Hayır'),
+          child: Text(S.of(context).noButton),
           onPressed: () => Navigator.pop(context),
         ),
         TextButton(
-          child: Text('Evet'),
+          child: Text(S.of(context).yesButton),
           onPressed: () {
             Navigator.pop(context);
 
@@ -1419,7 +1427,7 @@ Widget _buildAppointmentCard() {
     stream: _appointmentsStream,
     builder: (context, snapshot) {
       if (snapshot.hasError) {
-        return Center(child: Text('Bir hata oluştu'));
+        return Center(child: Text(S.of(context).basicErrorMessage));
       }
       if (snapshot.connectionState == ConnectionState.waiting) {
         return Center(child: CircularProgressIndicator());
@@ -1492,13 +1500,13 @@ Widget _buildEmptyAppointmentsView() {
           Icon(Icons.event_busy, size: 48, color: Colors.grey[400]),
           const SizedBox(height: 16),
           Text(
-            'Yaklaşan randevunuz bulunmamaktadır',
+            S.of(context).noUpcomingAppointments,
             style: TextStyle(color: Colors.grey[600], fontSize: 16),
           ),
           const SizedBox(height: 8),
           ElevatedButton.icon(
             icon: const Icon(Icons.add),
-            label: const Text('Randevu Al'),
+            label: Text(S.of(context).quickAppointment),
             onPressed: () {
               _pageController.animateToPage(
                 2,
@@ -1991,7 +1999,7 @@ Widget _buildQuickActionButton({
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Text(
-            'Aranan içerik bulunamadı',
+            S.of(context).searchEmpty,
             style: TextStyle(fontSize: 16, color: Colors.grey),
           ),
         ),
@@ -2116,7 +2124,7 @@ Widget _buildQuickActionButton({
     context: context,
     builder: (context) => StatefulBuilder(
       builder: (context, setState) => AlertDialog(
-        title: Text('Ödeme Seçenekleri'),
+        title: Text(S.of(context).paymentTitle),
         content: FutureBuilder<SharedPreferences>(
           future: SharedPreferences.getInstance(),
           builder: (context, snapshot) {
@@ -2138,14 +2146,14 @@ Widget _buildQuickActionButton({
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch, // Butonları genişlet
                 children: [
-            Text('Randevu Detayları:'),
+            Text(S.of(context).appointmentPaymentTitle),
             SizedBox(height: 8),
-            Text('Tarih: ${selectedDateTime.day}/${selectedDateTime.month}/${selectedDateTime.year}'),
-            Text('Saat: ${selectedDateTime.hour}:${selectedDateTime.minute == 0 ? '00' : selectedDateTime.minute}'),
-            Text('Paket: ${package.title}'),
+            Text('${S.of(context).appointmentPaymentDate} ${selectedDateTime.day}/${selectedDateTime.month}/${selectedDateTime.year}'),
+            Text('${S.of(context).appointmentPaymentTime} ${selectedDateTime.hour}:${selectedDateTime.minute == 0 ? '00' : selectedDateTime.minute}'),
+            Text('${S.of(context).appointmentPaymentPackage} ${package.title}'),
             Divider(),
-            Text('Paket Tutarı: ₺${price.toStringAsFixed(2)}'),
-            Text('Cüzdan Bakiyeniz: ₺${availableBalance.toStringAsFixed(2)}'),
+            Text('${S.of(context).appointmentPaymentAmount} ₺${price.toStringAsFixed(2)}'),
+            Text('${S.of(context).appointmentPaymentWallet} ₺${availableBalance.toStringAsFixed(2)}'),
             SizedBox(height: 16),
             if (canPayWithWallet)
               ElevatedButton(
@@ -2160,11 +2168,11 @@ Widget _buildQuickActionButton({
                   backgroundColor: Colors.green,
                   padding: EdgeInsets.all(16),
                 ),
-                child: Text('Cüzdan Bakiyesi ile Öde'),
+                child: Text(S.of(context).paymentWithWallet),
               )
             else ...[
               Text(
-                'Yetersiz bakiye. Kalan tutar: ₺${remainingAmount.toStringAsFixed(2)}',
+                '${S.of(context).notEnoughWallet} ₺${remainingAmount.toStringAsFixed(2)}',
                 style: TextStyle(color: Colors.red),
               ),
               SizedBox(height: 8),
@@ -2175,7 +2183,7 @@ Widget _buildQuickActionButton({
                     _showRegularPaymentDialog(package, selectedDateTime, remainingAmount);
                   },
                   style: ElevatedButton.styleFrom(padding: EdgeInsets.all(16)),
-                  child: Text('Cüzdan + Kart ile Öde (₺${remainingAmount.toStringAsFixed(2)})'),
+                  child: Text('${S.of(context).walletPlusCardPayment} (₺${remainingAmount.toStringAsFixed(2)})'),
                 ),
               ElevatedButton(
                 onPressed: () {
@@ -2183,7 +2191,7 @@ Widget _buildQuickActionButton({
                   _showRegularPaymentDialog(package, selectedDateTime, price);
                 },
                 style: ElevatedButton.styleFrom(padding: EdgeInsets.all(16)),
-                child: Text('Kredi/Banka Kartı ile Öde'),
+                child: Text(S.of(context).payWithCard),
               ),
             ],
           ],
@@ -2205,17 +2213,17 @@ void _showRegularPaymentDialog(PackageItem package, DateTime selectedDateTime, d
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text('Kart ile Ödeme'),
+      title: Text(S.of(context).payWithCardTitle),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Ödenecek Tutar: ₺${amount.toStringAsFixed(2)}'),
+            Text('${S.of(context).cardPaymentAmount} ₺${amount.toStringAsFixed(2)}'),
             SizedBox(height: 16),
             TextField(
               controller: cardNumberController,
               decoration: InputDecoration(
-                labelText: 'Kart Numarası',
+                labelText: S.of(context).cardNumber,
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
@@ -2227,7 +2235,7 @@ void _showRegularPaymentDialog(PackageItem package, DateTime selectedDateTime, d
                   child: TextField(
                     controller: expiryController,
                     decoration: InputDecoration(
-                      labelText: 'AA/YY',
+                      labelText: S.of(context).cardEndDate,
                       border: OutlineInputBorder(),
                     ),
                     keyboardType: TextInputType.number,
@@ -2265,11 +2273,11 @@ void _showRegularPaymentDialog(PackageItem package, DateTime selectedDateTime, d
               Navigator.pop(context);
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Lütfen geçerli kart bilgileri girin')),
+                SnackBar(content: Text(S.of(context).invalidCardMessage)),
               );
             }
           },
-          child: Text('Ödemeyi Tamamla'),
+          child: Text(S.of(context).confirmPayment),
         ),
       ],
     ),
@@ -2293,11 +2301,11 @@ void _createAppointment(PackageItem package, DateTime selectedDateTime, Hospital
   try {
     await _appointmentService.addAppointment(newAppointment);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Randevunuz başarıyla oluşturuldu')),
+      SnackBar(content: Text(S.of(context).appointmentSuccess)),
     );
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Randevu oluşturulurken bir hata oluştu')),
+      SnackBar(content: Text(S.of(context).appointmentFailure)),
     );
   }
 
@@ -2312,7 +2320,7 @@ void _showChildDetailsDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Çocuk Bilgileri'),
+        title: Text(S.of(context).childInformation),
         content: Form(
           key: formKey,
           child: Column(
@@ -2320,25 +2328,25 @@ void _showChildDetailsDialog(BuildContext context) {
             children: [
               TextFormField(
                 controller: nameController,
-                decoration: InputDecoration(labelText: 'Ad'),
+                decoration: InputDecoration(labelText: S.of(context).firstName),
                 validator: (value) =>
-                    value?.isEmpty ?? true ? 'Bu alan zorunludur' : null,
+                    value?.isEmpty ?? true ? S.of(context).requiredField : null,
               ),
               TextFormField(
                 controller: surnameController,
-                decoration: InputDecoration(labelText: 'Soyad'),
+                decoration: InputDecoration(labelText: S.of(context).lastName),
                 validator: (value) =>
-                    value?.isEmpty ?? true ? 'Bu alan zorunludur' : null,
+                    value?.isEmpty ?? true ? S.of(context).requiredField : null,
               ),
               TextFormField(
                 controller: emailController,
-                decoration: InputDecoration(labelText: 'E-posta'),
+                decoration: InputDecoration(labelText: S.of(context).emailLabel),
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'Bu alan zorunludur';
+                    return S.of(context).requiredField;
                   }
                   if (!value!.contains('@')) {
-                    return 'Geçerli bir e-posta adresi girin';
+                    return S.of(context).invalidEmailMessage;
                   }
                   return null;
                 },
@@ -2352,7 +2360,7 @@ void _showChildDetailsDialog(BuildContext context) {
             onPressed: () => Navigator.pop(context),
           ),
           TextButton(
-            child: Text('Ekle'),
+            child: Text(S.of(context).addKeyword),
             onPressed: () async {
               if (formKey.currentState?.validate() ?? false) {
                 final familyService = FamilyService();
@@ -2368,17 +2376,17 @@ void _showChildDetailsDialog(BuildContext context) {
                     
                     if (success) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Çocuk hesabı başarıyla bağlandı')),
+                        SnackBar(content: Text(S.of(context).childAccountConnectionSuccess)),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Hesap bağlama başarısız oldu')),
+                        SnackBar(content: Text(S.of(context).childAccountConnectionFailure)),
                       );
                     }
                   }
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Belirtilen e-posta ile çocuk hesabı bulunamadı')),
+                    SnackBar(content: Text(S.of(context).childAccountNonExistent)),
                   );
                 }
                 Navigator.pop(context);

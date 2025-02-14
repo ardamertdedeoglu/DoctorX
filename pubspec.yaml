@@ -38,6 +38,7 @@ flutter:
   assets:
     - assets/reports/
     - assets/reports/kan_tahlili.pdf
+    - assets/default_profile.png
 
 flutter_intl:
   enabled: true

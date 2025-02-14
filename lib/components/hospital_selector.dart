@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/hospital_model.dart';
 import '../services/hospital_service.dart';
+import 'package:doctorx/generated/l10n.dart';
 
 class HospitalSelector extends StatefulWidget {
   final Function(HospitalModel hospital, DoctorModel doctor) onSelectionComplete;
@@ -32,7 +33,7 @@ class _HospitalSelectorState extends State<HospitalSelector> {
         // Hospital selection remains.
         DropdownButtonFormField<HospitalModel>(
           decoration: InputDecoration(
-            labelText: 'Hastane Seçin',
+            labelText: S.of(context).chooseHospitalLabel,
             border: OutlineInputBorder(),
           ),
           value: selectedHospital,
@@ -54,7 +55,7 @@ class _HospitalSelectorState extends State<HospitalSelector> {
         if (selectedHospital != null)
           DropdownButtonFormField<DoctorModel>(
             decoration: InputDecoration(
-              labelText: 'Doktor Seçin',
+              labelText: S.of(context).chooseDoctor,
               border: OutlineInputBorder(),
             ),
             value: selectedDoctor,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'generated/l10n.dart';
 
 class AppointmentSelector extends StatefulWidget {
   final Function(DateTime) onAppointmentSelected;
@@ -60,14 +61,14 @@ class _AppointmentSelectorState extends State<AppointmentSelector> {
           icon: Icon(Icons.calendar_today),
           label: Text(
             selectedDate == null
-                ? 'Tarih Seçin'
+                ?  S.of(context).dateSelection
                 : '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}',
           ),
         ),
         if (selectedDate != null) ...[
           SizedBox(height: 16),
           Text(
-            'Müsait Saatler:',
+            S.of(context).availableHours,
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 8),

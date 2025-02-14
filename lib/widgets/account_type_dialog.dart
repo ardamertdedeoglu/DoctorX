@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:doctorx/services/family_service.dart';
+import 'package:doctorx/generated/l10n.dart';
 
 class AccountTypeDialog extends StatelessWidget {
   final Function(String) onTypeSelected;
@@ -11,13 +12,13 @@ class AccountTypeDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Hesap Türü Seçin'),
+      title: Text(S.of(context).chooseAccountType),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
             leading: Icon(Icons.woman),
-            title: Text('Anne'),
+            title: Text(S.of(context).mother),
             onTap: () {
               Navigator.pop(context);
               onTypeSelected('parent');
@@ -26,7 +27,7 @@ class AccountTypeDialog extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.man),
-            title: Text('Baba'),
+            title: Text(S.of(context).father),
             onTap: () {
               Navigator.pop(context);
               onTypeSelected('parent');
@@ -42,15 +43,15 @@ class AccountTypeDialog extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Çocuk Hesabı'),
-        content: Text('Çocuklarınızın hesabını eklemek ister misiniz?'),
+        title: Text(S.of(context).childAccountTitle),
+        content: Text(S.of(context).childAccountConnectionQuestion),
         actions: [
           TextButton(
-            child: Text('Hayır'),
+            child: Text(S.of(context).noButton),
             onPressed: () => Navigator.pop(context),
           ),
           TextButton(
-            child: Text('Evet'),
+            child: Text(S.of(context).yesButton),
             onPressed: () {
               Navigator.pop(context);
               _showChildDetailsDialog(context);
@@ -70,7 +71,7 @@ class AccountTypeDialog extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Çocuk Bilgileri'),
+        title: Text(S.of(context).childInformation),
         content: Form(
           key: formKey,
           child: Column(
@@ -78,25 +79,25 @@ class AccountTypeDialog extends StatelessWidget {
             children: [
               TextFormField(
                 controller: nameController,
-                decoration: InputDecoration(labelText: 'Ad'),
+                decoration: InputDecoration(labelText: S.of(context).firstName),
                 validator: (value) =>
-                    value?.isEmpty ?? true ? 'Bu alan zorunludur' : null,
+                    value?.isEmpty ?? true ? S.of(context).requiredField : null,
               ),
               TextFormField(
                 controller: surnameController,
-                decoration: InputDecoration(labelText: 'Soyad'),
+                decoration: InputDecoration(labelText: S.of(context).lastName),
                 validator: (value) =>
-                    value?.isEmpty ?? true ? 'Bu alan zorunludur' : null,
+                    value?.isEmpty ?? true ? S.of(context).requiredField : null,
               ),
               TextFormField(
                 controller: emailController,
-                decoration: InputDecoration(labelText: 'E-posta'),
+                decoration: InputDecoration(labelText: S.of(context).emailLabel),
                 validator: (value) {
                   if (value?.isEmpty ?? true) {
-                    return 'Bu alan zorunludur';
+                    return S.of(context).requiredField;
                   }
                   if (!value!.contains('@')) {
-                    return 'Geçerli bir e-posta adresi girin';
+                    return S.of(context).invalidEmailMessage;
                   }
                   return null;
                 },
@@ -106,11 +107,11 @@ class AccountTypeDialog extends StatelessWidget {
         ),
         actions: [
           TextButton(
-            child: Text('İptal'),
+            child: Text(S.of(context).cancel),
             onPressed: () => Navigator.pop(context),
           ),
           TextButton(
-            child: Text('Ekle'),
+            child: Text(S.of(context).addKeyword),
             onPressed: () async {
               if (formKey.currentState?.validate() ?? false) {
                 final familyService = FamilyService();
@@ -126,17 +127,17 @@ class AccountTypeDialog extends StatelessWidget {
                     
                     if (success) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Çocuk hesabı başarıyla bağlandı')),
+                        SnackBar(content: Text(S.of(context).childAccountConnectionSuccess)),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Hesap bağlama başarısız oldu')),
+                        SnackBar(content: Text(S.of(context).childAccountConnectionFailure)),
                       );
                     }
                   }
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Belirtilen e-posta ile çocuk hesabı bulunamadı')),
+                    SnackBar(content: Text(S.of(context).childAccountNonExistent)),
                   );
                 }
                 Navigator.pop(context);

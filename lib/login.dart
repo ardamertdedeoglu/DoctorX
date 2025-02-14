@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
 import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
 import 'dart:convert'; // Import jsonEncode
+import 'generated/l10n.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -62,20 +63,20 @@ class _LoginPageState extends State<LoginPage> {
   // Form validation
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Email gereklidir';
+      return S.of(context).requiredEmail;
     }
     if (!value.contains('@')) {
-      return 'Geçerli bir email giriniz';
+      return S.of(context).invalidEmailMessage;
     }
     return null;
   }
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Şifre gereklidir';
+      return S.of(context).requiredPassword;
     }
     if (value.length < 6) {
-      return 'Şifre en az 6 karakter olmalıdır';
+      return S.of(context).passwordMinLength;
     }
     return null;
   }
@@ -126,9 +127,9 @@ class _LoginPageState extends State<LoginPage> {
     } on FirebaseAuthException catch (e) {
       String message = 'Bir hata oluştu';
       if (e.code == 'user-not-found') {
-        message = 'Bu e-posta adresi ile kayıtlı kullanıcı bulunamadı';
+        message = S.of(context).userNotFound;
       } else if (e.code == 'wrong-password') {
-        message = 'Hatalı şifre';
+        message = S.of(context).wrongPassword;
       }
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(message)),
@@ -167,16 +168,16 @@ class _LoginPageState extends State<LoginPage> {
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Şifre Sıfırlama'),
+        title: Text(S.of(context).resetPasswordTitle),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Şifre sıfırlama bağlantısı gönderilecek e-posta adresini girin:'),
+            Text(S.of(context).emailForResettingPassword),
             SizedBox(height: 16),
             TextField(
               controller: resetEmailController,
               decoration: InputDecoration(
-                labelText: 'E-posta',
+                labelText: S.of(context).emailLabel,
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.emailAddress,
@@ -186,14 +187,14 @@ class _LoginPageState extends State<LoginPage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('İptal'),
+            child: Text(S.of(context).cancel),
           ),
           TextButton(
             onPressed: () async {
               final email = resetEmailController.text.trim();
               if (email.isEmpty) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Lütfen e-posta adresinizi girin')),
+                  SnackBar(content: Text(S.of(context).requiredEmail)),
                 );
                 return;
               }
@@ -202,11 +203,11 @@ class _LoginPageState extends State<LoginPage> {
                 await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
                 Navigator.pop(context); // Close the dialog
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Şifre sıfırlama bağlantısı e-posta adresinize gönderildi')),
+                  SnackBar(content: Text(S.of(context).resetLinkConfirmed)),
                 );
               } catch (e) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Şifre sıfırlama hatası: ${e.toString()}')),
+                  SnackBar(content: Text('${S.of(context).resetLinkError} ${e.toString()}')),
                 );
               }
             },
@@ -233,15 +234,17 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Giriş Yap', style: TextStyle(fontSize: 24)),
+              Text(S.of(context).login, style: TextStyle(fontSize: 24)),
               SizedBox(height: 24),
               TextFormField(
                 controller: _emailController,
                 validator: _validateEmail,
                 decoration: InputDecoration(
-                  labelText: 'Email',
+                  labelText: S.of(context).emailLabel,
                   border: OutlineInputBorder(),
                 ),
+                //Klavyeyi e-posta moduna ayarla
+                keyboardType: TextInputType.emailAddress,
               ),
               SizedBox(height: 16),
               TextFormField(
@@ -249,7 +252,7 @@ class _LoginPageState extends State<LoginPage> {
                 validator: _validatePassword,
                 obscureText: !_isPasswordVisible,  // Değişkene göre görünürlük
                 decoration: InputDecoration(
-                  labelText: 'Şifre',
+                  labelText: S.of(context).password,
                   border: OutlineInputBorder(),
                   suffixIcon: GestureDetector(
                     onTapDown: (_) => setState(() => _isPasswordVisible = true),
@@ -276,12 +279,12 @@ class _LoginPageState extends State<LoginPage> {
                           });
                         },
                       ),
-                      Text('Beni Hatırla'),
+                      Text(S.of(context).rememberMe),
                     ],
                   ),
                   TextButton(
                     onPressed: _resetPassword,
-                    child: Text('Şifremi Unuttum'),
+                    child: Text(S.of(context).forgotPassword),
                   ),
                 ],
               ),
@@ -293,13 +296,13 @@ class _LoginPageState extends State<LoginPage> {
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(double.infinity, 50),
                     ),
-                    child: Text('Giriş Yap', 
+                    child: Text(S.of(context).login, 
                       style: TextStyle(fontWeight: FontWeight.bold)
                     ),
                   ),
               TextButton(
                 onPressed: () => Navigator.pushNamed(context, '/signup'),
-                child: Text('Hesabın yok mu? Kayıt ol'),
+                child: Text(S.of(context).signupButton),
               ),
             ],
           ),

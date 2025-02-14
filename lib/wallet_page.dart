@@ -1,3 +1,4 @@
+import 'package:doctorx/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -53,7 +54,7 @@ class _WalletPageState extends State<WalletPage> {
     
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cüzdanım'),
+        title: Text(S.of(context).wallet),
         backgroundColor: isDarkMode ? Colors.grey[900] : Colors.white,
       ),
       body: SingleChildScrollView(
@@ -82,7 +83,7 @@ class _WalletPageState extends State<WalletPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Kullanılabilir Bakiye',
+                        S.of(context).availableBalance,
                         style: TextStyle(
                           color: Colors.white70,
                           fontSize: 16,
@@ -100,7 +101,7 @@ class _WalletPageState extends State<WalletPage> {
                       if (_wallet?.pendingBalance != null && _wallet!.pendingBalance > 0) ...[
                         SizedBox(height: 16),
                         Text(
-                          'Bekleyen Bakiye: ₺${_wallet?.pendingBalance.toStringAsFixed(2)}',
+                          '${S.of(context).pendingBalance} ₺${_wallet?.pendingBalance.toStringAsFixed(2)}',
                           style: TextStyle(
                             color: Colors.white70,
                             fontSize: 14,
@@ -113,7 +114,7 @@ class _WalletPageState extends State<WalletPage> {
               ),
               SizedBox(height: 24),
               Text(
-                'Bakiye Yükle',
+                S.of(context).addBalance,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,

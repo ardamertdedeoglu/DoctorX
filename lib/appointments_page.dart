@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'theme_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doctorx/generated/l10n.dart';
 
 class AppointmentsPage extends StatelessWidget {
   final int initialTab;
@@ -41,14 +42,14 @@ class AppointmentsPage extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Scaffold(
-            appBar: AppBar(title: Text('Randevularım')),
-            body: Center(child: Text('Bir hata oluştu: ${snapshot.error}')),
+            appBar: AppBar(title: Text(S.of(context).quickAppointmentsList)),
+            body: Center(child: Text('${S.of(context).basicErrorMessage} ${snapshot.error}')),
           );
         }
 
         if (!snapshot.hasData) {
           return Scaffold(
-            appBar: AppBar(title: Text('Randevularım')),
+            appBar: AppBar(title: Text(S.of(context).quickAppointmentsList)),
             body: Center(child: CircularProgressIndicator()),
           );
         }
@@ -70,7 +71,7 @@ class AppointmentsPage extends StatelessWidget {
           initialIndex: initialTab,
           child: Scaffold(
             appBar: AppBar(
-              title: Text('Randevularım'),
+              title: Text(S.of(context).quickAppointmentsList),
               bottom: TabBar(
                 tabs: [
                   Tab(
@@ -79,7 +80,7 @@ class AppointmentsPage extends StatelessWidget {
                       children: [
                         Icon(Icons.event_available),
                         SizedBox(width: 8),
-                        Text('Gelecek (${upcomingAppointments.length})'),
+                        Text('${S.of(context).futureAppointments} (${upcomingAppointments.length})'),
                       ],
                     ),
                   ),
@@ -89,7 +90,7 @@ class AppointmentsPage extends StatelessWidget {
                       children: [
                         Icon(Icons.history),
                         SizedBox(width: 8),
-                        Text('Geçmiş (${pastAppointments.length})'),
+                        Text('${S.of(context).pastAppointments} (${pastAppointments.length})'),
                       ],
                     ),
                   ),
@@ -98,8 +99,8 @@ class AppointmentsPage extends StatelessWidget {
             ),
             body: TabBarView(
               children: [
-                _buildAppointmentList(upcomingAppointments, true, isDarkMode),
-                _buildAppointmentList(pastAppointments, false, isDarkMode),
+                _buildAppointmentList(context, upcomingAppointments, true, isDarkMode),
+                _buildAppointmentList(context, pastAppointments, false, isDarkMode),
               ],
             ),
           ),
@@ -108,7 +109,7 @@ class AppointmentsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildAppointmentList(List<AppointmentModel> appointments, bool isUpcoming, bool isDarkMode) {
+  Widget _buildAppointmentList(BuildContext context, List<AppointmentModel> appointments, bool isUpcoming, bool isDarkMode) {
     if (appointments.isEmpty) {
       return Center(
         child: Column(
@@ -122,8 +123,8 @@ class AppointmentsPage extends StatelessWidget {
             SizedBox(height: 16),
             Text(
               isUpcoming 
-                ? 'Yaklaşan randevunuz bulunmamaktadır'
-                : 'Geçmiş randevunuz bulunmamaktadır',
+                ? S.of(context).noUpcomingAppointments
+                : S.of(context).noPastAppointments,
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.grey[600],
@@ -183,7 +184,7 @@ class AppointmentsPage extends StatelessWidget {
                             value: 'edit',
                             child: ListTile(
                               leading: Icon(Icons.edit, color: Colors.blue),
-                              title: Text('Düzenle'),
+                              title: Text(S.of(context).editButton),
                               contentPadding: EdgeInsets.zero,
                             ),
                           ),
@@ -191,13 +192,14 @@ class AppointmentsPage extends StatelessWidget {
                             value: 'cancel',
                             child: ListTile(
                               leading: Icon(Icons.cancel, color: Colors.red),
-                              title: Text('İptal Et'),
+                              title: Text(S.of(context).cancel),
                               contentPadding: EdgeInsets.zero,
                             ),
                           ),
                         ],
                         onSelected: (value) {
                           // Implement edit/cancel functionality
+
                         },
                       ),
                   ],

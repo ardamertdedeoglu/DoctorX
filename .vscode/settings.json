@@ -1,5 +1,6 @@
 {
     "cmake.sourceDirectory": "C:/Users/User/Desktop/Flutter deneme/flutter_deneme/windows",
     "java.compile.nullAnalysis.mode": "automatic",
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "cmake.ignoreCMakeListsMissing": true
 }

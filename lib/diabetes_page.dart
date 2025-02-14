@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'theme_provider.dart';
+import 'generated/l10n.dart';
 
 class DiabetesPage extends StatefulWidget {
   const DiabetesPage({super.key});
@@ -94,7 +95,7 @@ class _DiabetesPageState extends State<DiabetesPage> {
     
     final hours = diff ~/ 60;
     final minutes = diff % 60;
-    return '${hours}s ${minutes}dk';
+    return '$hours${S.of(context).hour} $minutes${S.of(context).minutes}';
   }
 
   bool _isDoseTimeValid(TimeOfDay doseTime) {
@@ -107,7 +108,7 @@ class _DiabetesPageState extends State<DiabetesPage> {
   Widget _buildDoseStatus(bool isChecked, bool isTimeValid) {
     if (!isTimeValid || isChecked) { // isChecked durumunu da kontrol et
       return Text(
-        isChecked ? 'Aferin, sağlıklı olmaya bir adım daha!' : 'Eyvah, sakın bir daha unutma!',
+        isChecked ? S.of(context).doseConfirmedMessage : S.of(context).doseNotConfirmedMessage,
         style: TextStyle(
           color: isChecked ? Colors.green : Colors.red,
           fontWeight: FontWeight.bold,
@@ -122,19 +123,19 @@ class _DiabetesPageState extends State<DiabetesPage> {
     return await showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Doz Onayı'),
-        content: Text('$doseType dozunu aldığınızdan emin misiniz?'),
+        title: Text(S.of(context).doseConfirm),
+        content: Text('${S.of(context).doseConfirmationDesc} $doseType'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text('Hayır'),
+            child: Text(S.of(context).noButton),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
             style: TextButton.styleFrom(
               foregroundColor: Colors.green,
             ),
-            child: Text('Evet'),
+            child: Text(S.of(context).yesButton),
           ),
         ],
       ),
@@ -152,7 +153,7 @@ class _DiabetesPageState extends State<DiabetesPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'İnsülin Doz',
+              S.of(context).doseTitle,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -164,13 +165,13 @@ class _DiabetesPageState extends State<DiabetesPage> {
                 children: [
                   Expanded(
                     flex: 2,
-                    child: Text('Sabah Dozu (11:00)'),
+                    child: Text(S.of(context).morningDose),
                   ),
                   if (isMorningValid && !_morningInsulin)
                     SizedBox(
                       width: 100, // Sabit genişlik
                       child: Text(
-                        '${_getRemainingTime(morningDoseTime)} kaldı',
+                        '${S.of(context).remainingTime} ${_getRemainingTime(morningDoseTime)}',
                         style: TextStyle(
                           color: Colors.blue,
                           fontSize: 12,
@@ -183,7 +184,7 @@ class _DiabetesPageState extends State<DiabetesPage> {
               enabled: isMorningValid && !_morningInsulin,
               onChanged: isMorningValid ? (value) async {
                 if (value == true) {
-                  final confirmed = await _showConfirmationDialog('Sabah');
+                  final confirmed = await _showConfirmationDialog(S.of(context).morning);
                   if (confirmed) {
                     setState(() {
                       _morningInsulin = true;
@@ -203,13 +204,13 @@ class _DiabetesPageState extends State<DiabetesPage> {
                 children: [
                   Expanded(
                     flex: 2,
-                    child: Text('Akşam Dozu (20:00)'),
+                    child: Text(S.of(context).eveningDose),
                   ),
                   if (isEveningValid && !_eveningInsulin)
                     SizedBox(
                       width: 100, // Sabit genişlik
                       child: Text(
-                        '${_getRemainingTime(eveningDoseTime)} kaldı',
+                        '${S.of(context).remainingTime} ${_getRemainingTime(eveningDoseTime)}',
                         style: TextStyle(
                           color: Colors.blue,
                           fontSize: 12,
@@ -222,7 +223,7 @@ class _DiabetesPageState extends State<DiabetesPage> {
               enabled: isEveningValid && !_eveningInsulin, // İşaretlendiyse devre dışı bırak
               onChanged: isEveningValid ? (value) async {
                 if (value == true) {
-                  final confirmed = await _showConfirmationDialog('Akşam');
+                  final confirmed = await _showConfirmationDialog(S.of(context).evening);
                   if (confirmed) {
                     setState(() {
                       _eveningInsulin = true;
@@ -248,7 +249,7 @@ class _DiabetesPageState extends State<DiabetesPage> {
     final isDarkMode = context.watch<ThemeProvider>().isDarkMode;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Diyabet'),
+        title: Text(S.of(context).diabetes),
         backgroundColor: isDarkMode ? Colors.grey[900] : Colors.white,
         foregroundColor: isDarkMode ? Colors.white : Colors.black,
       ),
@@ -265,7 +266,7 @@ class _DiabetesPageState extends State<DiabetesPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Glikoz Seviyesi',
+                      S.of(context).glucoseLevel,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -301,9 +302,9 @@ class _DiabetesPageState extends State<DiabetesPage> {
                     ),
                     SizedBox(height: 8),
                     Text(
-                      _glucoseLevel > 140 ? 'Glikoz seviyesi azaltılmalı!' :
-                      _glucoseLevel < 70 ? 'Glikoz tüketimini arttır!' :
-                      'İşte böyle devam et!',
+                      _glucoseLevel > 140 ? S.of(context).tooMuchGlucose :
+                      _glucoseLevel < 70 ? S.of(context).tooLowGlucose :
+                      S.of(context).normalGlucose,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -326,7 +327,7 @@ class _DiabetesPageState extends State<DiabetesPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Karbonhidratlar',
+                      S.of(context).carbonhydrates,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

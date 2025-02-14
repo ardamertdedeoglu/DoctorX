@@ -5,6 +5,7 @@ import 'models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
 import 'widgets/account_type_dialog.dart'; // Import AccountTypeDialog
 import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
+import 'generated/l10n.dart';
 
 
 class SignupPage extends StatefulWidget {
@@ -32,14 +33,14 @@ class _SignupPageState extends State<SignupPage> {
         _passwordController.text.isEmpty ||
         _confirmPasswordController.text.isEmpty) { // Confirm password kontrolü
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Tüm alanları doldurunuz')),
+        SnackBar(content: Text(S.of(context).requiredAll)),
       );
       return;
     }
 
     if (_passwordController.text != _confirmPasswordController.text) { // Şifre kontrolü
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Şifreler eşleşmiyor')),
+        SnackBar(content: Text(S.of(context).passwordsNotMatch)),
       );
       return;
     }
@@ -72,14 +73,14 @@ class _SignupPageState extends State<SignupPage> {
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        _showError('Şifre çok zayıf.');
+        _showError(S.of(context).weakPassword);
       } else if (e.code == 'email-already-in-use') {
-        _showError('Bu e-posta adresi zaten kullanımda.');
+        _showError(S.of(context).emailAlreadyInUse);
       } else {
-        _showError('Kayıt hatası: ${e.message}');
+        _showError('${S.of(context).signError} ${e.message}');
       }
     } catch (e) {
-      _showError('Beklenmedik bir hata oluştu: ${e.toString()}');
+      _showError('${S.of(context).unexpectedError} ${e.toString()}');
     } finally {
       setState(() => _isLoading = false);
     }
@@ -125,6 +126,7 @@ class _SignupPageState extends State<SignupPage> {
         );
       } catch (e) {
         // Hata yönetimi...
+
       }
     }
   }
@@ -161,7 +163,7 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Kayıt Ol')),
+      appBar: AppBar(title: Text(S.of(context).signup)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -170,7 +172,7 @@ class _SignupPageState extends State<SignupPage> {
             TextField(
               controller: _firstNameController,
               decoration: InputDecoration(
-                labelText: 'Ad',
+                labelText: S.of(context).firstName,
                 border: OutlineInputBorder(),
               ),
             ),
@@ -178,7 +180,7 @@ class _SignupPageState extends State<SignupPage> {
             TextField(
               controller: _lastNameController,
               decoration: InputDecoration(
-                labelText: 'Soyad',
+                labelText: S.of(context).lastName,
                 border: OutlineInputBorder(),
               ),
             ),
@@ -186,7 +188,7 @@ class _SignupPageState extends State<SignupPage> {
             TextField(
               controller: _emailController,
               decoration: InputDecoration(
-                labelText: 'Email',
+                labelText: S.of(context).emailLabel,
                 border: OutlineInputBorder(),
               ),
             ),
@@ -195,7 +197,7 @@ class _SignupPageState extends State<SignupPage> {
               controller: _passwordController,
               obscureText: !_isPasswordVisible,  // Değişkene göre görünürlük
               decoration: InputDecoration(
-                labelText: 'Şifre',
+                labelText: S.of(context).password,
                 border: OutlineInputBorder(),
                 suffixIcon: GestureDetector(
                   onTapDown: (_) => setState(() => _isPasswordVisible = true),
@@ -213,7 +215,7 @@ class _SignupPageState extends State<SignupPage> {
               controller: _confirmPasswordController, // Confirm password alanı
               obscureText: !_isConfirmPasswordVisible, // Confirm password görünürlük
               decoration: InputDecoration(
-                labelText: 'Şifreyi Doğrula',
+                labelText: S.of(context).verifyPassword,
                 border: OutlineInputBorder(),
                 suffixIcon: GestureDetector(
                   onTapDown: (_) => setState(() => _isConfirmPasswordVisible = true),
@@ -232,7 +234,7 @@ class _SignupPageState extends State<SignupPage> {
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(double.infinity, 50),
               ),
-              child: Text('Kayıt Ol'),
+              child: Text(S.of(context).signup),
             ),
           ],
         ),

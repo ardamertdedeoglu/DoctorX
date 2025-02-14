@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../models/user_model.dart';
 import '../services/family_service.dart';
+import '../generated/l10n.dart';
+
 
 class AccountSwitcher extends StatelessWidget {
   final UserModel currentUser;
@@ -16,15 +18,15 @@ class AccountSwitcher extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExpansionTile(
       leading: Icon(Icons.family_restroom),
-      title: Text('Hesap Değiştir'),
+      title: Text(S.of(context).accountSwitcher),
       children: [
         FutureBuilder<List<UserModel>>(
           future: FamilyService().getLinkedAccounts(currentUser.id!),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return ListTile(
-                title: Text('Bir hata oluştu'),
-                subtitle: Text('Bağlı hesaplar yüklenemedi'),
+                title: Text(S.of(context).basicErrorMessage),
+                subtitle: Text(S.of(context).loadErrorAccountSwitcher),
               );
             }
 
@@ -35,7 +37,7 @@ class AccountSwitcher extends StatelessWidget {
             final linkedAccounts = snapshot.data!;
             if (linkedAccounts.isEmpty) {
               return ListTile(
-                title: Text('Bağlı hesap bulunamadı'),
+                title: Text(S.of(context).noLinkedAccountsMessage),
               );
             }
 
