@@ -2159,6 +2159,96 @@ class S {
       args: [],
     );
   }
+
+  /// `You cannot edit an appointment within 3 days of the appointment date.`
+  String get cantEditAppointmentWithin3Days {
+    return Intl.message(
+      'You cannot edit an appointment within 3 days of the appointment date.',
+      name: 'cantEditAppointmentWithin3Days',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel Appointment`
+  String get confirmCancellation {
+    return Intl.message(
+      'Cancel Appointment',
+      name: 'confirmCancellation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to cancel this appointment?`
+  String get cancelAppointmentConfirmation {
+    return Intl.message(
+      'Are you sure you want to cancel this appointment?',
+      name: 'cancelAppointmentConfirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Carbohydrates Tracking`
+  String get carbohydratesTracking {
+    return Intl.message(
+      'Carbohydrates Tracking',
+      name: 'carbohydratesTracking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Today's Consumption:`
+  String get consumptionToday {
+    return Intl.message(
+      'Today\'s Consumption:',
+      name: 'consumptionToday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Calories:`
+  String get calories {
+    return Intl.message('Calories:', name: 'calories', desc: '', args: []);
+  }
+
+  /// `What did you eat today?`
+  String get eatQuestion {
+    return Intl.message(
+      'What did you eat today?',
+      name: 'eatQuestion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `carbohydrates`
+  String get carbohydrates {
+    return Intl.message(
+      'carbohydrates',
+      name: 'carbohydrates',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Insulin Tracking`
+  String get insulineTracking {
+    return Intl.message(
+      'Insulin Tracking',
+      name: 'insulineTracking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apple`
+  String get apple {
+    return Intl.message('Apple', name: 'apple', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -245,5 +245,15 @@
   "documentTitle3": "Healthy Eating Guide",
   "documentCategory": "Nutrition",
   "documentSummary3": "Balanced and healthy nutrition recommendations",
-  "documentContent3": "Healthy nutrition requires taking in all the nutrients our body needs in a balanced way..."
+  "documentContent3": "Healthy nutrition requires taking in all the nutrients our body needs in a balanced way...",
+  "cantEditAppointmentWithin3Days": "You cannot edit an appointment within 3 days of the appointment date.",
+  "confirmCancellation": "Cancel Appointment",
+  "cancelAppointmentConfirmation": "Are you sure you want to cancel this appointment?",
+  "carbohydratesTracking": "Carbohydrates Tracking",
+  "consumptionToday": "Today's Consumption:",
+  "calories": "Calories:",
+  "eatQuestion": "What did you eat today?",
+  "carbohydrates": "carbohydrates",
+  "insulineTracking": "Insulin Tracking",
+  "apple": "Apple"
 }

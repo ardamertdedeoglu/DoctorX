@@ -22,10 +22,20 @@ class AppointmentModel {
     required this.dateTime,
   });
 
+  // İki hafta içinde olup olmadığını kontrol eden metodu güncelle
   bool isWithinTwoWeeks() {
     final now = DateTime.now();
-    final difference = dateTime.difference(now).inDays;
-    return difference >= 0 && difference <= 14;
+    final twoWeeksLater = DateTime(
+      now.year,
+      now.month,
+      now.day + 14,
+      23, // Günün son saati
+      59, // Son dakika
+      59, // Son saniye
+    );
+    
+    // Şu anki zamandan sonraki ve 2 hafta içindeki randevuları kontrol et
+    return dateTime.isAfter(now) && dateTime.isBefore(twoWeeksLater);
   }
 
   // Helper method to parse date and time to DateTime

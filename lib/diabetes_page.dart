@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'theme_provider.dart';
 import 'generated/l10n.dart';
+import 'models/food_item.dart';
 
 class DiabetesPage extends StatefulWidget {
   const DiabetesPage({super.key});
@@ -12,7 +13,7 @@ class DiabetesPage extends StatefulWidget {
   _DiabetesPageState createState() => _DiabetesPageState();
 }
 
-class _DiabetesPageState extends State<DiabetesPage> {
+class _DiabetesPageState extends State<DiabetesPage> with SingleTickerProviderStateMixin {
   double _glucoseLevel = 100.0;
   int _consumedCarbs = 0;
   final int _dailyTargetCarbs = 250;
@@ -26,9 +27,28 @@ class _DiabetesPageState extends State<DiabetesPage> {
   // Yeni özellik ekleyelim
   String? _lastResetDate;
 
+  // Yiyecek listesi
+  final List<FoodItem> foodItems = [
+    FoodItem(name: 'Elma', carbAmount: 15.0),
+    FoodItem(name: 'Ekmek (1 dilim)', carbAmount: 12.0),
+    FoodItem(name: 'Pilav (1 porsiyon)', carbAmount: 45.0),
+    FoodItem(name: 'Makarna (1 porsiyon)', carbAmount: 42.0),
+    FoodItem(name: 'Muz', carbAmount: 23.0),
+    FoodItem(name: 'Süt (1 bardak)', carbAmount: 12.0),
+    FoodItem(name: 'Yoğurt (1 kase)', carbAmount: 10.0),
+    FoodItem(name: 'Patates (1 orta boy)', carbAmount: 30.0),
+  ];
+
+  double _totalCarbs = 0.0;
+
+  late TabController _tabController;
+
+  final int _caloriesPerCarb = 4; // 1g karbonhidrat = 4 kalori
+
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 2, vsync: this);
     _loadDiabetesData();
     _checkAndResetDailyDoses(); // initState'e ekleyelim
     _timer = Timer.periodic(Duration(seconds: 1), (_) {
@@ -41,6 +61,7 @@ class _DiabetesPageState extends State<DiabetesPage> {
 
   @override
   void dispose() {
+    _tabController.dispose();
     _timer?.cancel();
     super.dispose();
   }
@@ -244,6 +265,152 @@ class _DiabetesPageState extends State<DiabetesPage> {
     );
   }
 
+  // Karbonhidrat sekmesi için widget
+  Widget _buildCarbsTab() {
+    // Toplam kalori hesaplama
+    final totalCalories = _totalCarbs * _caloriesPerCarb;
+    final targetCalories = _dailyTargetCarbs * _caloriesPerCarb;
+    
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              S.of(context).carbohydratesTracking,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          S.of(context).consumptionToday,
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        Text(
+                          '${_totalCarbs.toStringAsFixed(1)}g',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    Divider(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          S.of(context).calories,
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        Text(
+                          '${totalCalories.toStringAsFixed(1)} / $targetCalories kcal',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: totalCalories > targetCalories ? Colors.red : Colors.green,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    LinearProgressIndicator(
+                      value: totalCalories / targetCalories,
+                      backgroundColor: Colors.grey[200],
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        totalCalories > targetCalories ? Colors.red : Colors.green,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            Text(
+              S.of(context).eatQuestion,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            // Yiyecek listesi
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: foodItems.length,
+              itemBuilder: (context, index) {
+                final food = foodItems[index];
+                return Card(
+                  child: ListTile(
+                    title: Text(food.name),
+                    subtitle: Text('${food.carbAmount}g ${S.of(context).carbohydrates}'),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (food.consumedCount > 0)
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.blue.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              '${food.consumedCount}x',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ),
+                        SizedBox(width: 8),
+                        IconButton(
+                          icon: Icon(Icons.add_circle, color: Colors.green),
+                          onPressed: () {
+                            setState(() {
+                              food.consumedCount++;
+                              _totalCarbs += food.carbAmount;
+                            });
+                          },
+                        ),
+                        if (food.consumedCount > 0)
+                          IconButton(
+                            icon: Icon(Icons.remove_circle, color: Colors.red),
+                            onPressed: () {
+                              setState(() {
+                                if (food.consumedCount > 0) {
+                                  food.consumedCount--;
+                                  _totalCarbs -= food.carbAmount;
+                                }
+                              });
+                            },
+                          ),
+                      ],
+                    ),
+                    onTap: () {
+                      setState(() {
+                        food.consumedCount++;
+                        _totalCarbs += food.carbAmount;
+                      });
+                    },
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDarkMode = context.watch<ThemeProvider>().isDarkMode;
@@ -252,134 +419,91 @@ class _DiabetesPageState extends State<DiabetesPage> {
         title: Text(S.of(context).diabetes),
         backgroundColor: isDarkMode ? Colors.grey[900] : Colors.white,
         foregroundColor: isDarkMode ? Colors.white : Colors.black,
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: [
+            Tab(text: S.of(context).insulineTracking),
+            Tab(text: S.of(context).carbohydratesTracking),
+          ],
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Glikoz Ölçer
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      S.of(context).glucoseLevel,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Row(
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          // İnsülin takibi tab'ı
+          SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Glikoz Ölçer Card
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: Slider(
-                            value: _glucoseLevel,
-                            min: 0,
-                            max: 200,
-                            onChanged: (value) {
-                              setState(() {
-                                _glucoseLevel = value;
-                              });
-                              _saveDiabetesData();
-                            },
+                        Text(
+                          S.of(context).glucoseLevel,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
+                        SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Slider(
+                                value: _glucoseLevel,
+                                min: 0,
+                                max: 200,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _glucoseLevel = value;
+                                  });
+                                  _saveDiabetesData();
+                                },
+                              ),
+                            ),
+                            Text(
+                              '${_glucoseLevel.toStringAsFixed(1)} mg/dL',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: _glucoseLevel > 140 ? Colors.red : 
+                                       _glucoseLevel < 70 ? Colors.orange : 
+                                       Colors.green,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 8),
                         Text(
-                          '${_glucoseLevel.toStringAsFixed(1)} mg/dL',
+                          _glucoseLevel > 140 ? S.of(context).tooMuchGlucose :
+                          _glucoseLevel < 70 ? S.of(context).tooLowGlucose :
+                          S.of(context).normalGlucose,
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: _glucoseLevel > 140 ? Colors.red : 
-                                   _glucoseLevel < 70 ? Colors.orange : 
+                            color: _glucoseLevel > 140 ? Colors.red :
+                                   _glucoseLevel < 70 ? Colors.orange :
                                    Colors.green,
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 8),
-                    Text(
-                      _glucoseLevel > 140 ? S.of(context).tooMuchGlucose :
-                      _glucoseLevel < 70 ? S.of(context).tooLowGlucose :
-                      S.of(context).normalGlucose,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: _glucoseLevel > 140 ? Colors.red :
-                               _glucoseLevel < 70 ? Colors.orange :
-                               Colors.green,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                SizedBox(height: 16),
+                // İnsülin Takibi Card
+                _buildInsulinCard(),
+              ],
             ),
-            SizedBox(height: 16),
-
-            // Karbonhidrat Takibi
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      S.of(context).carbonhydrates,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    LinearProgressIndicator(
-                      value: _consumedCarbs / _dailyTargetCarbs,
-                      backgroundColor: Colors.grey[200],
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        _consumedCarbs > _dailyTargetCarbs ? Colors.red : Colors.blue,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('$_consumedCarbs / $_dailyTargetCarbs g'),
-                        Row(
-                          children: [
-                            IconButton(
-                              icon: Icon(Icons.remove),
-                              onPressed: () {
-                                setState(() {
-                                  if (_consumedCarbs > 0) _consumedCarbs -= 10;
-                                });
-                                _saveDiabetesData();
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.add),
-                              onPressed: () {
-                                setState(() {
-                                  _consumedCarbs += 10;
-                                });
-                                _saveDiabetesData();
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(height: 16),
-
-            // İnsülin Takibi
-            _buildInsulinCard(),
-          ],
-        ),
+          ),
+          // Karbonhidrat takibi tab'ı
+          _buildCarbsTab(),
+        ],
       ),
     );
   }

@@ -5,10 +5,8 @@ import 'dart:async';
 import 'models/user_model.dart';
 import 'main.dart';
 import 'generated/l10n.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'theme_provider.dart';
-import 'locale_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -88,7 +86,7 @@ class _HomePageState extends State<HomePage> {
               Text(
                 _userData != null
                     ? '${S.of(context).welcomeMessage}, ${_userData!.firstName}!'
-                    : '${S.of(context).welcomeMessage}, Guest!',
+                    : S.of(context).welcomeMessage,
                 style: TextStyle(
                   fontSize: 24,
                   color: isDarkMode ? Colors.white : Colors.black,

@@ -59,6 +59,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "allReports": MessageLookupByLibrary.simpleMessage("Tümü"),
     "appTitle": MessageLookupByLibrary.simpleMessage("DoctorX"),
+    "apple": MessageLookupByLibrary.simpleMessage("Elma"),
     "appointmentFailure": MessageLookupByLibrary.simpleMessage(
       "Randevu oluşturulurken bir hata oluştu",
     ),
@@ -89,8 +90,19 @@ class MessageLookup extends MessageLookupByLibrary {
       "Bir hata oluştu",
     ),
     "buyKeyword": MessageLookupByLibrary.simpleMessage("Satın Al"),
+    "calories": MessageLookupByLibrary.simpleMessage("Kalori:"),
     "cameraButton": MessageLookupByLibrary.simpleMessage("Fotoğraf Çek"),
     "cancel": MessageLookupByLibrary.simpleMessage("İptal"),
+    "cancelAppointmentConfirmation": MessageLookupByLibrary.simpleMessage(
+      "Bu randevuyu iptal etmek istediğinizden emin misiniz?",
+    ),
+    "cantEditAppointmentWithin3Days": MessageLookupByLibrary.simpleMessage(
+      "Randevu tarihine 3 günden az kaldığı için randevuyu düzenleyemezsiniz.",
+    ),
+    "carbohydrates": MessageLookupByLibrary.simpleMessage("karbonhidrat"),
+    "carbohydratesTracking": MessageLookupByLibrary.simpleMessage(
+      "Karbonhidrat Takibi",
+    ),
     "carbonhydrates": MessageLookupByLibrary.simpleMessage("Karbonhidratlar"),
     "cardEndDate": MessageLookupByLibrary.simpleMessage("AA/YY"),
     "cardNumber": MessageLookupByLibrary.simpleMessage("Kart Numarası"),
@@ -129,7 +141,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "Hastane Seçin",
     ),
     "close": MessageLookupByLibrary.simpleMessage("Kapat"),
+    "confirmCancellation": MessageLookupByLibrary.simpleMessage(
+      "Randevuyu İptal Et",
+    ),
     "confirmPayment": MessageLookupByLibrary.simpleMessage("Ödemeyi Tamamla"),
+    "consumptionToday": MessageLookupByLibrary.simpleMessage(
+      "Bugün Tüketilen:",
+    ),
     "darkMode": MessageLookupByLibrary.simpleMessage("Koyu Tema"),
     "dateSelection": MessageLookupByLibrary.simpleMessage("Tarih Seçin"),
     "december": MessageLookupByLibrary.simpleMessage("ARA"),
@@ -204,6 +222,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Eyvah, sakın bir daha unutma!",
     ),
     "doseTitle": MessageLookupByLibrary.simpleMessage("İnsülin Doz"),
+    "eatQuestion": MessageLookupByLibrary.simpleMessage("Bugün ne yedin?"),
     "editButton": MessageLookupByLibrary.simpleMessage("Düzenle"),
     "emailAlreadyInUse": MessageLookupByLibrary.simpleMessage(
       "Bu e-posta adresi zaten kullanımda.",
@@ -248,6 +267,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Hastane ve Doktor Seçimi",
     ),
     "hour": MessageLookupByLibrary.simpleMessage("s"),
+    "insulineTracking": MessageLookupByLibrary.simpleMessage("İnsülin Takibi"),
     "invalidCardMessage": MessageLookupByLibrary.simpleMessage(
       "Lütfen geçerli kart bilgileri girin",
     ),

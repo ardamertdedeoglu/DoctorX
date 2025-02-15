@@ -247,5 +247,15 @@
   "documentTitle3": "Sağlıklı Beslenme Rehberi",
   "documentCategory": "Beslenme",
   "documentSummary3": "Dengeli ve sağlıklı beslenme önerileri",
-  "documentContent3": "Sağlıklı beslenme, vücudumuzun ihtiyaç duyduğu tüm besin öğelerini dengeli bir şekilde almayı gerektirir..."
+  "documentContent3": "Sağlıklı beslenme, vücudumuzun ihtiyaç duyduğu tüm besin öğelerini dengeli bir şekilde almayı gerektirir...",
+  "cantEditAppointmentWithin3Days": "Randevu tarihine 3 günden az kaldığı için randevuyu düzenleyemezsiniz.",
+  "confirmCancellation": "Randevuyu İptal Et",
+  "cancelAppointmentConfirmation": "Bu randevuyu iptal etmek istediğinizden emin misiniz?",
+  "carbohydratesTracking": "Karbonhidrat Takibi",
+  "consumptionToday": "Bugün Tüketilen:",
+  "calories": "Kalori:",
+  "eatQuestion": "Bugün ne yedin?",
+  "carbohydrates": "karbonhidrat",
+  "insulineTracking": "İnsülin Takibi",
+  "apple": "Elma"
 }

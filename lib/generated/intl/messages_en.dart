@@ -59,6 +59,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "allReports": MessageLookupByLibrary.simpleMessage("All"),
     "appTitle": MessageLookupByLibrary.simpleMessage("DoctorX"),
+    "apple": MessageLookupByLibrary.simpleMessage("Apple"),
     "appointmentDateAndTimeTitle": MessageLookupByLibrary.simpleMessage(
       "Appointment Date and Time",
     ),
@@ -94,8 +95,19 @@ class MessageLookup extends MessageLookupByLibrary {
       "An error occurred.",
     ),
     "buyKeyword": MessageLookupByLibrary.simpleMessage("Buy"),
+    "calories": MessageLookupByLibrary.simpleMessage("Calories:"),
     "cameraButton": MessageLookupByLibrary.simpleMessage("Take a Photo"),
     "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+    "cancelAppointmentConfirmation": MessageLookupByLibrary.simpleMessage(
+      "Are you sure you want to cancel this appointment?",
+    ),
+    "cantEditAppointmentWithin3Days": MessageLookupByLibrary.simpleMessage(
+      "You cannot edit an appointment within 3 days of the appointment date.",
+    ),
+    "carbohydrates": MessageLookupByLibrary.simpleMessage("carbohydrates"),
+    "carbohydratesTracking": MessageLookupByLibrary.simpleMessage(
+      "Carbohydrates Tracking",
+    ),
     "carbonhydrates": MessageLookupByLibrary.simpleMessage("Carbohydrates"),
     "cardEndDate": MessageLookupByLibrary.simpleMessage("MM/YY"),
     "cardNumber": MessageLookupByLibrary.simpleMessage("Card Number"),
@@ -134,7 +146,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "Choose Hospital",
     ),
     "close": MessageLookupByLibrary.simpleMessage("Close"),
+    "confirmCancellation": MessageLookupByLibrary.simpleMessage(
+      "Cancel Appointment",
+    ),
     "confirmPayment": MessageLookupByLibrary.simpleMessage("Confirm Payment"),
+    "consumptionToday": MessageLookupByLibrary.simpleMessage(
+      "Today\'s Consumption:",
+    ),
     "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
     "dateSelection": MessageLookupByLibrary.simpleMessage("Select a Date"),
     "december": MessageLookupByLibrary.simpleMessage("DEC"),
@@ -212,6 +230,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Oh no, don\'t forget again!",
     ),
     "doseTitle": MessageLookupByLibrary.simpleMessage("Insulin Dose"),
+    "eatQuestion": MessageLookupByLibrary.simpleMessage(
+      "What did you eat today?",
+    ),
     "editButton": MessageLookupByLibrary.simpleMessage("Edit"),
     "emailAlreadyInUse": MessageLookupByLibrary.simpleMessage(
       "This email address is already in use",
@@ -263,6 +284,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Hospital and Doctor Selection",
     ),
     "hour": MessageLookupByLibrary.simpleMessage("h"),
+    "insulineTracking": MessageLookupByLibrary.simpleMessage(
+      "Insulin Tracking",
+    ),
     "invalidCardMessage": MessageLookupByLibrary.simpleMessage(
       "Please enter a valid card number",
     ),

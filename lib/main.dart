@@ -654,8 +654,8 @@ class _MyHomePageState extends State<MyHomePage> {
       // UserModel'i güncelle
       final updatedUser = UserModel(
         id: _userData?.id,
-        firstName: _userData?.firstName,
-        lastName: _userData?.lastName,
+        firstName: _userData!.firstName,
+        lastName: _userData!.lastName,
         email: _userData?.email ?? '',
         accountType: _userData?.accountType,
         linkedAccounts: _userData?.linkedAccounts,
@@ -1181,8 +1181,8 @@ void _showProfileDialog() {
                           if (user != null) {
                             final updatedUserModel = UserModel(
                               id: user.uid,
-                              firstName: _userData?.firstName,
-                              lastName: _userData?.lastName,
+                              firstName: _userData!.firstName,
+                              lastName: _userData!.lastName,
                               email: _userData?.email ?? '',
                               accountType: accountType,
                               linkedAccounts: [],
@@ -1240,8 +1240,8 @@ void _showProfileDialog() {
               final prefs = await SharedPreferences.getInstance();
               if (newEmailController.text.isNotEmpty) {
                 final updatedUser = UserModel(
-                  firstName: _userData?.firstName,
-                  lastName: _userData?.lastName,
+                  firstName: _userData!.firstName,
+                  lastName: _userData!.lastName,
                   email: newEmailController.text,
                 );
                 await prefs.setString('user_data', jsonEncode(updatedUser.toJson()));

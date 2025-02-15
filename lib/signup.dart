@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'models/user_model.dart';
-import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
-import 'widgets/account_type_dialog.dart'; // Import AccountTypeDialog
-import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'generated/l10n.dart';
-
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -21,142 +19,47 @@ class _SignupPageState extends State<SignupPage> {
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController(); // Yeni controller
+  final _confirmPasswordController = TextEditingController();
   bool _isPasswordVisible = false;
-  bool _isConfirmPasswordVisible = false; // Yeni değişken
+  bool _isConfirmPasswordVisible = false;
   bool _isLoading = false;
 
-  Future<void> _signup() async {
-    if (_firstNameController.text.isEmpty ||
-        _lastNameController.text.isEmpty ||
-        _emailController.text.isEmpty ||
-        _passwordController.text.isEmpty ||
-        _confirmPasswordController.text.isEmpty) { // Confirm password kontrolü
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(S.of(context).requiredAll)),
-      );
-      return;
-    }
-
-    if (_passwordController.text != _confirmPasswordController.text) { // Şifre kontrolü
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(S.of(context).passwordsNotMatch)),
-      );
-      return;
-    }
-
-    setState(() => _isLoading = true);
-
-    try {
-      // Firebase Authentication ile kullanıcı oluştur
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
-
-      // Kullanıcı başarıyla oluşturulduysa
-      if (userCredential.user != null) {
-        final prefs = await SharedPreferences.getInstance();
-        
-        // Kullanıcı bilgilerini kaydet
-        final user = UserModel(
-          firstName: _firstNameController.text,
-          lastName: _lastNameController.text,
-          email: _emailController.text,
-        );
-
-        await prefs.setString('user_data', jsonEncode(user.toJson()));
-        await prefs.setString('user_email', _emailController.text);
-        await prefs.setString('user_password', _passwordController.text);
-        
-        Navigator.pushReplacementNamed(context, '/home');
-      }
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        _showError(S.of(context).weakPassword);
-      } else if (e.code == 'email-already-in-use') {
-        _showError(S.of(context).emailAlreadyInUse);
-      } else {
-        _showError('${S.of(context).signError} ${e.message}');
-      }
-    } catch (e) {
-      _showError('${S.of(context).unexpectedError} ${e.toString()}');
-    } finally {
-      setState(() => _isLoading = false);
-    }
-  }
-
-  void _showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
-  }
-
-  void _handleSignup() async {
-    if (_formKey.currentState!.validate()) {
+  Future<void> _handleSignup() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      setState(() => _isLoading = true);
       try {
-        // Normal kayıt işlemleri...
         final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _emailController.text,
           password: _passwordController.text,
         );
-        // Başarılı kayıt sonrası hesap türü seçimi göster
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) => AccountTypeDialog(
-            onTypeSelected: (accountType) async {
-              // Kullanıcı verisini güncelle
-              final userModel = UserModel(
-                id: userCredential.user!.uid,
-                firstName: _firstNameController.text,
-                lastName: _lastNameController.text,
-                email: _emailController.text,
-                accountType: accountType,
-                linkedAccounts: [],
-              );
 
-              // Firestore'a kaydet
-              await FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(userCredential.user!.uid)
-                  .set(userModel.toJson());
-            },
-          ),
-        );
+        if (userCredential.user != null) {
+          final user = UserModel(
+            id: userCredential.user?.uid,
+            firstName: _firstNameController.text,
+            lastName: _lastNameController.text,
+            email: _emailController.text,
+          );
+
+          // Firestore'a kaydet
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(userCredential.user?.uid)
+              .set(user.toJson());
+
+          // SharedPreferences'a kaydet
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('user_data', jsonEncode(user.toJson()));
+          
+          Navigator.pushReplacementNamed(context, '/home');
+        }
       } catch (e) {
-        // Hata yönetimi...
-
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.toString())),
+        );
+      } finally {
+        setState(() => _isLoading = false);
       }
-    }
-  }
-
-  // Çocuk hesabı oluşturma
-  Future<void> _createChildAccount({
-    required String email,
-    required String password,
-    required String firstName,
-    required String lastName,
-  }) async {
-    try {
-      final userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-
-      final userModel = UserModel(
-        id: userCredential.user!.uid,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        accountType: 'child', // Çocuk hesabı olarak işaretle
-      );
-
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userCredential.user!.uid)
-          .set(userModel.toJson());
-
-    } catch (e) {
-      rethrow;
     }
   }
 
@@ -164,77 +67,110 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(S.of(context).signup)),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: Form(
+        key: _formKey,
+        child: ListView(
+          padding: EdgeInsets.all(16),
           children: [
-            TextField(
+            TextFormField(
               controller: _firstNameController,
               decoration: InputDecoration(
                 labelText: S.of(context).firstName,
                 border: OutlineInputBorder(),
               ),
+              validator: (value) => 
+                value?.isEmpty ?? true ? S.of(context).requiredField : null,
             ),
             SizedBox(height: 16),
-            TextField(
+            TextFormField(
               controller: _lastNameController,
               decoration: InputDecoration(
                 labelText: S.of(context).lastName,
                 border: OutlineInputBorder(),
               ),
+              validator: (value) => 
+                value?.isEmpty ?? true ? S.of(context).requiredField : null,
             ),
             SizedBox(height: 16),
-            TextField(
+            TextFormField(
               controller: _emailController,
               decoration: InputDecoration(
                 labelText: S.of(context).emailLabel,
                 border: OutlineInputBorder(),
               ),
+              validator: (value) {
+                if (value?.isEmpty ?? true) {
+                  return S.of(context).requiredField;
+                }
+                if (!value!.contains('@')) {
+                  return S.of(context).invalidEmailMessage;
+                }
+                return null;
+              },
             ),
             SizedBox(height: 16),
-            TextField(
+            TextFormField(
               controller: _passwordController,
-              obscureText: !_isPasswordVisible,  // Değişkene göre görünürlük
+              obscureText: !_isPasswordVisible,
               decoration: InputDecoration(
                 labelText: S.of(context).password,
                 border: OutlineInputBorder(),
-                suffixIcon: GestureDetector(
-                  onTapDown: (_) => setState(() => _isPasswordVisible = true),
-                  onTapUp: (_) => setState(() => _isPasswordVisible = false),
-                  onTapCancel: () => setState(() => _isPasswordVisible = false),
-                  child: Icon(
+                suffixIcon: IconButton(
+                  icon: Icon(
                     _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                    color: Colors.grey,
+                  ),
+                  onPressed: () => setState(() => 
+                    _isPasswordVisible = !_isPasswordVisible
                   ),
                 ),
               ),
+              validator: (value) {
+                if (value?.isEmpty ?? true) {
+                  return S.of(context).requiredField;
+                }
+                if ((value?.length ?? 0) < 6) {
+                  return S.of(context).passwordMinLength;
+                }
+                return null;
+              },
             ),
             SizedBox(height: 16),
-            TextField(
-              controller: _confirmPasswordController, // Confirm password alanı
-              obscureText: !_isConfirmPasswordVisible, // Confirm password görünürlük
+            TextFormField(
+              controller: _confirmPasswordController,
+              obscureText: !_isConfirmPasswordVisible,
               decoration: InputDecoration(
                 labelText: S.of(context).verifyPassword,
                 border: OutlineInputBorder(),
-                suffixIcon: GestureDetector(
-                  onTapDown: (_) => setState(() => _isConfirmPasswordVisible = true),
-                  onTapUp: (_) => setState(() => _isConfirmPasswordVisible = false),
-                  onTapCancel: () => setState(() => _isConfirmPasswordVisible = false),
-                  child: Icon(
-                    _isConfirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                    color: Colors.grey,
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _isConfirmPasswordVisible 
+                        ? Icons.visibility 
+                        : Icons.visibility_off,
+                  ),
+                  onPressed: () => setState(() => 
+                    _isConfirmPasswordVisible = !_isConfirmPasswordVisible
                   ),
                 ),
               ),
+              validator: (value) {
+                if (value?.isEmpty ?? true) {
+                  return S.of(context).requiredField;
+                }
+                if (value != _passwordController.text) {
+                  return S.of(context).passwordsNotMatch;
+                }
+                return null;
+              },
             ),
             SizedBox(height: 24),
             ElevatedButton(
-              onPressed: _signup,
+              onPressed: _isLoading ? null : _handleSignup,
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(double.infinity, 50),
               ),
-              child: Text(S.of(context).signup),
+              child: _isLoading 
+                  ? CircularProgressIndicator()
+                  : Text(S.of(context).signup),
             ),
           ],
         ),

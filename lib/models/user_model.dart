@@ -1,53 +1,43 @@
 class UserModel {
   final String? id;
-  final String? firstName;
-  final String? lastName;
+  final String firstName;
+  final String lastName;
   final String email;
-  final String? accountType; // 'parent' or 'child'
-  final String? parentId; // If this is a child account, stores parent's ID
-  final List<String>? linkedAccounts; // Store IDs of linked child accounts
-  final String? profileImageUrl;  // Yeni alan ekle
-  final bool isDarkMode;  // Yeni alan ekle
-  final bool rememberMe; // Yeni alan
+  final String? profileImageUrl;
+  final String? accountType;
+  final List<String>? linkedAccounts;
 
   UserModel({
     this.id,
-    this.firstName,
-    this.lastName,
+    required this.firstName,
+    required this.lastName,
     required this.email,
-    this.accountType,
-    this.parentId,
-    this.linkedAccounts,
     this.profileImageUrl,
-    this.isDarkMode = false,  // Varsayılan değer
-    this.rememberMe = false, // Varsayılan değer
+    this.accountType,
+    this.linkedAccounts,
   });
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'firstName': firstName,
-        'lastName': lastName,
-        'email': email,
-        'accountType': accountType,
-        'parentId': parentId,
-        'linkedAccounts': linkedAccounts,
-        'profileImageUrl': profileImageUrl,
-        'isDarkMode': isDarkMode,  // Yeni alanı ekle
-        'rememberMe': rememberMe, // JSON'a ekle
-      };
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      id: json['id'],
+      firstName: json['firstName'],
+      lastName: json['lastName'],
+      email: json['email'],
+      profileImageUrl: json['profileImageUrl'],
+      accountType: json['accountType'],
+      linkedAccounts: List<String>.from(json['linkedAccounts'] ?? []),
+    );
+  }
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        id: json['id'],
-        firstName: json['firstName'],
-        lastName: json['lastName'],
-        email: json['email'],
-        accountType: json['accountType'],
-        parentId: json['parentId'],
-        linkedAccounts: json['linkedAccounts'] != null
-            ? List<String>.from(json['linkedAccounts'])
-            : null,
-        profileImageUrl: json['profileImageUrl'],
-        isDarkMode: json['isDarkMode'] ?? false,  // Yeni alanı oku
-        rememberMe: json['rememberMe'] ?? false, // JSON'dan oku
-      );
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'firstName': firstName,
+      'lastName': lastName,
+      'email': email,
+      'profileImageUrl': profileImageUrl,
+      'accountType': accountType,
+      'linkedAccounts': linkedAccounts,
+    };
+  }
 }

@@ -197,8 +197,72 @@ class AppointmentsPage extends StatelessWidget {
                             ),
                           ),
                         ],
-                        onSelected: (value) {
-                          // Implement edit/cancel functionality
+                        onSelected: (value) async {
+                          if (value == 'edit') {
+                            final now = DateTime.now();
+                            final daysDifference = apt.dateTime.difference(now).inDays;
+                            
+                            if (daysDifference < 3) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(S.of(context).cantEditAppointmentWithin3Days)),
+                              );
+                              return;
+                            }
+
+                            // Show time picker for the same day
+                            final newTime = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.fromDateTime(apt.dateTime),
+                            );
+
+                            if (newTime != null) {
+                              // Create new DateTime with same date but new time
+                              final newDateTime = DateTime(
+                                apt.dateTime.year,
+                                apt.dateTime.month,
+                                apt.dateTime.day,
+                                newTime.hour,
+                                newTime.minute,
+                              );
+
+                              // Yeni zaman bilgilerini formatla
+                              final newTimeStr = '${newTime.hour.toString().padLeft(2, '0')}:${newTime.minute.toString().padLeft(2, '0')}';
+                              
+                              // Firebase'i güncelle
+                              await FirebaseFirestore.instance
+                                  .collection('appointments')
+                                  .doc(apt.id)
+                                  .update({
+                                    'dateTime': newDateTime.toIso8601String(),
+                                    'time': newTimeStr,
+                                  });
+                            }
+                          } else if (value == 'cancel') {
+                            final confirm = await showDialog<bool>(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text(S.of(context).confirmCancellation),
+                                content: Text(S.of(context).cancelAppointmentConfirmation),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context, false),
+                                    child: Text(S.of(context).noButton),
+                                  ),
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context, true),
+                                    child: Text(S.of(context).yesButton),
+                                  ),
+                                ],
+                              ),
+                            );
+
+                            if (confirm == true) {
+                              await FirebaseFirestore.instance
+                                  .collection('appointments')
+                                  .doc(apt.id)
+                                  .delete();
+                            }
+                          }
 
                         },
                       ),
