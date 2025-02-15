@@ -219,5 +219,16 @@
   "emailAlreadyInUse": "Bu e-posta adresi zaten kullanımda.",
   "signError": "Kayıt hatası:",
   "unexpectedError": "Beklenmedik bir hata oluştu:",
-  "verifyPassword": "Şifreyi Doğrula"
+  "verifyPassword": "Şifreyi Doğrula",
+  "allReports": "Tümü",
+  "reportsTitle1": "Kan Tahlili Sonucu",
+  "pdfError": "PDF görüntülenirken bir hata oluştu:",
+  "deleteReportTitle": "Raporu Sil",
+  "deleteReportDesc": "Bu raporu silmek istediğinizden emin misiniz?",
+  "deleteButton": "Sil",
+  "deleteReportSuccess": "Rapor başarıyla silindi",
+  "reportsPageTitle": "Raporlarım",
+  "searchReports": "Rapor veya doktor ara...",
+  "openPdfViewer": "Görüntüle",
+  "searchDocuments": "Doküman ara..."
 }

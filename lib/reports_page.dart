@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'dart:io';
 import 'reports_model.dart';
 import 'theme_provider.dart';
+import 'generated/l10n.dart';
 
 class ReportsPage extends StatefulWidget {
   const ReportsPage({super.key});
@@ -15,44 +16,59 @@ class ReportsPage extends StatefulWidget {
 }
 
 class _ReportsPageState extends State<ReportsPage> {
-  String _selectedDepartment = 'Tümü';
+  String? _selectedDepartment;
   final _searchController = TextEditingController();
 
-  final List<ReportsModel> _reports = [
-    ReportsModel(
-      title: 'Kan Tahlili Sonucu',
-      department: 'Dahiliye',
-      doctor: 'Dr. Ahmet Yılmaz',
-      date: '15/01/2024',
-      pdfUrl: 'assets/reports/kan_tahlili.pdf',
-    ),
-    ReportsModel(
-      title: 'EKG Raporu',
-      department: 'Kardiyoloji',
-      doctor: 'Dr. Ayşe Demir',
-      date: '18/01/2024',
-      pdfUrl: 'assets/reports/ekg_raporu.pdf',
-    ),
-    ReportsModel(
-      title: 'Akciğer Filmi',
-      department: 'Göğüs Hastalıkları',
-      doctor: 'Dr. Mehmet Kaya',
-      date: '22/01/2024',
-      pdfUrl: 'assets/reports/akciger_filmi.pdf',
-    ),
-    ReportsModel(
-      title: 'MR Görüntüleme Sonucu',
-      department: 'Nöroloji',
-      doctor: 'Dr. Zeynep Şahin',
-      date: '25/01/2024',
-      pdfUrl: 'assets/reports/mr_sonuc.pdf',
-    ),
-  ];
+  late List<ReportsModel> _reports;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _initializeCategories();
+  }
+
+  void _initializeCategories() {
+    _selectedDepartment = S.of(context).allReports;
+    _reports = [
+      ReportsModel(
+        title: S.of(context).reportsTitle1,
+        department: 'Dahiliye',
+        doctor: 'Dr. Ahmet Yılmaz',
+        date: '15/01/2025',
+        pdfUrl: 'assets/reports/kan_tahlili.pdf',
+      ),
+      ReportsModel(
+        title: 'EKG Raporu',
+        department: 'Kardiyoloji',
+        doctor: 'Dr. Ayşe Demir',
+        date: '18/01/2025',
+        pdfUrl: 'assets/reports/ekg_raporu.pdf',
+      ),
+      ReportsModel(
+        title: 'Akciğer Filmi',
+        department: 'Göğüs Hastalıkları',
+        doctor: 'Dr. Mehmet Kaya',
+        date: '22/01/2025',
+        pdfUrl: 'assets/reports/akciger_filmi.pdf',
+      ),
+      ReportsModel(
+        title: 'MR Görüntüleme Sonucu',
+        department: 'Nöroloji',
+        doctor: 'Dr. Zeynep Şahin',
+        date: '25/01/2025',
+        pdfUrl: 'assets/reports/mr_sonuc.pdf',
+      ),
+    ];
+  }
 
   List<ReportsModel> get _filteredReports {
     return _reports.where((report) =>
       !report.isDeleted &&
-      (_selectedDepartment == 'Tümü' || report.department == _selectedDepartment) &&
+      (_selectedDepartment == S.of(context).allReports || report.department == _selectedDepartment) &&
       (report.title.toLowerCase().contains(_searchController.text.toLowerCase()) ||
        report.doctor.toLowerCase().contains(_searchController.text.toLowerCase()))
     ).toList();
@@ -103,7 +119,7 @@ class _ReportsPageState extends State<ReportsPage> {
     } catch (e) {
       print('PDF Hata: $e'); // Hata ayıklama için
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('PDF görüntülenirken bir hata oluştu: ${e.toString()}')),
+        SnackBar(content: Text('${S.of(context).pdfError} ${e.toString()}')),
       );
     }
   }
@@ -112,17 +128,17 @@ class _ReportsPageState extends State<ReportsPage> {
     final result = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Raporu Sil'),
-        content: Text('Bu raporu silmek istediğinizden emin misiniz?'),
+        title: Text(S.of(context).deleteReportTitle),
+        content: Text(S.of(context).deleteReportDesc),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: Text('İptal'),
+            child: Text(S.of(context).cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
             style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: Text('Sil'),
+            child: Text(S.of(context).deleteButton),
           ),
         ],
       ),
@@ -133,7 +149,7 @@ class _ReportsPageState extends State<ReportsPage> {
         report.isDeleted = true;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Rapor başarıyla silindi')),
+        SnackBar(content: Text(S.of(context).deleteReportSuccess)),
       );
     }
   }
@@ -141,11 +157,11 @@ class _ReportsPageState extends State<ReportsPage> {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = context.watch<ThemeProvider>().isDarkMode;
-    final departments = ['Tümü', ..._reports.map((e) => e.department).toSet()];
+    final departments = [S.of(context).allReports, ..._reports.map((e) => e.department).toSet()];
     
     return Scaffold(
       appBar: AppBar(
-        title: Text('Raporlarım'),
+        title: Text(S.of(context).reportsPageTitle),
         backgroundColor: isDarkMode ? Colors.grey[900] : Colors.white,
         foregroundColor: isDarkMode ? Colors.white : Colors.black,
       ),
@@ -158,7 +174,7 @@ class _ReportsPageState extends State<ReportsPage> {
                 TextField(
                   controller: _searchController,
                   decoration: InputDecoration(
-                    hintText: 'Rapor veya doktor ara...',
+                    hintText: S.of(context).searchReports,
                     prefixIcon: Icon(Icons.search),
                     border: OutlineInputBorder(),
                   ),
@@ -176,7 +192,7 @@ class _ReportsPageState extends State<ReportsPage> {
                           label: Text(dept),
                           onSelected: (selected) {
                             setState(() {
-                              _selectedDepartment = selected ? dept : 'Tümü';
+                              _selectedDepartment = selected ? dept : S.of(context).allReports;
                             });
                           },
                         ),
@@ -229,12 +245,12 @@ class _ReportsPageState extends State<ReportsPage> {
                           children: [
                             IconButton(
                               icon: Icon(Icons.remove_red_eye),
-                              tooltip: 'Görüntüle',
+                              tooltip: S.of(context).openPdfViewer,
                               onPressed: () => _openPdfViewer(report),
                             ),
                             IconButton(
                               icon: Icon(Icons.delete, color: Colors.red),
-                              tooltip: 'Sil',
+                              tooltip: S.of(context).deleteButton,
                               onPressed: () => _showDeleteConfirmation(report),
                             ),
                           ],

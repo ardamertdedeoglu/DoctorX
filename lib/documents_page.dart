@@ -3,6 +3,7 @@ import 'document_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'theme_provider.dart';
+import 'generated/l10n.dart';
 
 class DocumentsPage extends StatefulWidget {
   const DocumentsPage({super.key});
@@ -12,7 +13,7 @@ class DocumentsPage extends StatefulWidget {
 }
 
 class _DocumentsPageState extends State<DocumentsPage> {
-  String _selectedCategory = 'Tümü';
+  String? _selectedCategory;
   final _searchController = TextEditingController();
 
   final List<DocumentModel> _documents = [
@@ -47,7 +48,7 @@ class _DocumentsPageState extends State<DocumentsPage> {
 
   List<DocumentModel> get filteredDocuments {
     return _documents.where((doc) {
-      final matchesCategory = _selectedCategory == 'Tümü' || 
+      final matchesCategory = _selectedCategory == S.of(context).allReports || 
                             doc.category == _selectedCategory;
       final matchesSearch = doc.title.toLowerCase()
           .contains(_searchController.text.toLowerCase()) ||
@@ -86,7 +87,7 @@ class _DocumentsPageState extends State<DocumentsPage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Kapat'),
+            child: Text(S.of(context).close),
           ),
         ],
       ),
@@ -96,6 +97,7 @@ class _DocumentsPageState extends State<DocumentsPage> {
   @override
   void initState() {
     super.initState();
+    _selectedCategory = S.of(context).allReports;
     _loadReadStatus();
   }
 
@@ -111,11 +113,11 @@ class _DocumentsPageState extends State<DocumentsPage> {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = context.watch<ThemeProvider>().isDarkMode;
-    final categories = ['Tümü', ..._documents.map((e) => e.category).toSet()];
+    final categories = [S.of(context).allReports, ..._documents.map((e) => e.category).toSet()];
     
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dokümanlar'),
+        title: Text(S.of(context).documents),
         backgroundColor: isDarkMode ? Colors.grey[900] : Colors.white,
         foregroundColor: isDarkMode ? Colors.white : Colors.black,
       ),
@@ -129,7 +131,7 @@ class _DocumentsPageState extends State<DocumentsPage> {
                 TextField(
                   controller: _searchController,
                   decoration: InputDecoration(
-                    hintText: 'Doküman ara...',
+                    hintText: S.of(context).searchDocuments,
                     prefixIcon: Icon(Icons.search),
                     border: OutlineInputBorder(),
                   ),
@@ -148,7 +150,7 @@ class _DocumentsPageState extends State<DocumentsPage> {
                           label: Text(category),
                           onSelected: (selected) {
                             setState(() {
-                              _selectedCategory = selected ? category : 'Tümü';
+                              _selectedCategory = selected ? category : S.of(context).allReports;
                             });
                           },
                         ),

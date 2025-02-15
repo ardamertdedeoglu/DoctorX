@@ -57,6 +57,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "aiFirstMessage": MessageLookupByLibrary.simpleMessage(
       "Nasıl yardımcı olabilirim?",
     ),
+    "allReports": MessageLookupByLibrary.simpleMessage("Tümü"),
     "appTitle": MessageLookupByLibrary.simpleMessage("DoctorX"),
     "appointmentFailure": MessageLookupByLibrary.simpleMessage(
       "Randevu oluşturulurken bir hata oluştu",
@@ -133,6 +134,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "dateSelection": MessageLookupByLibrary.simpleMessage("Tarih Seçin"),
     "december": MessageLookupByLibrary.simpleMessage("ARA"),
     "defaultUsername": MessageLookupByLibrary.simpleMessage("Kullanıcı"),
+    "deleteButton": MessageLookupByLibrary.simpleMessage("Sil"),
+    "deleteReportDesc": MessageLookupByLibrary.simpleMessage(
+      "Bu raporu silmek istediğinizden emin misiniz?",
+    ),
+    "deleteReportSuccess": MessageLookupByLibrary.simpleMessage(
+      "Rapor başarıyla silindi",
+    ),
+    "deleteReportTitle": MessageLookupByLibrary.simpleMessage("Raporu Sil"),
     "diabetes": MessageLookupByLibrary.simpleMessage("Diyabet"),
     "dietician": MessageLookupByLibrary.simpleMessage("Diyetisyen"),
     "dieticianDesc": MessageLookupByLibrary.simpleMessage(
@@ -282,6 +291,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "november": MessageLookupByLibrary.simpleMessage("KAS"),
     "october": MessageLookupByLibrary.simpleMessage("EKİ"),
+    "openPdfViewer": MessageLookupByLibrary.simpleMessage("Görüntüle"),
     "packagesDesc": MessageLookupByLibrary.simpleMessage(
       "Bu bölümde:\n• Sağlık hizmet paketlerimizi inceleyebilirsiniz.\n• Online randevu alabilirsiniz.\n• Bağış yapabilirsiniz.\n• Normalden ucuz fiyata paket satın alabilirsiniz.",
     ),
@@ -309,6 +319,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "paymentWithWallet": MessageLookupByLibrary.simpleMessage(
       "Cüzdan Bakiyesi ile Öde",
     ),
+    "pdfError": MessageLookupByLibrary.simpleMessage(
+      "PDF görüntülenirken bir hata oluştu:",
+    ),
     "pendingBalance": MessageLookupByLibrary.simpleMessage("Bekleyen Bakiye:"),
     "preparingApp": MessageLookupByLibrary.simpleMessage(
       "Uygulama sizin için hazırlanıyor...",
@@ -330,6 +343,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Fotoğrafı Kaldır",
     ),
     "reports": MessageLookupByLibrary.simpleMessage("Raporlar"),
+    "reportsPageTitle": MessageLookupByLibrary.simpleMessage("Raporlarım"),
+    "reportsTitle1": MessageLookupByLibrary.simpleMessage("Kan Tahlili Sonucu"),
     "requiredAll": MessageLookupByLibrary.simpleMessage(
       "Tüm alanları doldurunuz",
     ),
@@ -348,6 +363,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Şifre Sıfırlama",
     ),
     "searchCategoryHealth": MessageLookupByLibrary.simpleMessage("Sağlık"),
+    "searchDocuments": MessageLookupByLibrary.simpleMessage("Doküman ara..."),
     "searchEmpty": MessageLookupByLibrary.simpleMessage(
       "Aranan içerik bulunamadı",
     ),
@@ -383,6 +399,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Tıbbi Raporlar",
     ),
     "searchLabel": MessageLookupByLibrary.simpleMessage("Ara..."),
+    "searchReports": MessageLookupByLibrary.simpleMessage(
+      "Rapor veya doktor ara...",
+    ),
     "september": MessageLookupByLibrary.simpleMessage("EYL"),
     "settings": MessageLookupByLibrary.simpleMessage("Ayarlar"),
     "signError": MessageLookupByLibrary.simpleMessage("Kayıt hatası:"),

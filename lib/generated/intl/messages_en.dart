@@ -57,6 +57,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "aiFirstMessage": MessageLookupByLibrary.simpleMessage(
       "How may I be of service today?",
     ),
+    "allReports": MessageLookupByLibrary.simpleMessage("All"),
     "appTitle": MessageLookupByLibrary.simpleMessage("DoctorX"),
     "appointmentDateAndTimeTitle": MessageLookupByLibrary.simpleMessage(
       "Appointment Date and Time",
@@ -138,6 +139,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "dateSelection": MessageLookupByLibrary.simpleMessage("Select a Date"),
     "december": MessageLookupByLibrary.simpleMessage("DEC"),
     "defaultUsername": MessageLookupByLibrary.simpleMessage("User"),
+    "deleteButton": MessageLookupByLibrary.simpleMessage("Delete"),
+    "deleteReportDesc": MessageLookupByLibrary.simpleMessage(
+      "Are you sure you want to delete this report?",
+    ),
+    "deleteReportSuccess": MessageLookupByLibrary.simpleMessage(
+      "Report deleted successfully.",
+    ),
+    "deleteReportTitle": MessageLookupByLibrary.simpleMessage("Delete Report"),
     "diabetes": MessageLookupByLibrary.simpleMessage("Diabetes"),
     "dietician": MessageLookupByLibrary.simpleMessage("Dietician"),
     "dieticianDesc": MessageLookupByLibrary.simpleMessage(
@@ -294,6 +303,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "november": MessageLookupByLibrary.simpleMessage("NOV"),
     "october": MessageLookupByLibrary.simpleMessage("OCT"),
+    "openPdfViewer": MessageLookupByLibrary.simpleMessage("View"),
     "packagesDesc": MessageLookupByLibrary.simpleMessage(
       "In this page:\n• You can examine our health-service packages.\n• You can make an appointment online.\n• You can donate.\n• You can buy our packages with a cheaper price than normal.",
     ),
@@ -321,6 +331,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "paymentWithWallet": MessageLookupByLibrary.simpleMessage(
       "Pay with Wallet Balance",
     ),
+    "pdfError": MessageLookupByLibrary.simpleMessage(
+      "An error occurred while loading the PDF:",
+    ),
     "pendingBalance": MessageLookupByLibrary.simpleMessage("Pending Balance:"),
     "preparingApp": MessageLookupByLibrary.simpleMessage(
       "We are preparing the app for you...",
@@ -342,6 +355,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "rememberMe": MessageLookupByLibrary.simpleMessage("Remember Me"),
     "removePhotoButton": MessageLookupByLibrary.simpleMessage("Remove Photo"),
     "reports": MessageLookupByLibrary.simpleMessage("Reports"),
+    "reportsPageTitle": MessageLookupByLibrary.simpleMessage("My Reports"),
+    "reportsTitle1": MessageLookupByLibrary.simpleMessage("Blood Test Results"),
     "requiredAll": MessageLookupByLibrary.simpleMessage(
       "Please fill in all fields",
     ),
@@ -363,6 +378,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "search": MessageLookupByLibrary.simpleMessage("Search"),
     "searchCategoryHealth": MessageLookupByLibrary.simpleMessage("Health"),
+    "searchDocuments": MessageLookupByLibrary.simpleMessage(
+      "Search for a document...",
+    ),
     "searchEmpty": MessageLookupByLibrary.simpleMessage("No results found."),
     "searchHelper": MessageLookupByLibrary.simpleMessage(
       "Type the section you want to search",
@@ -399,6 +417,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Health Reports",
     ),
     "searchLabel": MessageLookupByLibrary.simpleMessage("Search..."),
+    "searchReports": MessageLookupByLibrary.simpleMessage(
+      "Search for a report or a doctor...",
+    ),
     "september": MessageLookupByLibrary.simpleMessage("SEP"),
     "settings": MessageLookupByLibrary.simpleMessage("Settings"),
     "signError": MessageLookupByLibrary.simpleMessage(

@@ -1894,6 +1894,101 @@ class S {
       args: [],
     );
   }
+
+  /// `All`
+  String get allReports {
+    return Intl.message('All', name: 'allReports', desc: '', args: []);
+  }
+
+  /// `Blood Test Results`
+  String get reportsTitle1 {
+    return Intl.message(
+      'Blood Test Results',
+      name: 'reportsTitle1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred while loading the PDF:`
+  String get pdfError {
+    return Intl.message(
+      'An error occurred while loading the PDF:',
+      name: 'pdfError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Report`
+  String get deleteReportTitle {
+    return Intl.message(
+      'Delete Report',
+      name: 'deleteReportTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete this report?`
+  String get deleteReportDesc {
+    return Intl.message(
+      'Are you sure you want to delete this report?',
+      name: 'deleteReportDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get deleteButton {
+    return Intl.message('Delete', name: 'deleteButton', desc: '', args: []);
+  }
+
+  /// `Report deleted successfully.`
+  String get deleteReportSuccess {
+    return Intl.message(
+      'Report deleted successfully.',
+      name: 'deleteReportSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My Reports`
+  String get reportsPageTitle {
+    return Intl.message(
+      'My Reports',
+      name: 'reportsPageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for a report or a doctor...`
+  String get searchReports {
+    return Intl.message(
+      'Search for a report or a doctor...',
+      name: 'searchReports',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View`
+  String get openPdfViewer {
+    return Intl.message('View', name: 'openPdfViewer', desc: '', args: []);
+  }
+
+  /// `Search for a document...`
+  String get searchDocuments {
+    return Intl.message(
+      'Search for a document...',
+      name: 'searchDocuments',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

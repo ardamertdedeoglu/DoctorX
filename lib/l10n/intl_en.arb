@@ -217,5 +217,16 @@
   "emailAlreadyInUse": "This email address is already in use",
   "signError": "An error occurred while signing up:",
   "unexpectedError": "An unexpected error occurred:",
-  "verifyPassword": "Verify Password"
+  "verifyPassword": "Verify Password",
+  "allReports": "All",
+  "reportsTitle1": "Blood Test Results",
+  "pdfError": "An error occurred while loading the PDF:",
+  "deleteReportTitle": "Delete Report",
+  "deleteReportDesc": "Are you sure you want to delete this report?",
+  "deleteButton": "Delete",
+  "deleteReportSuccess": "Report deleted successfully.",
+  "reportsPageTitle": "My Reports",
+  "searchReports": "Search for a report or a doctor...",
+  "openPdfViewer": "View",
+  "searchDocuments": "Search for a document..."
 }

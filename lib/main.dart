@@ -181,7 +181,6 @@ class _MyHomePageState extends State<MyHomePage> {
     _loadProfileImage();
     _loadThemeMode();
     _initializeFirebase();
-    _initializeAIResponses();
     _authService.checkEmailVerification().then((isVerified) {
       if (isVerified) {
         _startEmailVerificationCheck();
@@ -259,6 +258,8 @@ class _MyHomePageState extends State<MyHomePage> {
     super.didChangeDependencies();
     // BuildContext hazır olduğunda listeleri initialize et
     _initializeData(context);
+    // AI yanıtlarını burada initialize et
+    _initializeAIResponses();
     // Paketler hazır olduktan sonra arama öğelerini initialize et
     if (_packages != null) {
       _initializeSearchItems();
@@ -1144,9 +1145,9 @@ void _showProfileDialog() {
             SizedBox(height: 20),
             
             // Kullanıcı bilgileri
-            Text('${S.of(context).firstName} ${_userData?.firstName}'),
-            Text('${S.of(context).lastName} ${_userData?.lastName}'),
-            Text('${S.of(context).emailLabel} ${_userData?.email}'),
+            Text('${S.of(context).firstName}: ${_userData?.firstName}'),
+            Text('${S.of(context).lastName}: ${_userData?.lastName}'),
+            Text('${S.of(context).emailLabel}: ${_userData?.email}'),
             
             // Hesap türü ve yükseltme butonu
             SizedBox(height: 16),
