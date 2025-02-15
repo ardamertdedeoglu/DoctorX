@@ -16,64 +16,94 @@ class HospitalSelector extends StatefulWidget {
 }
 
 class _HospitalSelectorState extends State<HospitalSelector> {
-  HospitalModel? selectedHospital;
-  DoctorModel? selectedDoctor;
+  HospitalModel? _selectedHospital;
+  DoctorModel? _selectedDoctor;
+  late List<HospitalModel> _hospitals;
 
-  final hospitals = HospitalService.getHospitals();
+  @override
+  void initState() {
+    super.initState();
+    // Başlangıç listesini direkt oluştur
+    _hospitals = HospitalService.baseHospitals;
+  }
 
-  List<DoctorModel> _getAllDoctors(HospitalModel hospital) {
-    return hospital.departments.expand((dept) => dept.doctors).toList();
+  List<HospitalModel> _getLocalizedHospitals() {
+    return _hospitals.map((hospital) {
+      String name = hospital.name;
+      if (name.contains('Merkez')) {
+        return HospitalModel(
+          id: hospital.id,
+          name: 'Merkez ${S.of(context).hospital}',
+          address: hospital.address,
+          departments: hospital.departments,
+        );
+      } else if (name.contains('Şehir')) {
+        return HospitalModel(
+          id: hospital.id,
+          name: 'Şehir ${S.of(context).hospital}',
+          address: hospital.address,
+          departments: hospital.departments,
+        );
+      }
+      return hospital;
+    }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    final localizedHospitals = _getLocalizedHospitals();
+    
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
       children: [
-        // Hospital selection remains.
+        // Hastane Seçimi
         DropdownButtonFormField<HospitalModel>(
-          decoration: InputDecoration(
-            labelText: S.of(context).chooseHospitalLabel,
-            border: OutlineInputBorder(),
-          ),
-          value: selectedHospital,
-          items: hospitals.map((hospital) {
-            return DropdownMenuItem(
-              value: hospital,
-              child: Text(hospital.name),
-            );
-          }).toList(),
-          onChanged: (hospital) {
+          value: _selectedHospital,
+          hint: Text(S.of(context).chooseHospitalLabel),
+          isExpanded: true,
+          items: localizedHospitals.map((hospital) => DropdownMenuItem(
+            value: hospital,
+            child: Text(
+              hospital.name,
+              overflow: TextOverflow.ellipsis,
+            ),
+          )).toList(),
+          onChanged: (newValue) {
             setState(() {
-              selectedHospital = hospital;
-              selectedDoctor = null;
+              _selectedHospital = newValue;
+              _selectedDoctor = null; // Hastane değişince doktoru sıfırla
             });
           },
         ),
+        
         SizedBox(height: 16),
-        // Doctor selection: list all doctors from the selected hospital.
-        if (selectedHospital != null)
+        
+        // Doktor Seçimi
+        if (_selectedHospital != null) ...[
           DropdownButtonFormField<DoctorModel>(
-            decoration: InputDecoration(
-              labelText: S.of(context).chooseDoctor,
-              border: OutlineInputBorder(),
-            ),
-            value: selectedDoctor,
-            items: _getAllDoctors(selectedHospital!).map((doctor) {
-              return DropdownMenuItem(
-                value: doctor,
-                child: Text('${doctor.title} ${doctor.name}'),
-              );
-            }).toList(),
+            value: _selectedDoctor,
+            hint: Text(S.of(context).chooseDoctor),
+            isExpanded: true,
+            items: _selectedHospital!.departments
+                .expand((dept) => dept.doctors)
+                .map((doctor) => DropdownMenuItem(
+                      value: doctor,
+                      child: Text(
+                        '${doctor.title} ${doctor.name}',
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ))
+                .toList(),
             onChanged: (doctor) {
-              if (doctor != null) {
-                setState(() {
-                  selectedDoctor = doctor;
-                });
-                widget.onSelectionComplete(selectedHospital!, doctor);
-              }
+              setState(() {
+                _selectedDoctor = doctor;
+                if (doctor != null) {
+                  widget.onSelectionComplete(_selectedHospital!, doctor);
+                }
+              });
             },
           ),
+        ],
       ],
     );
   }

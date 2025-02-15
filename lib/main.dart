@@ -2162,7 +2162,8 @@ Widget _buildQuickActionButton({
                   wallet.availableBalance -= price;
                   await prefs.setString('wallet_data', jsonEncode(wallet.toJson()));
                   
-                  _createAppointment(package, selectedDateTime, hospital ?? HospitalService.hospitals[0], doctor ?? HospitalService.hospitals[0].departments[0].doctors[0]);
+                  final hospitalService = HospitalService(context);
+                  _createAppointment(package, selectedDateTime, hospital ?? hospitalService.hospitals[0], doctor ?? hospitalService.hospitals[0].departments[0].doctors[0]);
                   Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
@@ -2270,7 +2271,8 @@ void _showRegularPaymentDialog(PackageItem package, DateTime selectedDateTime, d
             if (cardNumberController.text.length >= 16 &&
                 expiryController.text.length >= 4 &&
                 cvvController.text.length >= 3) {
-          _createAppointment(package, selectedDateTime, hospital ?? HospitalService.hospitals[0], doctor ?? HospitalService.hospitals[0].departments[0].doctors[0]);
+          final hospitalService = HospitalService(context);
+          _createAppointment(package, selectedDateTime, hospital ?? hospitalService.hospitals[0], doctor ?? hospitalService.hospitals[0].departments[0].doctors[0]);
               Navigator.pop(context);
             } else {
               ScaffoldMessenger.of(context).showSnackBar(

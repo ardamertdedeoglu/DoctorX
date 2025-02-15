@@ -1,7 +1,11 @@
 import '../models/hospital_model.dart';
+import 'package:doctorx/generated/l10n.dart';
+
+import 'package:flutter/material.dart';
 
 class HospitalService {
-  static final List<HospitalModel> hospitals = [
+  // BuildContext'i kaldır ve statik liste kullan
+  static List<HospitalModel> get baseHospitals => [
     HospitalModel(
       id: '1',
       name: 'Merkez Hastanesi',
@@ -84,6 +88,23 @@ class HospitalService {
     ),
   ];
 
+  final BuildContext context;
+
+  HospitalService(this.context);
+
+  // Lokalize edilmiş hastane listesini döndür
+  List<HospitalModel> get hospitals {
+    return baseHospitals.map((hospital) {
+      // Sadece ihtiyaç duyulan metinleri lokalize et
+      if (hospital.name.contains('Merkez')) {
+        hospital.name = 'Merkez ${S.of(context).hospital}';
+      } else if (hospital.name.contains('Şehir')) {
+        hospital.name = 'Şehir ${S.of(context).hospital}';
+      }
+      return hospital;
+    }).toList();
+  }
+
   static List<DateTime> _generateTimeSlots() {
     final now = DateTime.now();
     final slots = <DateTime>[];
@@ -105,9 +126,9 @@ class HospitalService {
     return slots;
   }
 
-  static List<HospitalModel> getHospitals() => hospitals;
+  List<HospitalModel> getHospitals() => hospitals;
   
-  static HospitalModel? getHospitalById(String id) {
+  HospitalModel? getHospitalById(String id) {
     try {
       return hospitals.firstWhere((h) => h.id == id);
     } catch (e) {

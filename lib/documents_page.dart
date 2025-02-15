@@ -15,39 +15,54 @@ class DocumentsPage extends StatefulWidget {
 class _DocumentsPageState extends State<DocumentsPage> {
   String? _selectedCategory;
   final _searchController = TextEditingController();
+  List<DocumentModel>? _documents; // Nullable olarak tanımla
 
-  final List<DocumentModel> _documents = [
-    DocumentModel(
-      title: 'Diyabet Nedir?',
-      category: 'Diyabet',
-      summary: 'Diyabet hastalığı hakkında temel bilgiler',
-      content: 'Diyabet, vücudunuzun kan şekerini (glikoz) düzenleyen insülin hormonunu '
-          'yeterince üretemediği veya etkili kullanamadığı bir metabolizma hastalığıdır...',
-      author: 'Dr. Ahmet Yılmaz',
-      date: '01/02/2024',
-    ),
-    DocumentModel(
-      title: 'Tip 2 Diyabet Tedavisi',
-      category: 'Diyabet',
-      summary: 'Tip 2 diyabet tedavi yöntemleri',
-      content: 'Tip 2 diyabet tedavisinde beslenme düzeni, egzersiz ve gerekli durumlarda '
-          'ilaç tedavisi uygulanır...',
-      author: 'Dr. Ayşe Demir',
-      date: '05/02/2024',
-    ),
-    DocumentModel(
-      title: 'Sağlıklı Beslenme Rehberi',
-      category: 'Beslenme',
-      summary: 'Dengeli ve sağlıklı beslenme önerileri',
-      content: 'Sağlıklı beslenme, vücudumuzun ihtiyaç duyduğu tüm besin öğelerini '
-          'dengeli bir şekilde almayı gerektirir...',
-      author: 'Dyt. Zeynep Kaya',
-      date: '10/02/2024',
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _loadReadStatus();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _initializeDocuments(); // Burada dokümanları initialize et
+  }
+
+  void _initializeDocuments() {
+    _selectedCategory = S.of(context).allReports;
+    _documents = [
+      DocumentModel(
+        title: S.of(context).documentTitle1,
+        category: S.of(context).diabetes,
+        summary: S.of(context).documentSummary1,
+        content: S.of(context).documentContent1,
+        author: 'Dr. Ahmet Yılmaz',
+        date: '01/02/2024',
+      ),
+      DocumentModel(
+        title: S.of(context).documentTitle2,
+        category: S.of(context).diabetes,
+        summary: S.of(context).documentSummary2,
+        content: S.of(context).documentContent2,
+        author: 'Dr. Ayşe Demir',
+        date: '05/02/2024',
+      ),
+      DocumentModel(
+        title: S.of(context).documentTitle3,
+        category: S.of(context).documentCategory,
+        summary: S.of(context).documentSummary3,
+        content: S.of(context).documentContent3,
+        author: 'Dyt. Zeynep Kaya',
+        date: '10/02/2024',
+      ),
+    ];
+  }
 
   List<DocumentModel> get filteredDocuments {
-    return _documents.where((doc) {
+    if (_documents == null) return [];
+    
+    return _documents!.where((doc) {
       final matchesCategory = _selectedCategory == S.of(context).allReports || 
                             doc.category == _selectedCategory;
       final matchesSearch = doc.title.toLowerCase()
@@ -94,17 +109,10 @@ class _DocumentsPageState extends State<DocumentsPage> {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _selectedCategory = S.of(context).allReports;
-    _loadReadStatus();
-  }
-
   Future<void> _loadReadStatus() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      for (var doc in _documents) {
+      for (var doc in _documents!) {
         doc.isRead = prefs.getBool('doc_${doc.title}_read') ?? false;
       }
     });
@@ -113,7 +121,7 @@ class _DocumentsPageState extends State<DocumentsPage> {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = context.watch<ThemeProvider>().isDarkMode;
-    final categories = [S.of(context).allReports, ..._documents.map((e) => e.category).toSet()];
+    final categories = [S.of(context).allReports, ..._documents!.map((e) => e.category).toSet()];
     
     return Scaffold(
       appBar: AppBar(

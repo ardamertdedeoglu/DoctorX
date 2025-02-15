@@ -25,13 +25,20 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _loadUserData();
-    // Add timer for auto-navigation
-    Timer(Duration(seconds: 3), () {
+    // Timer yerine Future.delayed kullanalım
+    Future.delayed(Duration(milliseconds: 1500), () {
       if (mounted) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (context) => MyHomePage(title: 'DoctorX'),
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) => MyHomePage(title: 'DoctorX'),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
+            },
+            transitionDuration: Duration(milliseconds: 500),
           ),
         );
       }
@@ -42,15 +49,22 @@ class _HomePageState extends State<HomePage> {
     try {
       final prefs = await SharedPreferences.getInstance();
       final userStr = prefs.getString('user_data');
-      if (userStr != null) {
-        setState(() {
+      
+      // Kullanıcı verisini yüklerken geçen süreyi azaltmak için
+      // mounted kontrolü yapalım ve setState'i optimize edelim
+      if (!mounted) return;
+      
+      setState(() {
+        if (userStr != null) {
           _userData = UserModel.fromJson(jsonDecode(userStr));
-          _isLoading = false;
-        });
-      }
+        }
+        _isLoading = false;
+      });
     } catch (e) {
       print('Error loading user data: $e');
-      setState(() => _isLoading = false);
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
     }
   }
 

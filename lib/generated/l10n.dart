@@ -1989,6 +1989,176 @@ class S {
       args: [],
     );
   }
+
+  /// `Internal Medicine`
+  String get reportsDepartment1 {
+    return Intl.message(
+      'Internal Medicine',
+      name: 'reportsDepartment1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `MRI Results`
+  String get reportsTitle2 {
+    return Intl.message(
+      'MRI Results',
+      name: 'reportsTitle2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cardiology`
+  String get reportsDepartment2 {
+    return Intl.message(
+      'Cardiology',
+      name: 'reportsDepartment2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `X-Ray of Lungs Results`
+  String get reportsTitle3 {
+    return Intl.message(
+      'X-Ray of Lungs Results',
+      name: 'reportsTitle3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pulmonology`
+  String get reportsDepartment3 {
+    return Intl.message(
+      'Pulmonology',
+      name: 'reportsDepartment3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `MR Scan Results`
+  String get reportsTitle4 {
+    return Intl.message(
+      'MR Scan Results',
+      name: 'reportsTitle4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Neurology`
+  String get reportsDepartment4 {
+    return Intl.message(
+      'Neurology',
+      name: 'reportsDepartment4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `What is Diabetes?`
+  String get documentTitle1 {
+    return Intl.message(
+      'What is Diabetes?',
+      name: 'documentTitle1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Basic information about diabetes`
+  String get documentSummary1 {
+    return Intl.message(
+      'Basic information about diabetes',
+      name: 'documentSummary1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Diabetes is a chronic disease that occurs when the pancreas does not produce enough insulin or when the body cannot effectively use the insulin it produces. Insulin is a hormone that regulates blood sugar. Hyperglycemia, or high blood sugar, is a common effect of uncontrolled diabetes and over time leads to serious damage to many of the body's systems, especially the nerves and blood vessels.`
+  String get documentContent1 {
+    return Intl.message(
+      'Diabetes is a chronic disease that occurs when the pancreas does not produce enough insulin or when the body cannot effectively use the insulin it produces. Insulin is a hormone that regulates blood sugar. Hyperglycemia, or high blood sugar, is a common effect of uncontrolled diabetes and over time leads to serious damage to many of the body\'s systems, especially the nerves and blood vessels.',
+      name: 'documentContent1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Type 2 Diabetes Treatment`
+  String get documentTitle2 {
+    return Intl.message(
+      'Type 2 Diabetes Treatment',
+      name: 'documentTitle2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Treatment methods for type 2 diabetes`
+  String get documentSummary2 {
+    return Intl.message(
+      'Treatment methods for type 2 diabetes',
+      name: 'documentSummary2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The main goal of type 2 diabetes treatment is to maintain blood sugar levels within the normal range. Treatment methods include lifestyle changes, oral medications, and insulin therapy. The treatment plan is determined by the doctor according to the patient's blood sugar level, age, and other health problems.`
+  String get documentContent2 {
+    return Intl.message(
+      'The main goal of type 2 diabetes treatment is to maintain blood sugar levels within the normal range. Treatment methods include lifestyle changes, oral medications, and insulin therapy. The treatment plan is determined by the doctor according to the patient\'s blood sugar level, age, and other health problems.',
+      name: 'documentContent2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Healthy Eating Guide`
+  String get documentTitle3 {
+    return Intl.message(
+      'Healthy Eating Guide',
+      name: 'documentTitle3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Nutrition`
+  String get documentCategory {
+    return Intl.message(
+      'Nutrition',
+      name: 'documentCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Balanced and healthy nutrition recommendations`
+  String get documentSummary3 {
+    return Intl.message(
+      'Balanced and healthy nutrition recommendations',
+      name: 'documentSummary3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Healthy nutrition requires taking in all the nutrients our body needs in a balanced way...`
+  String get documentContent3 {
+    return Intl.message(
+      'Healthy nutrition requires taking in all the nutrients our body needs in a balanced way...',
+      name: 'documentContent3',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -158,6 +158,32 @@ class MessageLookup extends MessageLookupByLibrary {
     "dieticianTherapyDesc": MessageLookupByLibrary.simpleMessage(
       "Combined package for both your physical and mental health.",
     ),
+    "documentCategory": MessageLookupByLibrary.simpleMessage("Nutrition"),
+    "documentContent1": MessageLookupByLibrary.simpleMessage(
+      "Diabetes is a chronic disease that occurs when the pancreas does not produce enough insulin or when the body cannot effectively use the insulin it produces. Insulin is a hormone that regulates blood sugar. Hyperglycemia, or high blood sugar, is a common effect of uncontrolled diabetes and over time leads to serious damage to many of the body\'s systems, especially the nerves and blood vessels.",
+    ),
+    "documentContent2": MessageLookupByLibrary.simpleMessage(
+      "The main goal of type 2 diabetes treatment is to maintain blood sugar levels within the normal range. Treatment methods include lifestyle changes, oral medications, and insulin therapy. The treatment plan is determined by the doctor according to the patient\'s blood sugar level, age, and other health problems.",
+    ),
+    "documentContent3": MessageLookupByLibrary.simpleMessage(
+      "Healthy nutrition requires taking in all the nutrients our body needs in a balanced way...",
+    ),
+    "documentSummary1": MessageLookupByLibrary.simpleMessage(
+      "Basic information about diabetes",
+    ),
+    "documentSummary2": MessageLookupByLibrary.simpleMessage(
+      "Treatment methods for type 2 diabetes",
+    ),
+    "documentSummary3": MessageLookupByLibrary.simpleMessage(
+      "Balanced and healthy nutrition recommendations",
+    ),
+    "documentTitle1": MessageLookupByLibrary.simpleMessage("What is Diabetes?"),
+    "documentTitle2": MessageLookupByLibrary.simpleMessage(
+      "Type 2 Diabetes Treatment",
+    ),
+    "documentTitle3": MessageLookupByLibrary.simpleMessage(
+      "Healthy Eating Guide",
+    ),
     "documents": MessageLookupByLibrary.simpleMessage("Documents"),
     "donation": MessageLookupByLibrary.simpleMessage("Donation"),
     "donationAmount": MessageLookupByLibrary.simpleMessage("Donation Amount"),
@@ -355,8 +381,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "rememberMe": MessageLookupByLibrary.simpleMessage("Remember Me"),
     "removePhotoButton": MessageLookupByLibrary.simpleMessage("Remove Photo"),
     "reports": MessageLookupByLibrary.simpleMessage("Reports"),
+    "reportsDepartment1": MessageLookupByLibrary.simpleMessage(
+      "Internal Medicine",
+    ),
+    "reportsDepartment2": MessageLookupByLibrary.simpleMessage("Cardiology"),
+    "reportsDepartment3": MessageLookupByLibrary.simpleMessage("Pulmonology"),
+    "reportsDepartment4": MessageLookupByLibrary.simpleMessage("Neurology"),
     "reportsPageTitle": MessageLookupByLibrary.simpleMessage("My Reports"),
     "reportsTitle1": MessageLookupByLibrary.simpleMessage("Blood Test Results"),
+    "reportsTitle2": MessageLookupByLibrary.simpleMessage("MRI Results"),
+    "reportsTitle3": MessageLookupByLibrary.simpleMessage(
+      "X-Ray of Lungs Results",
+    ),
+    "reportsTitle4": MessageLookupByLibrary.simpleMessage("MR Scan Results"),
     "requiredAll": MessageLookupByLibrary.simpleMessage(
       "Please fill in all fields",
     ),

@@ -228,5 +228,22 @@
   "reportsPageTitle": "My Reports",
   "searchReports": "Search for a report or a doctor...",
   "openPdfViewer": "View",
-  "searchDocuments": "Search for a document..."
+  "searchDocuments": "Search for a document...",
+  "reportsDepartment1": "Internal Medicine",
+  "reportsTitle2": "MRI Results",
+  "reportsDepartment2": "Cardiology",
+  "reportsTitle3": "X-Ray of Lungs Results",
+  "reportsDepartment3": "Pulmonology",
+  "reportsTitle4": "MR Scan Results",
+  "reportsDepartment4": "Neurology",
+  "documentTitle1": "What is Diabetes?",
+  "documentSummary1": "Basic information about diabetes",
+  "documentContent1": "Diabetes is a chronic disease that occurs when the pancreas does not produce enough insulin or when the body cannot effectively use the insulin it produces. Insulin is a hormone that regulates blood sugar. Hyperglycemia, or high blood sugar, is a common effect of uncontrolled diabetes and over time leads to serious damage to many of the body's systems, especially the nerves and blood vessels.",
+  "documentTitle2": "Type 2 Diabetes Treatment",
+  "documentSummary2": "Treatment methods for type 2 diabetes",
+  "documentContent2": "The main goal of type 2 diabetes treatment is to maintain blood sugar levels within the normal range. Treatment methods include lifestyle changes, oral medications, and insulin therapy. The treatment plan is determined by the doctor according to the patient's blood sugar level, age, and other health problems.",
+  "documentTitle3": "Healthy Eating Guide",
+  "documentCategory": "Nutrition",
+  "documentSummary3": "Balanced and healthy nutrition recommendations",
+  "documentContent3": "Healthy nutrition requires taking in all the nutrients our body needs in a balanced way..."
 }

@@ -1,6 +1,6 @@
 class HospitalModel {
   final String id;
-  final String name;
+  String name;
   final String address;
   final List<DepartmentModel> departments;
 
@@ -10,6 +10,30 @@ class HospitalModel {
     required this.address,
     required this.departments,
   });
+
+  HospitalModel copyWith({
+    String? id,
+    String? name,
+    String? address,
+    List<DepartmentModel>? departments,
+  }) {
+    return HospitalModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      address: address ?? this.address,
+      departments: departments ?? this.departments,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is HospitalModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
 }
 
 class DepartmentModel {

@@ -153,6 +153,29 @@ class MessageLookup extends MessageLookupByLibrary {
     "dieticianTherapyDesc": MessageLookupByLibrary.simpleMessage(
       "Hem fiziksel hem mental sağlığınız için kombine paket.",
     ),
+    "documentCategory": MessageLookupByLibrary.simpleMessage("Beslenme"),
+    "documentContent2": MessageLookupByLibrary.simpleMessage(
+      "Tip 2 diyabet tedavisinin temel amacı kan şekeri seviyelerini normal aralıkta tutmaktır. Tedavi yöntemleri arasında yaşam tarzı değişiklikleri, oral ilaçlar ve insülin tedavisi yer alır. Tedavi planı, doktor tarafından hastanın kan şekeri seviyesine, yaşına ve diğer sağlık sorunlarına göre belirlenir...",
+    ),
+    "documentContent3": MessageLookupByLibrary.simpleMessage(
+      "Sağlıklı beslenme, vücudumuzun ihtiyaç duyduğu tüm besin öğelerini dengeli bir şekilde almayı gerektirir...",
+    ),
+    "documentSummary1": MessageLookupByLibrary.simpleMessage(
+      "Diyabet hastalığı hakkında temel bilgiler",
+    ),
+    "documentSummary2": MessageLookupByLibrary.simpleMessage(
+      "Tip 2 diyabet hastalığının tedavi yöntemleri",
+    ),
+    "documentSummary3": MessageLookupByLibrary.simpleMessage(
+      "Dengeli ve sağlıklı beslenme önerileri",
+    ),
+    "documentTitle1": MessageLookupByLibrary.simpleMessage("Diyabet Nedir?"),
+    "documentTitle2": MessageLookupByLibrary.simpleMessage(
+      "Tip 2 Diyabet Tedavisi",
+    ),
+    "documentTitle3": MessageLookupByLibrary.simpleMessage(
+      "Sağlıklı Beslenme Rehberi",
+    ),
     "documents": MessageLookupByLibrary.simpleMessage("Dokümanlar"),
     "donation": MessageLookupByLibrary.simpleMessage("Bağış"),
     "donationAmount": MessageLookupByLibrary.simpleMessage("Bağış Miktarı"),
@@ -220,7 +243,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "home": MessageLookupByLibrary.simpleMessage("Ana Menü"),
     "homePageTitle": MessageLookupByLibrary.simpleMessage("DoctorX"),
-    "hospital": MessageLookupByLibrary.simpleMessage("Hastane"),
+    "hospital": MessageLookupByLibrary.simpleMessage("Hastanesi"),
     "hospitalDoctorTitle": MessageLookupByLibrary.simpleMessage(
       "Hastane ve Doktor Seçimi",
     ),
@@ -343,8 +366,19 @@ class MessageLookup extends MessageLookupByLibrary {
       "Fotoğrafı Kaldır",
     ),
     "reports": MessageLookupByLibrary.simpleMessage("Raporlar"),
+    "reportsDepartment1": MessageLookupByLibrary.simpleMessage("Dahiliye"),
+    "reportsDepartment2": MessageLookupByLibrary.simpleMessage("Kardiyoloji"),
+    "reportsDepartment3": MessageLookupByLibrary.simpleMessage(
+      "Göğüs Hastalıkları",
+    ),
+    "reportsDepartment4": MessageLookupByLibrary.simpleMessage("Nöroloji"),
     "reportsPageTitle": MessageLookupByLibrary.simpleMessage("Raporlarım"),
     "reportsTitle1": MessageLookupByLibrary.simpleMessage("Kan Tahlili Sonucu"),
+    "reportsTitle2": MessageLookupByLibrary.simpleMessage("EKG Raporu"),
+    "reportsTitle3": MessageLookupByLibrary.simpleMessage("Akciğer Filmi"),
+    "reportsTitle4": MessageLookupByLibrary.simpleMessage(
+      "MR Görüntüleme Sonucu",
+    ),
     "requiredAll": MessageLookupByLibrary.simpleMessage(
       "Tüm alanları doldurunuz",
     ),
