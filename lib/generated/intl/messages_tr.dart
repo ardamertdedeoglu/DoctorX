@@ -89,6 +89,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "basicErrorMessage": MessageLookupByLibrary.simpleMessage(
       "Bir hata oluştu",
     ),
+    "bread": MessageLookupByLibrary.simpleMessage("Ekmek"),
     "buyKeyword": MessageLookupByLibrary.simpleMessage("Satın Al"),
     "calories": MessageLookupByLibrary.simpleMessage("Kalori:"),
     "cameraButton": MessageLookupByLibrary.simpleMessage("Fotoğraf Çek"),
@@ -170,6 +171,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "dieticianTherapyDesc": MessageLookupByLibrary.simpleMessage(
       "Hem fiziksel hem mental sağlığınız için kombine paket.",
+    ),
+    "doctorTitle": MessageLookupByLibrary.simpleMessage(
+      "Unvan (Prof. Dr., Ast., Dr., etc.)",
     ),
     "documentCategory": MessageLookupByLibrary.simpleMessage("Beslenme"),
     "documentContent2": MessageLookupByLibrary.simpleMessage(
@@ -267,6 +271,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Hastane ve Doktor Seçimi",
     ),
     "hour": MessageLookupByLibrary.simpleMessage("s"),
+    "iAmDoctor": MessageLookupByLibrary.simpleMessage("Ben bir doktorum"),
     "insulineTracking": MessageLookupByLibrary.simpleMessage("İnsülin Takibi"),
     "invalidCardMessage": MessageLookupByLibrary.simpleMessage(
       "Lütfen geçerli kart bilgileri girin",
@@ -278,6 +283,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "july": MessageLookupByLibrary.simpleMessage("TEM"),
     "june": MessageLookupByLibrary.simpleMessage("HAZ"),
     "lastName": MessageLookupByLibrary.simpleMessage("Soyad"),
+    "lastVisit": MessageLookupByLibrary.simpleMessage("Son Ziyaret:"),
+    "licenseNumber": MessageLookupByLibrary.simpleMessage("Hekimlik Numarası"),
     "lightMode": MessageLookupByLibrary.simpleMessage("Açık Tema"),
     "loadErrorAccountSwitcher": MessageLookupByLibrary.simpleMessage(
       "Bağlı hesaplar yüklenemedi",
@@ -291,6 +298,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "mainMenuTitle": MessageLookupByLibrary.simpleMessage("Ana Menü"),
     "march": MessageLookupByLibrary.simpleMessage("MAR"),
     "may": MessageLookupByLibrary.simpleMessage("MAY"),
+    "mediumSize": MessageLookupByLibrary.simpleMessage("Orta boy"),
+    "milk": MessageLookupByLibrary.simpleMessage("Süt"),
     "minutes": MessageLookupByLibrary.simpleMessage("dk"),
     "morning": MessageLookupByLibrary.simpleMessage("Sabah"),
     "morningDose": MessageLookupByLibrary.simpleMessage("Sabah Dozu (11:00)"),
@@ -334,6 +343,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "november": MessageLookupByLibrary.simpleMessage("KAS"),
     "october": MessageLookupByLibrary.simpleMessage("EKİ"),
+    "oneBowl": MessageLookupByLibrary.simpleMessage("1 kase"),
+    "oneGlass": MessageLookupByLibrary.simpleMessage("1 bardak"),
+    "onePortion": MessageLookupByLibrary.simpleMessage("1 porsiyon"),
+    "oneSlice": MessageLookupByLibrary.simpleMessage("1 dilim"),
+    "oneUnit": MessageLookupByLibrary.simpleMessage("1 birim"),
     "openPdfViewer": MessageLookupByLibrary.simpleMessage("Görüntüle"),
     "packagesDesc": MessageLookupByLibrary.simpleMessage(
       "Bu bölümde:\n• Sağlık hizmet paketlerimizi inceleyebilirsiniz.\n• Online randevu alabilirsiniz.\n• Bağış yapabilirsiniz.\n• Normalden ucuz fiyata paket satın alabilirsiniz.",
@@ -354,6 +368,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Şifreler eşleşmiyor",
     ),
     "pastAppointments": MessageLookupByLibrary.simpleMessage("Geçmiş"),
+    "pasta": MessageLookupByLibrary.simpleMessage("Makarna"),
+    "patients": MessageLookupByLibrary.simpleMessage("Hastalar"),
     "payWithCard": MessageLookupByLibrary.simpleMessage(
       "Kredi/Banka Kartı ile Öde",
     ),
@@ -366,6 +382,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "PDF görüntülenirken bir hata oluştu:",
     ),
     "pendingBalance": MessageLookupByLibrary.simpleMessage("Bekleyen Bakiye:"),
+    "potato": MessageLookupByLibrary.simpleMessage("Patates"),
     "preparingApp": MessageLookupByLibrary.simpleMessage(
       "Uygulama sizin için hazırlanıyor...",
     ),
@@ -416,6 +433,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "resetPasswordTitle": MessageLookupByLibrary.simpleMessage(
       "Şifre Sıfırlama",
     ),
+    "rice": MessageLookupByLibrary.simpleMessage("Pirinç"),
     "searchCategoryHealth": MessageLookupByLibrary.simpleMessage("Sağlık"),
     "searchDocuments": MessageLookupByLibrary.simpleMessage("Doküman ara..."),
     "searchEmpty": MessageLookupByLibrary.simpleMessage(
@@ -456,6 +474,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchReports": MessageLookupByLibrary.simpleMessage(
       "Rapor veya doktor ara...",
     ),
+    "sendButton": MessageLookupByLibrary.simpleMessage("Gönder"),
+    "sendMessage": MessageLookupByLibrary.simpleMessage("Mesaj Gönder"),
     "september": MessageLookupByLibrary.simpleMessage("EYL"),
     "settings": MessageLookupByLibrary.simpleMessage("Ayarlar"),
     "signError": MessageLookupByLibrary.simpleMessage("Kayıt hatası:"),
@@ -464,6 +484,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Hesabın yok mu? Kayıt ol",
     ),
     "signupPageTitle": MessageLookupByLibrary.simpleMessage("Kayıt Ol"),
+    "specialization": MessageLookupByLibrary.simpleMessage("Uzmanlık Alanı"),
     "therapy": MessageLookupByLibrary.simpleMessage("Terapi"),
     "therapyDesc": MessageLookupByLibrary.simpleMessage(
       "Profesyonel terapistlerimizle mental sağlığınızı koruyun.",
@@ -491,7 +512,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "userNotFound": MessageLookupByLibrary.simpleMessage(
       "Bu e-posta adresi ile kayıtlı kullanıcı bulunamadı.",
     ),
+    "verifyDocuments": MessageLookupByLibrary.simpleMessage(
+      "Dökumanlarınız doğrulanacak.",
+    ),
     "verifyPassword": MessageLookupByLibrary.simpleMessage("Şifreyi Doğrula"),
+    "videoCall": MessageLookupByLibrary.simpleMessage("Görüntülü Arama"),
+    "voiceCall": MessageLookupByLibrary.simpleMessage("Sesli Arama"),
     "wallet": MessageLookupByLibrary.simpleMessage("Cüzdanım"),
     "walletPlusCardPayment": MessageLookupByLibrary.simpleMessage(
       "Cüzdan + Kart ile Öde",
@@ -501,5 +527,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "welcomeMessage": MessageLookupByLibrary.simpleMessage("Hoşgeldin!"),
     "wrongPassword": MessageLookupByLibrary.simpleMessage("Hatalı şifre"),
     "yesButton": MessageLookupByLibrary.simpleMessage("Evet"),
+    "yogurt": MessageLookupByLibrary.simpleMessage("Yoğurt"),
   };
 }

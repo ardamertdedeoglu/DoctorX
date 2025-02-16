@@ -27,17 +27,8 @@ class _DiabetesPageState extends State<DiabetesPage> with SingleTickerProviderSt
   // Yeni özellik ekleyelim
   String? _lastResetDate;
 
-  // Yiyecek listesi
-  final List<FoodItem> foodItems = [
-    FoodItem(name: 'Elma', carbAmount: 15.0),
-    FoodItem(name: 'Ekmek (1 dilim)', carbAmount: 12.0),
-    FoodItem(name: 'Pilav (1 porsiyon)', carbAmount: 45.0),
-    FoodItem(name: 'Makarna (1 porsiyon)', carbAmount: 42.0),
-    FoodItem(name: 'Muz', carbAmount: 23.0),
-    FoodItem(name: 'Süt (1 bardak)', carbAmount: 12.0),
-    FoodItem(name: 'Yoğurt (1 kase)', carbAmount: 10.0),
-    FoodItem(name: 'Patates (1 orta boy)', carbAmount: 30.0),
-  ];
+  // foodItems'ı nullable yap ve boş başlat
+  List<FoodItem>? foodItems;
 
   double _totalCarbs = 0.0;
 
@@ -57,6 +48,47 @@ class _DiabetesPageState extends State<DiabetesPage> with SingleTickerProviderSt
         _checkAndResetDailyDoses(); // Timer'da da kontrol edelim
       }
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    
+    // foodItems'ı burada lokalize et
+    foodItems = [
+      FoodItem(
+        name: 'Apple (${S.of(context).oneUnit})', 
+        carbAmount: 15.0
+      ),
+      FoodItem(
+        name: '${S.of(context).bread} (${S.of(context).oneSlice})', 
+        carbAmount: 12.0
+      ),
+      FoodItem(
+        name: '${S.of(context).rice} (${S.of(context).onePortion})', 
+        carbAmount: 45.0
+      ),
+      FoodItem(
+        name: '${S.of(context).pasta} (${S.of(context).onePortion})', 
+        carbAmount: 42.0
+      ),
+      FoodItem(
+        name: 'Banana (${S.of(context).oneUnit})', 
+        carbAmount: 23.0
+      ),
+      FoodItem(
+        name: '${S.of(context).milk} (${S.of(context).oneGlass})', 
+        carbAmount: 12.0
+      ),
+      FoodItem(
+        name: '${S.of(context).yogurt} (${S.of(context).oneBowl})', 
+        carbAmount: 10.0
+      ),
+      FoodItem(
+        name: '${S.of(context).potato} (${S.of(context).mediumSize})', 
+        carbAmount: 30.0
+      ),
+    ];
   }
 
   @override
@@ -267,6 +299,8 @@ class _DiabetesPageState extends State<DiabetesPage> with SingleTickerProviderSt
 
   // Karbonhidrat sekmesi için widget
   Widget _buildCarbsTab() {
+    if (foodItems == null) return Container();
+    
     // Toplam kalori hesaplama
     final totalCalories = _totalCarbs * _caloriesPerCarb;
     final targetCalories = _dailyTargetCarbs * _caloriesPerCarb;
@@ -345,9 +379,9 @@ class _DiabetesPageState extends State<DiabetesPage> with SingleTickerProviderSt
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: foodItems.length,
+              itemCount: foodItems!.length,
               itemBuilder: (context, index) {
-                final food = foodItems[index];
+                final food = foodItems![index];
                 return Card(
                   child: ListTile(
                     title: Text(food.name),

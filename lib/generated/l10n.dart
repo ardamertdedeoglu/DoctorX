@@ -1105,9 +1105,9 @@ class S {
     );
   }
 
-  /// `Name`
+  /// `First Name`
   String get firstName {
-    return Intl.message('Name', name: 'firstName', desc: '', args: []);
+    return Intl.message('First Name', name: 'firstName', desc: '', args: []);
   }
 
   /// `This field is required`
@@ -2248,6 +2248,146 @@ class S {
   /// `Apple`
   String get apple {
     return Intl.message('Apple', name: 'apple', desc: '', args: []);
+  }
+
+  /// `1 unit`
+  String get oneUnit {
+    return Intl.message('1 unit', name: 'oneUnit', desc: '', args: []);
+  }
+
+  /// `1 slice`
+  String get oneSlice {
+    return Intl.message('1 slice', name: 'oneSlice', desc: '', args: []);
+  }
+
+  /// `1 portion`
+  String get onePortion {
+    return Intl.message('1 portion', name: 'onePortion', desc: '', args: []);
+  }
+
+  /// `1 glass`
+  String get oneGlass {
+    return Intl.message('1 glass', name: 'oneGlass', desc: '', args: []);
+  }
+
+  /// `1 bowl`
+  String get oneBowl {
+    return Intl.message('1 bowl', name: 'oneBowl', desc: '', args: []);
+  }
+
+  /// `medium size`
+  String get mediumSize {
+    return Intl.message('medium size', name: 'mediumSize', desc: '', args: []);
+  }
+
+  /// `Bread`
+  String get bread {
+    return Intl.message('Bread', name: 'bread', desc: '', args: []);
+  }
+
+  /// `Rice`
+  String get rice {
+    return Intl.message('Rice', name: 'rice', desc: '', args: []);
+  }
+
+  /// `Pasta`
+  String get pasta {
+    return Intl.message('Pasta', name: 'pasta', desc: '', args: []);
+  }
+
+  /// `Milk`
+  String get milk {
+    return Intl.message('Milk', name: 'milk', desc: '', args: []);
+  }
+
+  /// `Yogurt`
+  String get yogurt {
+    return Intl.message('Yogurt', name: 'yogurt', desc: '', args: []);
+  }
+
+  /// `Potato`
+  String get potato {
+    return Intl.message('Potato', name: 'potato', desc: '', args: []);
+  }
+
+  /// `Send`
+  String get sendButton {
+    return Intl.message('Send', name: 'sendButton', desc: '', args: []);
+  }
+
+  /// `I am a Doctor`
+  String get iAmDoctor {
+    return Intl.message('I am a Doctor', name: 'iAmDoctor', desc: '', args: []);
+  }
+
+  /// `Title (Prof. Dr., Assoc. Dr., etc.)`
+  String get doctorTitle {
+    return Intl.message(
+      'Title (Prof. Dr., Assoc. Dr., etc.)',
+      name: 'doctorTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Medical Specialization`
+  String get specialization {
+    return Intl.message(
+      'Medical Specialization',
+      name: 'specialization',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Medical License Number`
+  String get licenseNumber {
+    return Intl.message(
+      'Medical License Number',
+      name: 'licenseNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your documents will be verified`
+  String get verifyDocuments {
+    return Intl.message(
+      'Your documents will be verified',
+      name: 'verifyDocuments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Patients`
+  String get patients {
+    return Intl.message('Patients', name: 'patients', desc: '', args: []);
+  }
+
+  /// `Send Message`
+  String get sendMessage {
+    return Intl.message(
+      'Send Message',
+      name: 'sendMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Voice Call`
+  String get voiceCall {
+    return Intl.message('Voice Call', name: 'voiceCall', desc: '', args: []);
+  }
+
+  /// `Video Call`
+  String get videoCall {
+    return Intl.message('Video Call', name: 'videoCall', desc: '', args: []);
+  }
+
+  /// `Last Visit:`
+  String get lastVisit {
+    return Intl.message('Last Visit:', name: 'lastVisit', desc: '', args: []);
   }
 }
 

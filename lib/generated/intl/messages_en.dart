@@ -94,6 +94,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "basicErrorMessage": MessageLookupByLibrary.simpleMessage(
       "An error occurred.",
     ),
+    "bread": MessageLookupByLibrary.simpleMessage("Bread"),
     "buyKeyword": MessageLookupByLibrary.simpleMessage("Buy"),
     "calories": MessageLookupByLibrary.simpleMessage("Calories:"),
     "cameraButton": MessageLookupByLibrary.simpleMessage("Take a Photo"),
@@ -175,6 +176,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "dieticianTherapyDesc": MessageLookupByLibrary.simpleMessage(
       "Combined package for both your physical and mental health.",
+    ),
+    "doctorTitle": MessageLookupByLibrary.simpleMessage(
+      "Title (Prof. Dr., Assoc. Dr., etc.)",
     ),
     "documentCategory": MessageLookupByLibrary.simpleMessage("Nutrition"),
     "documentContent1": MessageLookupByLibrary.simpleMessage(
@@ -267,7 +271,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "familyService": MessageLookupByLibrary.simpleMessage("Family Service"),
     "father": MessageLookupByLibrary.simpleMessage("Father"),
     "february": MessageLookupByLibrary.simpleMessage("FEB"),
-    "firstName": MessageLookupByLibrary.simpleMessage("Name"),
+    "firstName": MessageLookupByLibrary.simpleMessage("First Name"),
     "forgotPassword": MessageLookupByLibrary.simpleMessage(
       "Forgot your password?",
     ),
@@ -284,6 +288,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Hospital and Doctor Selection",
     ),
     "hour": MessageLookupByLibrary.simpleMessage("h"),
+    "iAmDoctor": MessageLookupByLibrary.simpleMessage("I am a Doctor"),
     "insulineTracking": MessageLookupByLibrary.simpleMessage(
       "Insulin Tracking",
     ),
@@ -297,6 +302,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "july": MessageLookupByLibrary.simpleMessage("JUL"),
     "june": MessageLookupByLibrary.simpleMessage("JUN"),
     "lastName": MessageLookupByLibrary.simpleMessage("Last Name"),
+    "lastVisit": MessageLookupByLibrary.simpleMessage("Last Visit:"),
+    "licenseNumber": MessageLookupByLibrary.simpleMessage(
+      "Medical License Number",
+    ),
     "lightMode": MessageLookupByLibrary.simpleMessage("Light Mode"),
     "loadErrorAccountSwitcher": MessageLookupByLibrary.simpleMessage(
       "Linked accounts could not be loaded.",
@@ -310,6 +319,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "mainMenuTitle": MessageLookupByLibrary.simpleMessage("Main Menu"),
     "march": MessageLookupByLibrary.simpleMessage("MAR"),
     "may": MessageLookupByLibrary.simpleMessage("MAY"),
+    "mediumSize": MessageLookupByLibrary.simpleMessage("medium size"),
+    "milk": MessageLookupByLibrary.simpleMessage("Milk"),
     "minutes": MessageLookupByLibrary.simpleMessage("m"),
     "morning": MessageLookupByLibrary.simpleMessage("Morning"),
     "morningDose": MessageLookupByLibrary.simpleMessage("Morning Dose (11:00)"),
@@ -353,6 +364,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "november": MessageLookupByLibrary.simpleMessage("NOV"),
     "october": MessageLookupByLibrary.simpleMessage("OCT"),
+    "oneBowl": MessageLookupByLibrary.simpleMessage("1 bowl"),
+    "oneGlass": MessageLookupByLibrary.simpleMessage("1 glass"),
+    "onePortion": MessageLookupByLibrary.simpleMessage("1 portion"),
+    "oneSlice": MessageLookupByLibrary.simpleMessage("1 slice"),
+    "oneUnit": MessageLookupByLibrary.simpleMessage("1 unit"),
     "openPdfViewer": MessageLookupByLibrary.simpleMessage("View"),
     "packagesDesc": MessageLookupByLibrary.simpleMessage(
       "In this page:\n• You can examine our health-service packages.\n• You can make an appointment online.\n• You can donate.\n• You can buy our packages with a cheaper price than normal.",
@@ -373,6 +389,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Passwords do not match",
     ),
     "pastAppointments": MessageLookupByLibrary.simpleMessage("Past"),
+    "pasta": MessageLookupByLibrary.simpleMessage("Pasta"),
+    "patients": MessageLookupByLibrary.simpleMessage("Patients"),
     "payWithCard": MessageLookupByLibrary.simpleMessage(
       "Pay With Credit/Debit Card",
     ),
@@ -385,6 +403,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "An error occurred while loading the PDF:",
     ),
     "pendingBalance": MessageLookupByLibrary.simpleMessage("Pending Balance:"),
+    "potato": MessageLookupByLibrary.simpleMessage("Potato"),
     "preparingApp": MessageLookupByLibrary.simpleMessage(
       "We are preparing the app for you...",
     ),
@@ -437,6 +456,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "resetPasswordTitle": MessageLookupByLibrary.simpleMessage(
       "Reset Password",
     ),
+    "rice": MessageLookupByLibrary.simpleMessage("Rice"),
     "search": MessageLookupByLibrary.simpleMessage("Search"),
     "searchCategoryHealth": MessageLookupByLibrary.simpleMessage("Health"),
     "searchDocuments": MessageLookupByLibrary.simpleMessage(
@@ -481,6 +501,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchReports": MessageLookupByLibrary.simpleMessage(
       "Search for a report or a doctor...",
     ),
+    "sendButton": MessageLookupByLibrary.simpleMessage("Send"),
+    "sendMessage": MessageLookupByLibrary.simpleMessage("Send Message"),
     "september": MessageLookupByLibrary.simpleMessage("SEP"),
     "settings": MessageLookupByLibrary.simpleMessage("Settings"),
     "signError": MessageLookupByLibrary.simpleMessage(
@@ -491,6 +513,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Don\'t have an account? Sign up",
     ),
     "signupPageTitle": MessageLookupByLibrary.simpleMessage("Sign Up"),
+    "specialization": MessageLookupByLibrary.simpleMessage(
+      "Medical Specialization",
+    ),
     "therapy": MessageLookupByLibrary.simpleMessage("Therapy"),
     "therapyDesc": MessageLookupByLibrary.simpleMessage(
       "Maintain your mental health with our professional therapists.",
@@ -518,7 +543,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "userNotFound": MessageLookupByLibrary.simpleMessage(
       "No user found with this email address.",
     ),
+    "verifyDocuments": MessageLookupByLibrary.simpleMessage(
+      "Your documents will be verified",
+    ),
     "verifyPassword": MessageLookupByLibrary.simpleMessage("Verify Password"),
+    "videoCall": MessageLookupByLibrary.simpleMessage("Video Call"),
+    "voiceCall": MessageLookupByLibrary.simpleMessage("Voice Call"),
     "wallet": MessageLookupByLibrary.simpleMessage("My Wallet"),
     "walletPlusCardPayment": MessageLookupByLibrary.simpleMessage(
       "Pay with Wallet + Card",
@@ -530,5 +560,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "welcomeMessage": MessageLookupByLibrary.simpleMessage("Welcome"),
     "wrongPassword": MessageLookupByLibrary.simpleMessage("Incorrect password"),
     "yesButton": MessageLookupByLibrary.simpleMessage("Yes"),
+    "yogurt": MessageLookupByLibrary.simpleMessage("Yogurt"),
   };
 }

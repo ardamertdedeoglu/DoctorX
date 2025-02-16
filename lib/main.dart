@@ -654,6 +654,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // UserModel'i güncelle
       final updatedUser = UserModel(
         id: _userData?.id,
+        role: _userData!.role,
         firstName: _userData!.firstName,
         lastName: _userData!.lastName,
         email: _userData?.email ?? '',
@@ -1181,6 +1182,7 @@ void _showProfileDialog() {
                           if (user != null) {
                             final updatedUserModel = UserModel(
                               id: user.uid,
+                              role: _userData!.role,
                               firstName: _userData!.firstName,
                               lastName: _userData!.lastName,
                               email: _userData?.email ?? '',
@@ -1240,6 +1242,8 @@ void _showProfileDialog() {
               final prefs = await SharedPreferences.getInstance();
               if (newEmailController.text.isNotEmpty) {
                 final updatedUser = UserModel(
+                  id: _userData!.id,
+                  role: _userData!.role,
                   firstName: _userData!.firstName,
                   lastName: _userData!.lastName,
                   email: newEmailController.text,
@@ -2403,4 +2407,3 @@ void _showChildDetailsDialog(BuildContext context) {
 
 
 }
-

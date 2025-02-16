@@ -138,28 +138,6 @@ class _LoginPageState extends State<LoginPage> {
       setState(() => _isLoading = false);
     }
   }
-
-  Future<void> _saveEmailPreference() async {
-    try {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user == null) return;
-
-      // Firestore'daki kullanıcı dokümanını güncelle
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .update({'rememberMe': _rememberMe});
-      
-      // Eğer "Beni Hatırla" seçili değilse, kayıtlı e-postayı temizle
-      if (!_rememberMe) {
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.remove('remembered_email');
-      }
-    } catch (e) {
-      print('Error saving remember me preference: $e');
-    }
-  }
-
   Future<void> _resetPassword() async {
     // Create a TextEditingController for the dialog
     final resetEmailController = TextEditingController();
@@ -211,7 +189,7 @@ class _LoginPageState extends State<LoginPage> {
                 );
               }
             },
-            child: Text('Gönder'),
+            child: Text(S.of(context).sendButton),
           ),
         ],
       ),

@@ -1,3 +1,5 @@
+import 'role_model.dart';
+
 class UserModel {
   final String? id;
   final String firstName;
@@ -6,6 +8,8 @@ class UserModel {
   final String? profileImageUrl;
   final String? accountType;
   final List<String>? linkedAccounts;
+  final UserRole role;
+  final DoctorDetails? doctorDetails;
 
   UserModel({
     this.id,
@@ -15,6 +19,8 @@ class UserModel {
     this.profileImageUrl,
     this.accountType,
     this.linkedAccounts,
+    required this.role,
+    this.doctorDetails,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -26,6 +32,13 @@ class UserModel {
       profileImageUrl: json['profileImageUrl'],
       accountType: json['accountType'],
       linkedAccounts: List<String>.from(json['linkedAccounts'] ?? []),
+      role: UserRole.values.firstWhere(
+        (e) => e.toString() == json['role'],
+        orElse: () => UserRole.patient,
+      ),
+      doctorDetails: json['doctorDetails'] != null 
+        ? DoctorDetails.fromJson(json['doctorDetails']) 
+        : null,
     );
   }
 
@@ -38,6 +51,8 @@ class UserModel {
       'profileImageUrl': profileImageUrl,
       'accountType': accountType,
       'linkedAccounts': linkedAccounts,
+      'role': role.toString(),
+      'doctorDetails': doctorDetails?.toJson(),
     };
   }
 }
