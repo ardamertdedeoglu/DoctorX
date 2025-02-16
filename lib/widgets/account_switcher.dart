@@ -9,10 +9,10 @@ class AccountSwitcher extends StatelessWidget {
   final Function(UserModel) onAccountChanged;
 
   const AccountSwitcher({
-    Key? key,
+    super.key,
     required this.currentUser,
     required this.onAccountChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

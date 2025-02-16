@@ -6,8 +6,7 @@ import 'package:doctorx/generated/l10n.dart';
 class AccountTypeDialog extends StatelessWidget {
   final Function(String) onTypeSelected;
 
-  const AccountTypeDialog({Key? key, required this.onTypeSelected})
-      : super(key: key);
+  const AccountTypeDialog({super.key, required this.onTypeSelected});
 
   @override
   Widget build(BuildContext context) {
