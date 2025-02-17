@@ -1,0 +1,2 @@
+C:/Users/User/Documents/GitHub/DoctorX/android/app/.cxx/RelWithDebInfo/5f71o262/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/User/Documents/GitHub/DoctorX/android/app/.cxx/RelWithDebInfo/5f71o262/armeabi-v7a/CMakeFiles/rebuild_cache.dir

@@ -8,12 +8,12 @@ class ProfileImage extends StatelessWidget {
   final Widget? badge; // Yeni: Badge widget için (doğrulanmış işareti vb.)
 
   const ProfileImage({
-    Key? key,
+    super.key,
     this.imageUrl,
     this.radius = 40,
     this.onTap,
     this.badge,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
