@@ -50,6 +50,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Select Account Type",
     ),
     "addBalance": MessageLookupByLibrary.simpleMessage("Top Up Balance"),
+    "addChildAccount": MessageLookupByLibrary.simpleMessage(
+      "Add Child Account",
+    ),
     "addKeyword": MessageLookupByLibrary.simpleMessage("Add"),
     "aiErrorMessage": MessageLookupByLibrary.simpleMessage(
       "Sorry, I can\'t help you with this. How else can I help you?",
@@ -91,6 +94,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Available Balance",
     ),
     "availableHours": MessageLookupByLibrary.simpleMessage("Available Hours:"),
+    "banana": MessageLookupByLibrary.simpleMessage("Banana"),
     "basicErrorMessage": MessageLookupByLibrary.simpleMessage(
       "An error occurred.",
     ),

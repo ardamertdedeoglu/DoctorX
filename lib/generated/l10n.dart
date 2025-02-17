@@ -2250,6 +2250,11 @@ class S {
     return Intl.message('Apple', name: 'apple', desc: '', args: []);
   }
 
+  /// `Banana`
+  String get banana {
+    return Intl.message('Banana', name: 'banana', desc: '', args: []);
+  }
+
   /// `1 unit`
   String get oneUnit {
     return Intl.message('1 unit', name: 'oneUnit', desc: '', args: []);
@@ -2388,6 +2393,16 @@ class S {
   /// `Last Visit:`
   String get lastVisit {
     return Intl.message('Last Visit:', name: 'lastVisit', desc: '', args: []);
+  }
+
+  /// `Add Child Account`
+  String get addChildAccount {
+    return Intl.message(
+      'Add Child Account',
+      name: 'addChildAccount',
+      desc: '',
+      args: [],
+    );
   }
 }
 

@@ -240,7 +240,7 @@
   "reportsDepartment4": "Nöroloji",
   "documentTitle1": "Diyabet Nedir?",
   "documentSummary1": "Diyabet hastalığı hakkında temel bilgiler",
-  "documentsContent1": "Diyabet, vücudunuzun kan şekerini (glikoz) düzenleyen insülin hormonunu yeterince üretemediği veya etkili kullanamadığı bir metabolizma hastalığıdır...",
+  "documentContent1": "Diyabet, vücudunuzun kan şekerini (glikoz) düzenleyen insülin hormonunu yeterince üretemediği veya etkili kullanamadığı bir metabolizma hastalığıdır...",
   "documentTitle2": "Tip 2 Diyabet Tedavisi",
   "documentSummary2": "Tip 2 diyabet hastalığının tedavi yöntemleri",
   "documentContent2": "Tip 2 diyabet tedavisinin temel amacı kan şekeri seviyelerini normal aralıkta tutmaktır. Tedavi yöntemleri arasında yaşam tarzı değişiklikleri, oral ilaçlar ve insülin tedavisi yer alır. Tedavi planı, doktor tarafından hastanın kan şekeri seviyesine, yaşına ve diğer sağlık sorunlarına göre belirlenir...",
@@ -258,6 +258,7 @@
   "carbohydrates": "karbonhidrat",
   "insulineTracking": "İnsülin Takibi",
   "apple": "Elma",
+  "banana": "Muz",
   "oneUnit": "1 birim",
   "oneSlice": "1 dilim",
   "onePortion": "1 porsiyon",
@@ -280,5 +281,7 @@
   "sendMessage": "Mesaj Gönder",
   "voiceCall": "Sesli Arama",
   "videoCall": "Görüntülü Arama",
-  "lastVisit": "Son Ziyaret:"
+  "lastVisit": "Son Ziyaret:",
+  "addChildAccount": "Çocuk Hesabı Ekle",
+  "firstName": "Ad"
 }

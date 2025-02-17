@@ -256,6 +256,7 @@
   "carbohydrates": "carbohydrates",
   "insulineTracking": "Insulin Tracking",
   "apple": "Apple",
+  "banana": "Banana",
   "oneUnit": "1 unit",
   "oneSlice": "1 slice",
   "onePortion": "1 portion",
@@ -278,5 +279,6 @@
   "sendMessage": "Send Message",
   "voiceCall": "Voice Call",
   "videoCall": "Video Call",
-  "lastVisit": "Last Visit:"
+  "lastVisit": "Last Visit:",
+  "addChildAccount": "Add Child Account"
 }

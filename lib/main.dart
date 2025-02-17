@@ -641,17 +641,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _deleteProfileImage() async {
-    await _profileImageService.deleteProfileImage();
-    setState(() {
-      _imagePath = null;
-    });
-  }
+    try {
+      await _profileImageService.deleteProfileImage();
 
-  Future<void> _saveImage(String path) async {
-    final file = File(path);
-    final url = await _profileImageService.uploadProfileImage(file);
-    if (url != null) {
-      // UserModel'i güncelle
       final updatedUser = UserModel(
         id: _userData?.id,
         role: _userData!.role,
@@ -660,15 +652,65 @@ class _MyHomePageState extends State<MyHomePage> {
         email: _userData?.email ?? '',
         accountType: _userData?.accountType,
         linkedAccounts: _userData?.linkedAccounts,
-        profileImageUrl: url,
+        profileImageUrl: null,
       );
 
-      // Verileri senkronize et
-      await _userService.updateUserData(updatedUser);
-      
-      setState(() {
-        _userData = updatedUser;
-      });
+      if (_userData?.id != null) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(_userData!.id)
+            .update({'profileImageUrl': null});
+
+        setState(() {
+          _userData = updatedUser;
+        });
+
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('user_data', jsonEncode(updatedUser.toJson()));
+      }
+    } catch (e) {
+      print("Error deleting profile image: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to delete profile image')),
+      );
+    }
+  }
+
+  Future<void> _saveImage(String path) async {
+    try {
+      final imageUrl = await _profileImageService.uploadProfileImage(File(path));
+      if (imageUrl != null) {
+        final updatedUser = UserModel(
+          id: _userData?.id,
+          role: _userData!.role,
+          firstName: _userData!.firstName,
+          lastName: _userData!.lastName,
+          email: _userData?.email ?? '',
+          accountType: _userData?.accountType,
+          linkedAccounts: _userData?.linkedAccounts,
+          profileImageUrl: imageUrl,
+        );
+
+        // Firestore'u güncelle
+        if (_userData?.id != null) {
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(_userData!.id)
+              .update({'profileImageUrl': imageUrl});
+
+          setState(() {
+            _userData = updatedUser;
+          });
+
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('user_data', jsonEncode(updatedUser.toJson()));
+        }
+      }
+    } catch (e) {
+      print("Error saving profile image: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to update profile image')),
+      );
     }
   }
 
@@ -1164,7 +1206,7 @@ void _showProfileDialog() {
                     Navigator.pop(context);
                     _showAddChildDialog(context);
                   },
-                  child: Text('${S.of(context).addKeyword} ${S.of(context).childAccountTitle}'),
+                  child: Text(S.of(context).addChildAccount),
                 ),
               )
             else

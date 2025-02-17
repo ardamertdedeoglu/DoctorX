@@ -50,6 +50,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Hesap Türünü Seçin",
     ),
     "addBalance": MessageLookupByLibrary.simpleMessage("Bakiye Yükle"),
+    "addChildAccount": MessageLookupByLibrary.simpleMessage(
+      "Çocuk Hesabı Ekle",
+    ),
     "addKeyword": MessageLookupByLibrary.simpleMessage("Ekle"),
     "aiErrorMessage": MessageLookupByLibrary.simpleMessage(
       "Üzgünüm, bu konuda size yardımcı olamıyorum. Başka nasıl yardımcı olabilirim?",
@@ -86,6 +89,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Kullanılabilir Bakiye",
     ),
     "availableHours": MessageLookupByLibrary.simpleMessage("Müsait Saatler:"),
+    "banana": MessageLookupByLibrary.simpleMessage("Muz"),
     "basicErrorMessage": MessageLookupByLibrary.simpleMessage(
       "Bir hata oluştu",
     ),
@@ -176,6 +180,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Unvan (Prof. Dr., Ast., Dr., etc.)",
     ),
     "documentCategory": MessageLookupByLibrary.simpleMessage("Beslenme"),
+    "documentContent1": MessageLookupByLibrary.simpleMessage(
+      "Diyabet, vücudunuzun kan şekerini (glikoz) düzenleyen insülin hormonunu yeterince üretemediği veya etkili kullanamadığı bir metabolizma hastalığıdır...",
+    ),
     "documentContent2": MessageLookupByLibrary.simpleMessage(
       "Tip 2 diyabet tedavisinin temel amacı kan şekeri seviyelerini normal aralıkta tutmaktır. Tedavi yöntemleri arasında yaşam tarzı değişiklikleri, oral ilaçlar ve insülin tedavisi yer alır. Tedavi planı, doktor tarafından hastanın kan şekeri seviyesine, yaşına ve diğer sağlık sorunlarına göre belirlenir...",
     ),
@@ -257,6 +264,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "familyService": MessageLookupByLibrary.simpleMessage("Aile Servisi"),
     "father": MessageLookupByLibrary.simpleMessage("Baba"),
     "february": MessageLookupByLibrary.simpleMessage("ŞUB"),
+    "firstName": MessageLookupByLibrary.simpleMessage("Ad"),
     "forgotPassword": MessageLookupByLibrary.simpleMessage("Şifremi Unuttum"),
     "futureAppointments": MessageLookupByLibrary.simpleMessage("Gelecek"),
     "glucoseLevel": MessageLookupByLibrary.simpleMessage("Glikoz Seviyesi"),

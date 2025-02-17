@@ -57,7 +57,7 @@ class _DiabetesPageState extends State<DiabetesPage> with SingleTickerProviderSt
     // foodItems'ı burada lokalize et
     foodItems = [
       FoodItem(
-        name: 'Apple (${S.of(context).oneUnit})', 
+        name: '${S.of(context).apple} (${S.of(context).oneUnit})', 
         carbAmount: 15.0
       ),
       FoodItem(
@@ -73,7 +73,7 @@ class _DiabetesPageState extends State<DiabetesPage> with SingleTickerProviderSt
         carbAmount: 42.0
       ),
       FoodItem(
-        name: 'Banana (${S.of(context).oneUnit})', 
+        name: '${S.of(context).banana} (${S.of(context).oneUnit})', 
         carbAmount: 23.0
       ),
       FoodItem(
