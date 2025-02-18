@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'generated/l10n.dart';
 import 'models/role_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -61,7 +63,7 @@ class _SignupPageState extends State<SignupPage> {
           decoration: InputDecoration(
             labelText: S.of(context).specialization,
             border: OutlineInputBorder(),
-            hintText: 'Cardiology',
+            hintText: S.of(context).specializationHintText,
           ),
           validator: (value) => 
             _isDoctor && (value?.isEmpty ?? true) ? S.of(context).requiredField : null,
@@ -72,7 +74,7 @@ class _SignupPageState extends State<SignupPage> {
           decoration: InputDecoration(
             labelText: S.of(context).licenseNumber,
             border: OutlineInputBorder(),
-            hintText: '123456',
+            hintText: S.of(context).licenseNumberHintText,
           ),
           validator: (value) => 
             _isDoctor && (value?.isEmpty ?? true) ? S.of(context).requiredField : null,
@@ -127,7 +129,16 @@ class _SignupPageState extends State<SignupPage> {
               .doc(userCredential.user?.uid)
               .set(user.toJson());
 
-          Navigator.pushReplacementNamed(context, '/home');
+          // Save user data to SharedPreferences
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('user_data', jsonEncode(user.toJson()));
+
+          // Navigate based on role
+          if (_isDoctor) {
+            Navigator.pushReplacementNamed(context, '/doctor_home');
+          } else {
+            Navigator.pushReplacementNamed(context, '/home');
+          }
         }
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(

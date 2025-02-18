@@ -274,6 +274,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "eveningDose": MessageLookupByLibrary.simpleMessage("Evening Dose (20:00)"),
     "familyService": MessageLookupByLibrary.simpleMessage("Family Service"),
     "father": MessageLookupByLibrary.simpleMessage("Father"),
+    "featureNotAvailable": MessageLookupByLibrary.simpleMessage(
+      "This feature is not available yet.",
+    ),
     "february": MessageLookupByLibrary.simpleMessage("FEB"),
     "firstName": MessageLookupByLibrary.simpleMessage("First Name"),
     "forgotPassword": MessageLookupByLibrary.simpleMessage(
@@ -306,9 +309,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "july": MessageLookupByLibrary.simpleMessage("JUL"),
     "june": MessageLookupByLibrary.simpleMessage("JUN"),
     "lastName": MessageLookupByLibrary.simpleMessage("Last Name"),
+    "lastSeen": MessageLookupByLibrary.simpleMessage("Last Seen:"),
     "lastVisit": MessageLookupByLibrary.simpleMessage("Last Visit:"),
     "licenseNumber": MessageLookupByLibrary.simpleMessage(
       "Medical License Number",
+    ),
+    "licenseNumberHintText": MessageLookupByLibrary.simpleMessage(
+      "e.g. 123456",
     ),
     "lightMode": MessageLookupByLibrary.simpleMessage("Light Mode"),
     "loadErrorAccountSwitcher": MessageLookupByLibrary.simpleMessage(
@@ -502,6 +509,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Health Reports",
     ),
     "searchLabel": MessageLookupByLibrary.simpleMessage("Search..."),
+    "searchPatients": MessageLookupByLibrary.simpleMessage(
+      "Search for a patient...",
+    ),
     "searchReports": MessageLookupByLibrary.simpleMessage(
       "Search for a report or a doctor...",
     ),
@@ -519,6 +529,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "signupPageTitle": MessageLookupByLibrary.simpleMessage("Sign Up"),
     "specialization": MessageLookupByLibrary.simpleMessage(
       "Medical Specialization",
+    ),
+    "specializationHintText": MessageLookupByLibrary.simpleMessage(
+      "e.g. Cardiology, Neurology",
     ),
     "therapy": MessageLookupByLibrary.simpleMessage("Therapy"),
     "therapyDesc": MessageLookupByLibrary.simpleMessage(

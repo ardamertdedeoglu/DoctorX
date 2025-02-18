@@ -263,6 +263,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "eveningDose": MessageLookupByLibrary.simpleMessage("Akşam Dozu (20:00)"),
     "familyService": MessageLookupByLibrary.simpleMessage("Aile Servisi"),
     "father": MessageLookupByLibrary.simpleMessage("Baba"),
+    "featureNotAvailable": MessageLookupByLibrary.simpleMessage(
+      "Bu özellik henüz kullanılabilir değil",
+    ),
     "february": MessageLookupByLibrary.simpleMessage("ŞUB"),
     "firstName": MessageLookupByLibrary.simpleMessage("Ad"),
     "forgotPassword": MessageLookupByLibrary.simpleMessage("Şifremi Unuttum"),
@@ -291,8 +294,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "july": MessageLookupByLibrary.simpleMessage("TEM"),
     "june": MessageLookupByLibrary.simpleMessage("HAZ"),
     "lastName": MessageLookupByLibrary.simpleMessage("Soyad"),
+    "lastSeen": MessageLookupByLibrary.simpleMessage("Son görülme"),
     "lastVisit": MessageLookupByLibrary.simpleMessage("Son Ziyaret:"),
     "licenseNumber": MessageLookupByLibrary.simpleMessage("Hekimlik Numarası"),
+    "licenseNumberHintText": MessageLookupByLibrary.simpleMessage(
+      "Örn: 123456",
+    ),
     "lightMode": MessageLookupByLibrary.simpleMessage("Açık Tema"),
     "loadErrorAccountSwitcher": MessageLookupByLibrary.simpleMessage(
       "Bağlı hesaplar yüklenemedi",
@@ -479,6 +486,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Tıbbi Raporlar",
     ),
     "searchLabel": MessageLookupByLibrary.simpleMessage("Ara..."),
+    "searchPatients": MessageLookupByLibrary.simpleMessage("Hasta Ara..."),
     "searchReports": MessageLookupByLibrary.simpleMessage(
       "Rapor veya doktor ara...",
     ),
@@ -493,6 +501,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "signupPageTitle": MessageLookupByLibrary.simpleMessage("Kayıt Ol"),
     "specialization": MessageLookupByLibrary.simpleMessage("Uzmanlık Alanı"),
+    "specializationHintText": MessageLookupByLibrary.simpleMessage(
+      "Örn: Kardiyoloji, Göz Hastalıkları, vb.",
+    ),
     "therapy": MessageLookupByLibrary.simpleMessage("Terapi"),
     "therapyDesc": MessageLookupByLibrary.simpleMessage(
       "Profesyonel terapistlerimizle mental sağlığınızı koruyun.",

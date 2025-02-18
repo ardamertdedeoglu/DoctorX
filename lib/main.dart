@@ -40,6 +40,9 @@ import 'services/auth_service.dart';
 import 'services/user_service.dart';
 import 'widgets/profile_image.dart';
 import 'services/family_service.dart';
+import 'doctor_home_page.dart';
+import 'models/role_model.dart';
+import 'widgets/patient_list_section.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -88,6 +91,7 @@ class MyApp extends StatelessWidget {
             '/': (context) => LoginPage(),
             '/signup': (context) => SignupPage(),
             '/home': (context) => HomePage(),
+            '/doctor_home': (context) => DoctorHomePage(), // Add this line
             '/newsDetail': (context) => NewsDetailPage(news: ModalRoute.of(context)!.settings.arguments as NewsModel),
           },
         );
@@ -1538,6 +1542,8 @@ Widget _buildAppointmentCard() {
 }
 
 Widget _buildEmptyAppointmentsView() {
+  final isDoctor = _userData?.role == UserRole.doctor;
+  
   return Padding(
     padding: const EdgeInsets.all(24),
     child: Center(
@@ -1550,18 +1556,20 @@ Widget _buildEmptyAppointmentsView() {
             S.of(context).noUpcomingAppointments,
             style: TextStyle(color: Colors.grey[600], fontSize: 16),
           ),
-          const SizedBox(height: 8),
-          ElevatedButton.icon(
-            icon: const Icon(Icons.add),
-            label: Text(S.of(context).quickAppointment),
-            onPressed: () {
-              _pageController.animateToPage(
-                2,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              );
-            },
-          ),
+          if (!isDoctor) ...[  // Sadece hasta için randevu alma butonu göster
+            const SizedBox(height: 8),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.add),
+              label: Text(S.of(context).quickAppointment),
+              onPressed: () {
+                _pageController.animateToPage(
+                  2,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                );
+              },
+            ),
+          ],
         ],
       ),
     ),
@@ -2093,6 +2101,8 @@ Widget _buildQuickActionButton({
   @override
   Widget build(BuildContext context) {
     final isDarkMode = context.watch<ThemeProvider>().isDarkMode;
+    final isDoctor = _userData?.role == UserRole.doctor; // Add this line
+
     return Theme(
       data: Theme.of(context).copyWith(
         scaffoldBackgroundColor: isDarkMode ? Colors.grey[900] : Colors.white,
@@ -2112,7 +2122,7 @@ Widget _buildQuickActionButton({
             children: [
               _buildMainContent(),
               _buildChatSection(),
-              _buildPackagesSection(),
+              isDoctor ? PatientListSection() : _buildPackagesSection(), // Change this line
             ],
           ),
         ),
@@ -2129,8 +2139,11 @@ Widget _buildQuickActionButton({
               label: S.of(context).chatsTitle,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.emoji_emotions, color: Colors.green),
-              label: S.of(context).packagesTitle,
+              icon: Icon(
+                isDoctor ? Icons.people : Icons.emoji_emotions,
+                color: Colors.green
+              ),
+              label: isDoctor ? S.of(context).patients : S.of(context).packagesTitle,
             ),
           ],
           currentIndex: _selectedIndex,

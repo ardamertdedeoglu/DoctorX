@@ -11,6 +11,7 @@ import 'theme_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'services/profile_image_service.dart';
 import 'package:image_picker/image_picker.dart';
+import 'models/role_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -204,6 +205,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = context.watch<ThemeProvider>().isDarkMode;
+    final isDoctor = _userData?.role == UserRole.doctor; // Add this line
     
     return Scaffold(
       appBar: AppBar(
@@ -220,7 +222,7 @@ class _HomePageState extends State<HomePage> {
             else ...[
               Text(
                 _userData != null
-                    ? '${S.of(context).welcomeMessage}, ${_userData!.firstName}!'
+                    ? '${S.of(context).welcomeMessage}, ${isDoctor ? 'Dr. ' : ''}${_userData!.firstName}!' // Modified this line
                     : S.of(context).welcomeMessage,
                 style: TextStyle(
                   fontSize: 24,

@@ -280,5 +280,10 @@
   "voiceCall": "Voice Call",
   "videoCall": "Video Call",
   "lastVisit": "Last Visit:",
-  "addChildAccount": "Add Child Account"
+  "addChildAccount": "Add Child Account",
+  "searchPatients": "Search for a patient...",
+  "lastSeen": "Last Seen:",
+  "featureNotAvailable": "This feature is not available yet.",
+  "specializationHintText": "e.g. Cardiology, Neurology",
+  "licenseNumberHintText": "e.g. 123456"
 }

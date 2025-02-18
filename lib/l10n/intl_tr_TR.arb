@@ -283,5 +283,10 @@
   "videoCall": "Görüntülü Arama",
   "lastVisit": "Son Ziyaret:",
   "addChildAccount": "Çocuk Hesabı Ekle",
-  "firstName": "Ad"
+  "firstName": "Ad",
+  "searchPatients": "Hasta Ara...",
+  "lastSeen": "Son görülme",
+  "featureNotAvailable": "Bu özellik henüz kullanılabilir değil",
+  "specializationHintText": "Örn: Kardiyoloji, Göz Hastalıkları, vb.",
+  "licenseNumberHintText": "Örn: 123456"
 }

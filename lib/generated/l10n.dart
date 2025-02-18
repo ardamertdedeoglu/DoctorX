@@ -2404,6 +2404,51 @@ class S {
       args: [],
     );
   }
+
+  /// `Search for a patient...`
+  String get searchPatients {
+    return Intl.message(
+      'Search for a patient...',
+      name: 'searchPatients',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last Seen:`
+  String get lastSeen {
+    return Intl.message('Last Seen:', name: 'lastSeen', desc: '', args: []);
+  }
+
+  /// `This feature is not available yet.`
+  String get featureNotAvailable {
+    return Intl.message(
+      'This feature is not available yet.',
+      name: 'featureNotAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `e.g. Cardiology, Neurology`
+  String get specializationHintText {
+    return Intl.message(
+      'e.g. Cardiology, Neurology',
+      name: 'specializationHintText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `e.g. 123456`
+  String get licenseNumberHintText {
+    return Intl.message(
+      'e.g. 123456',
+      name: 'licenseNumberHintText',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
