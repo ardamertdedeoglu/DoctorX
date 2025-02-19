@@ -121,7 +121,10 @@ class _SignupPageState extends State<SignupPage> {
             lastName: _lastNameController.text,
             email: _emailController.text,
             role: userRole,
-            doctorDetails: doctorDetails,
+            accountType: _isDoctor ? 'doctor' : 'normal',
+            doctorTitle: _isDoctor ? _titleController.text : null,
+            specialization: _isDoctor ? _specializationController.text : null,
+            licenseNumber: _isDoctor ? _licenseController.text : null,
           );
 
           await FirebaseFirestore.instance

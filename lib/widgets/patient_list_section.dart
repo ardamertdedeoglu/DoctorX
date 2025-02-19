@@ -16,6 +16,8 @@ class PatientCard {
 }
 
 class PatientListSection extends StatefulWidget {
+  const PatientListSection({super.key});
+
   @override
   _PatientListSectionState createState() => _PatientListSectionState();
 }

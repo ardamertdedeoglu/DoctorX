@@ -210,6 +210,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "documentTitle3": MessageLookupByLibrary.simpleMessage(
       "Healthy Eating Guide",
     ),
+    "doctorAccount": MessageLookupByLibrary.simpleMessage("Doctor Account"),
+    "updateDoctorInfo": MessageLookupByLibrary.simpleMessage("Update Doctor Information"), 
     "documents": MessageLookupByLibrary.simpleMessage("Documents"),
     "donation": MessageLookupByLibrary.simpleMessage("Donation"),
     "donationAmount": MessageLookupByLibrary.simpleMessage("Donation Amount"),
@@ -327,6 +329,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "mainMenuDesc": MessageLookupByLibrary.simpleMessage(
       "In this page:\n• You can view your profile information and change them.\n• You can keep up with the current health news.\n• You can access content by searching.",
     ),
+    "viewPatients": MessageLookupByLibrary.simpleMessage("View Patients"),
     "mainMenuTitle": MessageLookupByLibrary.simpleMessage("Main Menu"),
     "march": MessageLookupByLibrary.simpleMessage("MAR"),
     "may": MessageLookupByLibrary.simpleMessage("MAY"),

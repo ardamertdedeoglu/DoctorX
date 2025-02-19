@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
 import 'generated/l10n.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'models/user_model.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';

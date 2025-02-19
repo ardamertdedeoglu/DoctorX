@@ -1153,6 +1153,9 @@ class _MyHomePageState extends State<MyHomePage> {
 void _showProfileDialog() {
   final newEmailController = TextEditingController(text: _userData?.email);
   final newPasswordController = TextEditingController();
+  final titleController = TextEditingController(text: _userData?.doctorTitle);
+  final specializationController = TextEditingController(text: _userData?.specialization);
+  final licenseController = TextEditingController(text: _userData?.licenseNumber);
 
   showDialog(
     context: context,
@@ -1196,24 +1199,92 @@ void _showProfileDialog() {
             Text('${S.of(context).lastName}: ${_userData?.lastName}'),
             Text('${S.of(context).emailLabel}: ${_userData?.email}'),
             
-            // Hesap türü ve yükseltme butonu
+            // Hesap türü
             SizedBox(height: 16),
             Text(
-              '${S.of(context).accountType} ${_userData?.accountType == 'parent' ? S.of(context).parentAccount : S.of(context).normalAccount}',
+              '${S.of(context).accountType} ${_userData?.role == UserRole.doctor 
+                ? S.of(context).doctorAccount 
+                : _userData?.accountType == 'parent' 
+                  ? S.of(context).parentAccount 
+                  : S.of(context).normalAccount}',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            if (_userData?.accountType == 'parent')
+
+            // Doktor bilgileri veya hesap yükseltme butonu
+            if (_userData?.role == UserRole.doctor) ...[
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 8),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    _showAddChildDialog(context);
-                  },
-                  child: Text(S.of(context).addChildAccount),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextField(
+                      controller: titleController,
+                      decoration: InputDecoration(
+                        labelText: S.of(context).doctorTitle,
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    TextField(
+                      controller: specializationController,
+                      decoration: InputDecoration(
+                        labelText: S.of(context).specialization,
+                        hintText: S.of(context).specializationHintText,
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    TextField(
+                      controller: licenseController,
+                      decoration: InputDecoration(
+                        labelText: S.of(context).licenseNumber,
+                        hintText: S.of(context).licenseNumberHintText,
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    ElevatedButton(
+                      onPressed: () async {
+                        // Doktor bilgilerini güncelle
+                        final user = FirebaseAuth.instance.currentUser;
+                        if (user != null) {
+                          final updatedUserModel = UserModel(
+                            id: user.uid,
+                            role: UserRole.doctor,
+                            firstName: _userData!.firstName,
+                            lastName: _userData!.lastName,
+                            email: _userData?.email ?? '',
+                            accountType: 'doctor',
+                            doctorTitle: titleController.text,
+                            specialization: specializationController.text,
+                            licenseNumber: licenseController.text,
+                          );
+
+                          await FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(user.uid)
+                              .update({
+                                'doctorTitle': titleController.text,
+                                'specialization': specializationController.text,
+                                'licenseNumber': licenseController.text,
+                              });
+
+                          setState(() {
+                            _userData = updatedUserModel;
+                          });
+
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(S.of(context).passwordUpdateSuccess)),
+                          );
+                        }
+                      },
+                      child: Text(S.of(context).updateDoctorInfo),
+                    ),
+                  ],
                 ),
-              )
-            else
+              ),
+            ] else if (_userData?.accountType != 'parent') ...[
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 8),
                 child: ElevatedButton(
@@ -1239,17 +1310,11 @@ void _showProfileDialog() {
                             await FirebaseFirestore.instance
                                 .collection('users')
                                 .doc(user.uid)
-                                .set(updatedUserModel.toJson());
+                                .update({'accountType': accountType});
 
                             setState(() {
                               _userData = updatedUserModel;
                             });
-
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setString(
-                              'user_data', 
-                              jsonEncode(updatedUserModel.toJson())
-                            );
                           }
                         },
                       ),
@@ -1258,6 +1323,7 @@ void _showProfileDialog() {
                   child: Text(S.of(context).upgradeToParent),
                 ),
               ),
+            ],
             
             // Yeni e-posta ve şifre alanları
             SizedBox(height: 20),
@@ -1705,8 +1771,28 @@ Widget _buildChatSection() {
     children: [
       _buildQuickActionButton(
         icon: Icons.calendar_today,
-        label: S.of(context).quickAppointment,
-        onTap: () {}, // Boş bırak, üstteki logic kullanılacak
+        label: _userData?.role == UserRole.doctor 
+            ? S.of(context).viewPatients 
+            : S.of(context).quickAppointment,
+        onTap: () {
+          if (_userData?.role == UserRole.doctor) {
+            // Doktor için hasta listesi sayfasına git
+            _pageController.animateToPage(
+              2, // Hastalar sekmesi
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+            );
+            setState(() => _selectedIndex = 2);
+          } else {
+            // Normal kullanıcı için randevu sayfasına git
+            _pageController.animateToPage(
+              2, // Paketler sekmesi
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+            );
+            setState(() => _selectedIndex = 2);
+          }
+        },
         color: Colors.blue,
       ),
       _buildQuickActionButton(

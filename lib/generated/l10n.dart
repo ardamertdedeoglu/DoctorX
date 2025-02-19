@@ -2449,6 +2449,36 @@ class S {
       args: [],
     );
   }
+
+  /// `View Patients`
+  String get viewPatients {
+    return Intl.message(
+      'View Patients',
+      name: 'viewPatients',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Doctor Account`
+  String get doctorAccount {
+    return Intl.message(
+      'Doctor Account',
+      name: 'doctorAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Doctor Information`
+  String get updateDoctorInfo {
+    return Intl.message(
+      'Update Doctor Information',
+      name: 'updateDoctorInfo',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

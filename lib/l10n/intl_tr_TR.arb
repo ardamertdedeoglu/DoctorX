@@ -288,5 +288,8 @@
   "lastSeen": "Son görülme",
   "featureNotAvailable": "Bu özellik henüz kullanılabilir değil",
   "specializationHintText": "Örn: Kardiyoloji, Göz Hastalıkları, vb.",
-  "licenseNumberHintText": "Örn: 123456"
+  "licenseNumberHintText": "Örn: 123456",
+  "viewPatients": "Hastaları Görüntüle",
+  "doctorAccount": "Doktor Hesabı",
+  "updateDoctorInfo": "Doktor Bilgilerini Güncelle"
 }

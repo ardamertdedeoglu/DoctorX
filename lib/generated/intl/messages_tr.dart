@@ -161,6 +161,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "deleteReportDesc": MessageLookupByLibrary.simpleMessage(
       "Bu raporu silmek istediğinizden emin misiniz?",
     ),
+    "doctorAccount": MessageLookupByLibrary.simpleMessage("Doktor Hesabı"),
+    "updateDoctorInfo": MessageLookupByLibrary.simpleMessage("Doktor Bilgilerini Güncelle"), 
     "deleteReportSuccess": MessageLookupByLibrary.simpleMessage(
       "Rapor başarıyla silindi",
     ),
@@ -367,6 +369,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "packagesDesc": MessageLookupByLibrary.simpleMessage(
       "Bu bölümde:\n• Sağlık hizmet paketlerimizi inceleyebilirsiniz.\n• Online randevu alabilirsiniz.\n• Bağış yapabilirsiniz.\n• Normalden ucuz fiyata paket satın alabilirsiniz.",
     ),
+    "viewPatients": MessageLookupByLibrary.simpleMessage("Hastaları Görüntüle"),
     "packagesTitle": MessageLookupByLibrary.simpleMessage("Paketler"),
     "parentAccount": MessageLookupByLibrary.simpleMessage("Ebeveyn"),
     "password": MessageLookupByLibrary.simpleMessage("Şifre"),
