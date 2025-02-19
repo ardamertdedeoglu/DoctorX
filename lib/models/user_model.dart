@@ -12,6 +12,7 @@ class UserModel {
   final String? specialization;
   final String? licenseNumber;
   final String? profileImageUrl;
+  final String? hospitalId;
 
   UserModel({
     this.id,
@@ -25,6 +26,7 @@ class UserModel {
     this.specialization,
     this.licenseNumber,
     this.profileImageUrl,
+    this.hospitalId,
   });
 
   Map<String, dynamic> toJson() {
@@ -40,6 +42,7 @@ class UserModel {
       'specialization': specialization,
       'licenseNumber': licenseNumber,
       'profileImageUrl': profileImageUrl,
+      'hospitalId': hospitalId,
     };
   }
 
@@ -56,6 +59,7 @@ class UserModel {
       specialization: json['specialization'],
       licenseNumber: json['licenseNumber'],
       profileImageUrl: json['profileImageUrl'],
+      hospitalId: json['hospitalId'],
     );
   }
 

@@ -53,6 +53,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "addChildAccount": MessageLookupByLibrary.simpleMessage(
       "Çocuk Hesabı Ekle",
     ),
+    "addDoctorAccount": MessageLookupByLibrary.simpleMessage("Doktor Hesabı Ekle"),
+    "doctorAccountInfo": MessageLookupByLibrary.simpleMessage("Doktor hesabı oluşturmak için medikal lisansınızı ve diğer profesyonel bilgilerinizi sağlayınız."),
+    "continueToRegistration": MessageLookupByLibrary.simpleMessage("Kayda Devam Et"),
     "addKeyword": MessageLookupByLibrary.simpleMessage("Ekle"),
     "aiErrorMessage": MessageLookupByLibrary.simpleMessage(
       "Üzgünüm, bu konuda size yardımcı olamıyorum. Başka nasıl yardımcı olabilirim?",
@@ -66,6 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "appointmentFailure": MessageLookupByLibrary.simpleMessage(
       "Randevu oluşturulurken bir hata oluştu",
     ),
+    "appointmentDateAndTimeTitle": MessageLookupByLibrary.simpleMessage("Randevu Tarihi ve Saati"),
     "appointmentKeyword": MessageLookupByLibrary.simpleMessage("Randevusu"),
     "appointmentPaymentAmount": MessageLookupByLibrary.simpleMessage(
       "Paket Tutarı:",
@@ -219,7 +223,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "tutarında bakiye 7 gün sonra cüzdanınıza eklenecektir.",
     ),
     "donationReward": MessageLookupByLibrary.simpleMessage(
-      "Bağış yaptığınız tutarın %50\\\'si cüzdanınıza eklenecektir.",
+      "Bağış yaptığınız tutarın %50'si cüzdanınıza eklenecektir.",
     ),
     "donationThanks": MessageLookupByLibrary.simpleMessage(
       "Bağışınız için teşekkür ederiz!",
@@ -535,7 +539,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Bu e-posta adresi ile kayıtlı kullanıcı bulunamadı.",
     ),
     "verifyDocuments": MessageLookupByLibrary.simpleMessage(
-      "Dökumanlarınız doğrulanacak.",
+      "Dokümanlarınız doğrulanacak.",
     ),
     "verifyPassword": MessageLookupByLibrary.simpleMessage("Şifreyi Doğrula"),
     "videoCall": MessageLookupByLibrary.simpleMessage("Görüntülü Arama"),

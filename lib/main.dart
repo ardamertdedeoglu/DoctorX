@@ -1284,7 +1284,20 @@ void _showProfileDialog() {
                   ],
                 ),
               ),
-            ] else if (_userData?.accountType != 'parent') ...[
+            ] else if (_userData?.accountType == 'parent') ...[
+              // Ebeveyn hesabı için çocuk ekleme butonu
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    _showAddChildDialog(context);
+                  },
+                  child: Text(S.of(context).addChildAccount),
+                ),
+              ),
+            ] else ...[
+              // Normal hesap için yükseltme butonu
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 8),
                 child: ElevatedButton(
@@ -1343,6 +1356,59 @@ void _showProfileDialog() {
                 border: OutlineInputBorder(),
               ),
             ),
+
+            // Doktor hesabı ekleme butonu
+            if (_userData?.role != UserRole.doctor) ...[
+              Divider(),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) => AlertDialog(
+                        title: Text(S.of(context).addDoctorAccount),
+                        content: SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(S.of(context).doctorAccountInfo),
+                              SizedBox(height: 16),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SignupPage(
+                                        initialRole: UserRole.doctor,
+                                        email: _userData?.email,
+                                        firstName: _userData?.firstName,
+                                        lastName: _userData?.lastName,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Text(S.of(context).continueToRegistration),
+                              ),
+                            ],
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text(S.of(context).cancel),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  child: Text(S.of(context).addDoctorAccount),
+                ),
+              ),
+            ],
           ],
         ),
       ),
@@ -1369,7 +1435,7 @@ void _showProfileDialog() {
                     await user.updatePassword(newPasswordController.text);
                     await prefs.setString('user_password', newPasswordController.text);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Şifre başarıyla güncellendi')),
+                      SnackBar(content: Text(S.of(context).passwordUpdateSuccess)),
                     );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(

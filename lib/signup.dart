@@ -6,9 +6,22 @@ import 'generated/l10n.dart';
 import 'models/role_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+import 'models/hospital_model.dart';
+import 'services/hospital_service.dart';
 
 class SignupPage extends StatefulWidget {
-  const SignupPage({super.key});
+  final UserRole? initialRole;
+  final String? email;
+  final String? firstName;
+  final String? lastName;
+
+  const SignupPage({
+    Key? key,
+    this.initialRole,
+    this.email,
+    this.firstName,
+    this.lastName,
+  }) : super(key: key);
 
   @override
   _SignupPageState createState() => _SignupPageState();
@@ -29,6 +42,16 @@ class _SignupPageState extends State<SignupPage> {
   final _titleController = TextEditingController();
   final _specializationController = TextEditingController();
   final _licenseController = TextEditingController();
+  String _selectedHospitalId = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _isDoctor = widget.initialRole == UserRole.doctor;
+    if (widget.email != null) _emailController.text = widget.email!;
+    if (widget.firstName != null) _firstNameController.text = widget.firstName!;
+    if (widget.lastName != null) _lastNameController.text = widget.lastName!;
+  }
 
   Widget _buildDoctorFields() {
     if (!_isDoctor) return SizedBox.shrink();
@@ -36,15 +59,36 @@ class _SignupPageState extends State<SignupPage> {
     return Column(
       children: [
         SizedBox(height: 16),
-        TextFormField(
-          controller: _hospitalController,
-          decoration: InputDecoration(
-            labelText: S.of(context).hospital,
-            border: OutlineInputBorder(),
-            hintText: 'Memorial Hospital',
-          ),
-          validator: (value) => 
-            _isDoctor && (value?.isEmpty ?? true) ? S.of(context).requiredField : null,
+        FutureBuilder<List<HospitalModel>>(
+          future: HospitalService(context).getHospitals(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            }
+            
+            final hospitals = snapshot.data ?? [];
+            
+            return DropdownButtonFormField<String>(
+              value: _selectedHospitalId,
+              decoration: InputDecoration(
+                labelText: S.of(context).hospital,
+                border: OutlineInputBorder(),
+              ),
+              items: hospitals.map((hospital) {
+                return DropdownMenuItem(
+                  value: hospital.id,
+                  child: Text(hospital.name),
+                );
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  _selectedHospitalId = value ?? '';
+                });
+              },
+              validator: (value) => 
+                _isDoctor && (value?.isEmpty ?? true) ? S.of(context).requiredField : null,
+            );
+          },
         ),
         SizedBox(height: 16),
         TextFormField(
@@ -103,17 +147,6 @@ class _SignupPageState extends State<SignupPage> {
 
         if (userCredential.user != null) {
           final userRole = _isDoctor ? UserRole.doctor : UserRole.patient;
-          DoctorDetails? doctorDetails;
-          
-          if (_isDoctor) {
-            doctorDetails = DoctorDetails(
-              hospital: _hospitalController.text,
-              title: _titleController.text,
-              specialization: _specializationController.text,
-              licenseNumber: _licenseController.text,
-              patientIds: [],
-            );
-          }
 
           final user = UserModel(
             id: userCredential.user?.uid,
@@ -125,6 +158,7 @@ class _SignupPageState extends State<SignupPage> {
             doctorTitle: _isDoctor ? _titleController.text : null,
             specialization: _isDoctor ? _specializationController.text : null,
             licenseNumber: _isDoctor ? _licenseController.text : null,
+            hospitalId: _isDoctor ? _selectedHospitalId : null,
           );
 
           await FirebaseFirestore.instance

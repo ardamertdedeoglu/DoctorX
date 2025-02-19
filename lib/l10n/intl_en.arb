@@ -288,5 +288,8 @@
   "licenseNumberHintText": "e.g. 123456",
   "viewPatients": "View Patients",
   "doctorAccount": "Doctor Account",
-  "updateDoctorInfo": "Update Doctor Information"
+  "updateDoctorInfo": "Update Doctor Information",
+  "addDoctorAccount": "Add Doctor Account",
+  "doctorAccountInfo": "You will need to provide your medical license and other professional details to create a doctor account.",
+  "continueToRegistration": "Continue to Registration"
 }

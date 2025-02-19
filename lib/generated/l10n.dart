@@ -2479,6 +2479,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Add Doctor Account`
+  String get addDoctorAccount {
+    return Intl.message(
+      'Add Doctor Account',
+      name: 'addDoctorAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You will need to provide your medical license and other professional details to create a doctor account.`
+  String get doctorAccountInfo {
+    return Intl.message(
+      'You will need to provide your medical license and other professional details to create a doctor account.',
+      name: 'doctorAccountInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Continue to Registration`
+  String get continueToRegistration {
+    return Intl.message(
+      'Continue to Registration',
+      name: 'continueToRegistration',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

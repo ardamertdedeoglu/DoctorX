@@ -1,5 +1,6 @@
 import '../models/hospital_model.dart';
 import 'package:doctorx/generated/l10n.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 
@@ -126,7 +127,15 @@ class HospitalService {
     return slots;
   }
 
-  List<HospitalModel> getHospitals() => hospitals;
+  Future<List<HospitalModel>> getHospitals() async {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('hospitals')
+        .get();
+    
+    return snapshot.docs
+        .map((doc) => HospitalModel.fromJson(doc.data()))
+        .toList();
+  }
   
   HospitalModel? getHospitalById(String id) {
     try {

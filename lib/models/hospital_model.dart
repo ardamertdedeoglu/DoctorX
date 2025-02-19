@@ -11,6 +11,26 @@ class HospitalModel {
     required this.departments,
   });
 
+  factory HospitalModel.fromJson(Map<String, dynamic> json) {
+    return HospitalModel(
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      address: json['address'] ?? '',
+      departments: List<DepartmentModel>.from(
+        json['departments'].map((x) => DepartmentModel.fromJson(x)),
+      ),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'address': address,
+      'departments': List<dynamic>.from(departments.map((x) => x.toJson())),
+    };
+  }
+
   HospitalModel copyWith({
     String? id,
     String? name,
@@ -46,6 +66,24 @@ class DepartmentModel {
     required this.name,
     required this.doctors,
   });
+
+  factory DepartmentModel.fromJson(Map<String, dynamic> json) {
+    return DepartmentModel(
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      doctors: List<DoctorModel>.from(
+        json['doctors'].map((x) => DoctorModel.fromJson(x)),
+      ),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'doctors': List<dynamic>.from(doctors.map((x) => x.toJson())),
+    };
+  }
 }
 
 class DoctorModel {
@@ -62,4 +100,26 @@ class DoctorModel {
     required this.departmentId,
     required this.availableSlots,
   });
+
+  factory DoctorModel.fromJson(Map<String, dynamic> json) {
+    return DoctorModel(
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      title: json['title'] ?? '',
+      departmentId: json['departmentId'] ?? '',
+      availableSlots: List<DateTime>.from(
+        json['availableSlots'].map((x) => DateTime.parse(x)),
+      ),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'title': title,
+      'departmentId': departmentId,
+      'availableSlots': List<String>.from(availableSlots.map((x) => x.toIso8601String())),
+    };
+  }
 }

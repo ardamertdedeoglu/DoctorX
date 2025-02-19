@@ -73,7 +73,7 @@
   "notVerifiedEmailMessage": "Lütfen e-posta adresinizi doğrulayın",
   "donationAmount": "Bağış Miktarı",
   "donationAmountLabel": "Miktar (TL)",
-  "donationReward": "Bağış yaptığınız tutarın %50\\'si cüzdanınıza eklenecektir.",
+  "donationReward": "Bağış yaptığınız tutarın %50'si cüzdanınıza eklenecektir.",
   "donationThanks": "Bağışınız için teşekkür ederiz!",
   "donationPendingTime": "tutarında bakiye 7 gün sonra cüzdanınıza eklenecektir.",
   "cancel": "İptal",
@@ -108,7 +108,7 @@
   "searchItemQuestionDesc": "Örnek:",
   "price": "Fiyat:",
   "hospitalDoctorTitle": "Hastane ve Doktor Seçimi",
-  "appointmentDateAndTime": "Randevu Tarihi ve Saati",
+  "appointmentDateAndTimeTitle": "Randevu Tarihi ve Saati",
   "verifyEmailWarning": "Lütfen e-posta adresinizi doğrulayın",
   "buyKeyword": "Satın Al",
   "dateSelection": "Tarih Seçin",
@@ -276,7 +276,7 @@
   "doctorTitle": "Unvan (Prof. Dr., Ast., Dr., etc.)",
   "specialization": "Uzmanlık Alanı",
   "licenseNumber": "Hekimlik Numarası",
-  "verifyDocuments": "Dökumanlarınız doğrulanacak.",
+  "verifyDocuments": "Dokümanlarınız doğrulanacak.",
   "patients": "Hastalar",
   "sendMessage": "Mesaj Gönder",
   "voiceCall": "Sesli Arama",
@@ -291,5 +291,8 @@
   "licenseNumberHintText": "Örn: 123456",
   "viewPatients": "Hastaları Görüntüle",
   "doctorAccount": "Doktor Hesabı",
-  "updateDoctorInfo": "Doktor Bilgilerini Güncelle"
+  "updateDoctorInfo": "Doktor Bilgilerini Güncelle",
+  "addDoctorAccount": "Doktor Hesabı Ekle",
+  "doctorAccountInfo": "Doktor hesabı oluşturmak için medikal lisansınızı ve diğer profesyonel bilgilerinizi sağlayınız.",
+  "continueToRegistration": "Kayda Devam Et"
 }
