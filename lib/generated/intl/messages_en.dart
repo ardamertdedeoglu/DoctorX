@@ -53,6 +53,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "addChildAccount": MessageLookupByLibrary.simpleMessage(
       "Add Child Account",
     ),
+    "addDoctorAccount": MessageLookupByLibrary.simpleMessage(
+      "Add Doctor Account",
+    ),
     "addKeyword": MessageLookupByLibrary.simpleMessage("Add"),
     "aiErrorMessage": MessageLookupByLibrary.simpleMessage(
       "Sorry, I can\'t help you with this. How else can I help you?",
@@ -158,6 +161,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "consumptionToday": MessageLookupByLibrary.simpleMessage(
       "Today\'s Consumption:",
     ),
+    "continueToRegistration": MessageLookupByLibrary.simpleMessage(
+      "Continue to Registration",
+    ),
     "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
     "dateSelection": MessageLookupByLibrary.simpleMessage("Select a Date"),
     "december": MessageLookupByLibrary.simpleMessage("DEC"),
@@ -180,6 +186,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "dieticianTherapyDesc": MessageLookupByLibrary.simpleMessage(
       "Combined package for both your physical and mental health.",
+    ),
+    "doctorAccount": MessageLookupByLibrary.simpleMessage("Doctor Account"),
+    "doctorAccountInfo": MessageLookupByLibrary.simpleMessage(
+      "You will need to provide your medical license and other professional details to create a doctor account.",
     ),
     "doctorTitle": MessageLookupByLibrary.simpleMessage(
       "Title (Prof. Dr., Assoc. Dr., etc.)",
@@ -210,11 +220,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "documentTitle3": MessageLookupByLibrary.simpleMessage(
       "Healthy Eating Guide",
     ),
-    "doctorAccount": MessageLookupByLibrary.simpleMessage("Doctor Account"),
-    "updateDoctorInfo": MessageLookupByLibrary.simpleMessage("Update Doctor Information"), 
-    "doctorAccountInfo": MessageLookupByLibrary.simpleMessage("You will need to provide your medical license and other professional details to create a doctor account."),
-    "continueToRegistration": MessageLookupByLibrary.simpleMessage("Continue to Registration"),
-    "addDoctorAccount": MessageLookupByLibrary.simpleMessage("Add Doctor Account"),
     "documents": MessageLookupByLibrary.simpleMessage("Documents"),
     "donation": MessageLookupByLibrary.simpleMessage("Donation"),
     "donationAmount": MessageLookupByLibrary.simpleMessage("Donation Amount"),
@@ -332,7 +337,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "mainMenuDesc": MessageLookupByLibrary.simpleMessage(
       "In this page:\n• You can view your profile information and change them.\n• You can keep up with the current health news.\n• You can access content by searching.",
     ),
-    "viewPatients": MessageLookupByLibrary.simpleMessage("View Patients"),
     "mainMenuTitle": MessageLookupByLibrary.simpleMessage("Main Menu"),
     "march": MessageLookupByLibrary.simpleMessage("MAR"),
     "may": MessageLookupByLibrary.simpleMessage("MAY"),
@@ -557,6 +561,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "upcomingAppointments": MessageLookupByLibrary.simpleMessage(
       "Upcoming Appointments",
     ),
+    "updateDoctorInfo": MessageLookupByLibrary.simpleMessage(
+      "Update Doctor Information",
+    ),
     "upgradeToParent": MessageLookupByLibrary.simpleMessage(
       "Upgrade to Parent Account",
     ),
@@ -571,6 +578,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "verifyPassword": MessageLookupByLibrary.simpleMessage("Verify Password"),
     "videoCall": MessageLookupByLibrary.simpleMessage("Video Call"),
+    "viewPatients": MessageLookupByLibrary.simpleMessage("View Patients"),
     "voiceCall": MessageLookupByLibrary.simpleMessage("Voice Call"),
     "wallet": MessageLookupByLibrary.simpleMessage("My Wallet"),
     "walletPlusCardPayment": MessageLookupByLibrary.simpleMessage(

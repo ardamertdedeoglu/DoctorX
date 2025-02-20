@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
       print("Error saving profile image: $e");
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to update profile image')),
+          SnackBar(content: Text(S.of(context).basicErrorMessage)),
         );
       }
     }
@@ -150,7 +150,7 @@ class _HomePageState extends State<HomePage> {
     } catch (e) {
       print("Error deleting profile image: $e");
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Profil fotoğrafı silinirken bir hata oluştu')),
+        SnackBar(content: Text(S.of(context).basicErrorMessage)),
       );
     }
   }

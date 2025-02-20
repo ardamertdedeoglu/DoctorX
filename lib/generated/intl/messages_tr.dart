@@ -53,9 +53,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "addChildAccount": MessageLookupByLibrary.simpleMessage(
       "Çocuk Hesabı Ekle",
     ),
-    "addDoctorAccount": MessageLookupByLibrary.simpleMessage("Doktor Hesabı Ekle"),
-    "doctorAccountInfo": MessageLookupByLibrary.simpleMessage("Doktor hesabı oluşturmak için medikal lisansınızı ve diğer profesyonel bilgilerinizi sağlayınız."),
-    "continueToRegistration": MessageLookupByLibrary.simpleMessage("Kayda Devam Et"),
+    "addDoctorAccount": MessageLookupByLibrary.simpleMessage(
+      "Doktor Hesabı Ekle",
+    ),
     "addKeyword": MessageLookupByLibrary.simpleMessage("Ekle"),
     "aiErrorMessage": MessageLookupByLibrary.simpleMessage(
       "Üzgünüm, bu konuda size yardımcı olamıyorum. Başka nasıl yardımcı olabilirim?",
@@ -66,10 +66,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "allReports": MessageLookupByLibrary.simpleMessage("Tümü"),
     "appTitle": MessageLookupByLibrary.simpleMessage("DoctorX"),
     "apple": MessageLookupByLibrary.simpleMessage("Elma"),
+    "appointmentDateAndTimeTitle": MessageLookupByLibrary.simpleMessage(
+      "Randevu Tarihi ve Saati",
+    ),
     "appointmentFailure": MessageLookupByLibrary.simpleMessage(
       "Randevu oluşturulurken bir hata oluştu",
     ),
-    "appointmentDateAndTimeTitle": MessageLookupByLibrary.simpleMessage("Randevu Tarihi ve Saati"),
     "appointmentKeyword": MessageLookupByLibrary.simpleMessage("Randevusu"),
     "appointmentPaymentAmount": MessageLookupByLibrary.simpleMessage(
       "Paket Tutarı:",
@@ -157,6 +159,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "consumptionToday": MessageLookupByLibrary.simpleMessage(
       "Bugün Tüketilen:",
     ),
+    "continueToRegistration": MessageLookupByLibrary.simpleMessage(
+      "Kayda Devam Et",
+    ),
     "darkMode": MessageLookupByLibrary.simpleMessage("Koyu Tema"),
     "dateSelection": MessageLookupByLibrary.simpleMessage("Tarih Seçin"),
     "december": MessageLookupByLibrary.simpleMessage("ARA"),
@@ -165,8 +170,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "deleteReportDesc": MessageLookupByLibrary.simpleMessage(
       "Bu raporu silmek istediğinizden emin misiniz?",
     ),
-    "doctorAccount": MessageLookupByLibrary.simpleMessage("Doktor Hesabı"),
-    "updateDoctorInfo": MessageLookupByLibrary.simpleMessage("Doktor Bilgilerini Güncelle"), 
     "deleteReportSuccess": MessageLookupByLibrary.simpleMessage(
       "Rapor başarıyla silindi",
     ),
@@ -181,6 +184,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "dieticianTherapyDesc": MessageLookupByLibrary.simpleMessage(
       "Hem fiziksel hem mental sağlığınız için kombine paket.",
+    ),
+    "doctorAccount": MessageLookupByLibrary.simpleMessage("Doktor Hesabı"),
+    "doctorAccountInfo": MessageLookupByLibrary.simpleMessage(
+      "Doktor hesabı oluşturmak için medikal lisansınızı ve diğer profesyonel bilgilerinizi sağlayınız.",
     ),
     "doctorTitle": MessageLookupByLibrary.simpleMessage(
       "Unvan (Prof. Dr., Ast., Dr., etc.)",
@@ -223,7 +230,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "tutarında bakiye 7 gün sonra cüzdanınıza eklenecektir.",
     ),
     "donationReward": MessageLookupByLibrary.simpleMessage(
-      "Bağış yaptığınız tutarın %50'si cüzdanınıza eklenecektir.",
+      "Bağış yaptığınız tutarın %50\'si cüzdanınıza eklenecektir.",
     ),
     "donationThanks": MessageLookupByLibrary.simpleMessage(
       "Bağışınız için teşekkür ederiz!",
@@ -373,7 +380,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "packagesDesc": MessageLookupByLibrary.simpleMessage(
       "Bu bölümde:\n• Sağlık hizmet paketlerimizi inceleyebilirsiniz.\n• Online randevu alabilirsiniz.\n• Bağış yapabilirsiniz.\n• Normalden ucuz fiyata paket satın alabilirsiniz.",
     ),
-    "viewPatients": MessageLookupByLibrary.simpleMessage("Hastaları Görüntüle"),
     "packagesTitle": MessageLookupByLibrary.simpleMessage("Paketler"),
     "parentAccount": MessageLookupByLibrary.simpleMessage("Ebeveyn"),
     "password": MessageLookupByLibrary.simpleMessage("Şifre"),
@@ -529,6 +535,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "upcomingAppointments": MessageLookupByLibrary.simpleMessage(
       "Yaklaşan Randevular",
     ),
+    "updateDoctorInfo": MessageLookupByLibrary.simpleMessage(
+      "Doktor Bilgilerini Güncelle",
+    ),
     "upgradeToParent": MessageLookupByLibrary.simpleMessage(
       "Ebeveyn Hesabına Yükselt",
     ),
@@ -543,6 +552,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "verifyPassword": MessageLookupByLibrary.simpleMessage("Şifreyi Doğrula"),
     "videoCall": MessageLookupByLibrary.simpleMessage("Görüntülü Arama"),
+    "viewPatients": MessageLookupByLibrary.simpleMessage("Hastaları Görüntüle"),
     "voiceCall": MessageLookupByLibrary.simpleMessage("Sesli Arama"),
     "wallet": MessageLookupByLibrary.simpleMessage("Cüzdanım"),
     "walletPlusCardPayment": MessageLookupByLibrary.simpleMessage(

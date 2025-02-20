@@ -742,13 +742,13 @@ class _MyHomePageState extends State<MyHomePage> {
       switch (_selectedIndex) {
         case 0:
           return   // Başlıklar büyük harf
-              S.of(context).mainMenuDesc;
+              S.of(context).mainMenuDesc; // Açıklamalar küçük harf
         case 1:
           return   // Başlıklar büyük harf
-              S.of(context).chatsDesc;
+              S.of(context).chatsDesc; // Açıklamalar küçük harf
         case 2:
           return   // Başlıklar büyük harf
-              S.of(context).packagesDesc;
+              S.of(context).packagesDesc; // Açıklamalar küçük harf 
         default:
           return 'DOCTORX UYGULAMASI';  // Başlık büyük harf
       }

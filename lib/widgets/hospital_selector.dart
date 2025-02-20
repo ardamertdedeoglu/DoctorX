@@ -8,9 +8,9 @@ class HospitalSelector extends StatefulWidget {
   final Function(HospitalModel, UserModel) onSelectionComplete;
 
   const HospitalSelector({
-    Key? key,
+    super.key,
     required this.onSelectionComplete,
-  }) : super(key: key);
+  });
 
   @override
   _HospitalSelectorState createState() => _HospitalSelectorState();

@@ -16,12 +16,12 @@ class SignupPage extends StatefulWidget {
   final String? lastName;
 
   const SignupPage({
-    Key? key,
+    super.key,
     this.initialRole,
     this.email,
     this.firstName,
     this.lastName,
-  }) : super(key: key);
+  });
 
   @override
   _SignupPageState createState() => _SignupPageState();
