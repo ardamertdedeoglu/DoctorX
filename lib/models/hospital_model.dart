@@ -1,13 +1,17 @@
 class HospitalModel {
   final String id;
-  String name;
+  final String name;
   final String address;
+  final String phone;
+  final String? imageUrl;
   final List<DepartmentModel> departments;
 
   HospitalModel({
     required this.id,
     required this.name,
     required this.address,
+    required this.phone,
+    this.imageUrl,
     required this.departments,
   });
 
@@ -16,6 +20,8 @@ class HospitalModel {
       id: json['id'] ?? '',
       name: json['name'] ?? '',
       address: json['address'] ?? '',
+      phone: json['phone'] ?? '',
+      imageUrl: json['imageUrl'],
       departments: List<DepartmentModel>.from(
         json['departments'].map((x) => DepartmentModel.fromJson(x)),
       ),
@@ -27,6 +33,8 @@ class HospitalModel {
       'id': id,
       'name': name,
       'address': address,
+      'phone': phone,
+      'imageUrl': imageUrl,
       'departments': List<dynamic>.from(departments.map((x) => x.toJson())),
     };
   }
@@ -35,12 +43,16 @@ class HospitalModel {
     String? id,
     String? name,
     String? address,
+    String? phone,
+    String? imageUrl,
     List<DepartmentModel>? departments,
   }) {
     return HospitalModel(
       id: id ?? this.id,
       name: name ?? this.name,
       address: address ?? this.address,
+      phone: phone ?? this.phone,
+      imageUrl: imageUrl ?? this.imageUrl,
       departments: departments ?? this.departments,
     );
   }

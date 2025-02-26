@@ -44,6 +44,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "User session not found. Please log in again.",
     ),
     "aboutUsTitle": MessageLookupByLibrary.simpleMessage("About Us"),
+    "accountRemoveError": MessageLookupByLibrary.simpleMessage(
+      "An error occurred while removing the account.",
+    ),
+    "accountRemoved": MessageLookupByLibrary.simpleMessage(
+      "Account removed successfully.",
+    ),
     "accountSwitcher": MessageLookupByLibrary.simpleMessage("Switch Account"),
     "accountType": MessageLookupByLibrary.simpleMessage("Account Type:"),
     "accountTypeDialog": MessageLookupByLibrary.simpleMessage(
@@ -109,6 +115,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "cancelAppointmentConfirmation": MessageLookupByLibrary.simpleMessage(
       "Are you sure you want to cancel this appointment?",
     ),
+    "cannotRemoveCurrentAccount": MessageLookupByLibrary.simpleMessage(
+      "You cannot remove your current account.",
+    ),
     "cantEditAppointmentWithin3Days": MessageLookupByLibrary.simpleMessage(
       "You cannot edit an appointment within 3 days of the appointment date.",
     ),
@@ -164,6 +173,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "continueToRegistration": MessageLookupByLibrary.simpleMessage(
       "Continue to Registration",
     ),
+    "createDoctorAccount": MessageLookupByLibrary.simpleMessage(
+      "Create Doctor Account",
+    ),
     "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
     "dateSelection": MessageLookupByLibrary.simpleMessage("Select a Date"),
     "december": MessageLookupByLibrary.simpleMessage("DEC"),
@@ -176,6 +188,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Report deleted successfully.",
     ),
     "deleteReportTitle": MessageLookupByLibrary.simpleMessage("Delete Report"),
+    "department1name": MessageLookupByLibrary.simpleMessage("Cardiology"),
+    "department2name": MessageLookupByLibrary.simpleMessage("Orthopedics"),
+    "department3name": MessageLookupByLibrary.simpleMessage(
+      "Internal Medicine",
+    ),
+    "department4name": MessageLookupByLibrary.simpleMessage("Neurology"),
     "diabetes": MessageLookupByLibrary.simpleMessage("Diabetes"),
     "dietician": MessageLookupByLibrary.simpleMessage("Dietician"),
     "dieticianDesc": MessageLookupByLibrary.simpleMessage(
@@ -188,6 +206,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Combined package for both your physical and mental health.",
     ),
     "doctorAccount": MessageLookupByLibrary.simpleMessage("Doctor Account"),
+    "doctorAccountCreated": MessageLookupByLibrary.simpleMessage(
+      "Doctor account created successfully.",
+    ),
+    "doctorAccountCreationError": MessageLookupByLibrary.simpleMessage(
+      "An error occurred while creating the doctor account.",
+    ),
     "doctorAccountInfo": MessageLookupByLibrary.simpleMessage(
       "You will need to provide your medical license and other professional details to create a doctor account.",
     ),
@@ -280,6 +304,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "enteringSentence": MessageLookupByLibrary.simpleMessage(
       "You are being directed to the application...",
     ),
+    "errorSwitchingAccount": MessageLookupByLibrary.simpleMessage(
+      "An error occurred while switching accounts.",
+    ),
     "evening": MessageLookupByLibrary.simpleMessage("Evening"),
     "eveningDose": MessageLookupByLibrary.simpleMessage("Evening Dose (20:00)"),
     "familyService": MessageLookupByLibrary.simpleMessage("Family Service"),
@@ -311,6 +338,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "invalidCardMessage": MessageLookupByLibrary.simpleMessage(
       "Please enter a valid card number",
+    ),
+    "invalidEmail": MessageLookupByLibrary.simpleMessage(
+      "Invalid email address",
     ),
     "invalidEmailMessage": MessageLookupByLibrary.simpleMessage(
       "Please enter a valid email address",
@@ -366,8 +396,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "newsDetailPageTitle": MessageLookupByLibrary.simpleMessage("News Detail"),
     "newsTitle": MessageLookupByLibrary.simpleMessage("Health News"),
     "noButton": MessageLookupByLibrary.simpleMessage("No"),
+    "noDoctorsAvailable": MessageLookupByLibrary.simpleMessage(
+      "No doctors available.",
+    ),
     "noLinkedAccountsMessage": MessageLookupByLibrary.simpleMessage(
       "You have no linked accounts.",
+    ),
+    "noPackagesAvailable": MessageLookupByLibrary.simpleMessage(
+      "No packages available.",
     ),
     "noPastAppointments": MessageLookupByLibrary.simpleMessage(
       "You have no past appointments.",
@@ -395,6 +431,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "In this page:\n• You can examine our health-service packages.\n• You can make an appointment online.\n• You can donate.\n• You can buy our packages with a cheaper price than normal.",
     ),
     "packagesTitle": MessageLookupByLibrary.simpleMessage("Packages"),
+    "parent": MessageLookupByLibrary.simpleMessage("Parent"),
     "parentAccount": MessageLookupByLibrary.simpleMessage("Parent"),
     "password": MessageLookupByLibrary.simpleMessage("Password"),
     "passwordMinLength": MessageLookupByLibrary.simpleMessage(
@@ -434,6 +471,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Profile Information",
     ),
     "profileImage": MessageLookupByLibrary.simpleMessage("Profile Image"),
+    "profilePhotoUpdateSuccess": MessageLookupByLibrary.simpleMessage(
+      "Profile photo updated successfully.",
+    ),
     "quickAccessTitle": MessageLookupByLibrary.simpleMessage("Quick Access"),
     "quickAppointment": MessageLookupByLibrary.simpleMessage(
       "Make an Appointment",
@@ -443,6 +483,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "remainingTime": MessageLookupByLibrary.simpleMessage("Remaining time:"),
     "rememberMe": MessageLookupByLibrary.simpleMessage("Remember Me"),
+    "removeAccount": MessageLookupByLibrary.simpleMessage("Remove Account"),
+    "removeAccountConfirmation": MessageLookupByLibrary.simpleMessage(
+      "Are you sure you want to remove this account?",
+    ),
     "removePhotoButton": MessageLookupByLibrary.simpleMessage("Remove Photo"),
     "reports": MessageLookupByLibrary.simpleMessage("Reports"),
     "reportsDepartment1": MessageLookupByLibrary.simpleMessage(
@@ -525,6 +569,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchReports": MessageLookupByLibrary.simpleMessage(
       "Search for a report or a doctor...",
     ),
+    "selectAccount": MessageLookupByLibrary.simpleMessage("Select Account"),
     "sendButton": MessageLookupByLibrary.simpleMessage("Send"),
     "sendMessage": MessageLookupByLibrary.simpleMessage("Send Message"),
     "september": MessageLookupByLibrary.simpleMessage("SEP"),
@@ -555,6 +600,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tooMuchGlucose": MessageLookupByLibrary.simpleMessage(
       "Glucose level should be reduced!",
     ),
+    "tryAgain": MessageLookupByLibrary.simpleMessage("Try Again"),
     "unexpectedError": MessageLookupByLibrary.simpleMessage(
       "An unexpected error occurred:",
     ),

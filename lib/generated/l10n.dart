@@ -2509,6 +2509,196 @@ class S {
       args: [],
     );
   }
+
+  /// `Select Account`
+  String get selectAccount {
+    return Intl.message(
+      'Select Account',
+      name: 'selectAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Doctor account created successfully.`
+  String get doctorAccountCreated {
+    return Intl.message(
+      'Doctor account created successfully.',
+      name: 'doctorAccountCreated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid email address`
+  String get invalidEmail {
+    return Intl.message(
+      'Invalid email address',
+      name: 'invalidEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create Doctor Account`
+  String get createDoctorAccount {
+    return Intl.message(
+      'Create Doctor Account',
+      name: 'createDoctorAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred while creating the doctor account.`
+  String get doctorAccountCreationError {
+    return Intl.message(
+      'An error occurred while creating the doctor account.',
+      name: 'doctorAccountCreationError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No doctors available.`
+  String get noDoctorsAvailable {
+    return Intl.message(
+      'No doctors available.',
+      name: 'noDoctorsAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You cannot remove your current account.`
+  String get cannotRemoveCurrentAccount {
+    return Intl.message(
+      'You cannot remove your current account.',
+      name: 'cannotRemoveCurrentAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove Account`
+  String get removeAccount {
+    return Intl.message(
+      'Remove Account',
+      name: 'removeAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to remove this account?`
+  String get removeAccountConfirmation {
+    return Intl.message(
+      'Are you sure you want to remove this account?',
+      name: 'removeAccountConfirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account removed successfully.`
+  String get accountRemoved {
+    return Intl.message(
+      'Account removed successfully.',
+      name: 'accountRemoved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred while removing the account.`
+  String get accountRemoveError {
+    return Intl.message(
+      'An error occurred while removing the account.',
+      name: 'accountRemoveError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred while switching accounts.`
+  String get errorSwitchingAccount {
+    return Intl.message(
+      'An error occurred while switching accounts.',
+      name: 'errorSwitchingAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No packages available.`
+  String get noPackagesAvailable {
+    return Intl.message(
+      'No packages available.',
+      name: 'noPackagesAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try Again`
+  String get tryAgain {
+    return Intl.message('Try Again', name: 'tryAgain', desc: '', args: []);
+  }
+
+  /// `Parent`
+  String get parent {
+    return Intl.message('Parent', name: 'parent', desc: '', args: []);
+  }
+
+  /// `Neurology`
+  String get department4name {
+    return Intl.message(
+      'Neurology',
+      name: 'department4name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Orthopedics`
+  String get department2name {
+    return Intl.message(
+      'Orthopedics',
+      name: 'department2name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Internal Medicine`
+  String get department3name {
+    return Intl.message(
+      'Internal Medicine',
+      name: 'department3name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cardiology`
+  String get department1name {
+    return Intl.message(
+      'Cardiology',
+      name: 'department1name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profile photo updated successfully.`
+  String get profilePhotoUpdateSuccess {
+    return Intl.message(
+      'Profile photo updated successfully.',
+      name: 'profilePhotoUpdateSuccess',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

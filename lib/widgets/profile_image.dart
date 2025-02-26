@@ -1,38 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-class ProfileImage extends StatelessWidget {
+class ProfileImage extends StatefulWidget {
   final String? imageUrl;
   final double radius;
   final VoidCallback? onTap;
-  final Widget? badge; // Yeni: Badge widget için (doğrulanmış işareti vb.)
+  final Widget? badge;
 
   const ProfileImage({
-    super.key,
+    Key? key,
     this.imageUrl,
     this.radius = 40,
     this.onTap,
     this.badge,
-  });
+  }) : super(key: key);
 
+  @override
+  State<ProfileImage> createState() => _ProfileImageState();
+}
+
+class _ProfileImageState extends State<ProfileImage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Stack(
         children: [
           CircleAvatar(
-            radius: radius,
-            backgroundColor: Colors.grey[200],
-            backgroundImage: imageUrl != null
-                ? CachedNetworkImageProvider(imageUrl!) as ImageProvider
-                : AssetImage('assets/default_profile.png'),
+            radius: widget.radius,
+            backgroundColor: Colors.grey[300],
+            child: ClipOval(
+              child: widget.imageUrl != null
+                  ? CachedNetworkImage(
+                      imageUrl: widget.imageUrl!,
+                      width: widget.radius * 2,
+                      height: widget.radius * 2,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(
+                        Icons.person,
+                        size: widget.radius,
+                        color: Colors.grey[600],
+                      ),
+                    )
+                  : Icon(
+                      Icons.person,
+                      size: widget.radius,
+                      color: Colors.grey[600],
+                    ),
+            ),
           ),
-          if (badge != null)
+          if (widget.badge != null)
             Positioned(
-              bottom: 0,
               right: 0,
-              child: badge!,
+              bottom: 0,
+              child: widget.badge!,
             ),
         ],
       ),

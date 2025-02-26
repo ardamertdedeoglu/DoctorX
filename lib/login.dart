@@ -4,6 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
 import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
 import 'dart:convert'; // Import jsonEncode
 import 'generated/l10n.dart';
+import 'services/auth_service.dart'; // Import AuthService
+import 'models/user_model.dart'; // Import UserModel
+import 'models/role_model.dart';
+import 'models/hospital_model.dart';
+import 'services/hospital_service.dart'; // Import HospitalService
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,6 +22,8 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _auth = FirebaseAuth.instance;
+  final _authService = AuthService();
   bool _isLoading = false;
   bool _isPasswordVisible = false;
   bool _rememberMe = false; // Yeni değişken
@@ -81,63 +89,119 @@ class _LoginPageState extends State<LoginPage> {
     return null;
   }
 
-  Future<void> _login() async {
-    if (!_formKey.currentState!.validate()) return;
-    setState(() => _isLoading = true);
+  Future<void> _handleLogin() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() => _isLoading = true);
+      
+      try {
+        await _auth.signInWithEmailAndPassword(
+          email: _emailController.text,
+          password: _passwordController.text,
+        );
 
-    try {
-      // 1. Firebase Authentication ile giriş yap
-      final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
-
-      // 2. Firestore'dan kullanıcı verilerini al
-      final userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userCredential.user!.uid)
-          .get();
-
-      if (userDoc.exists) {
-        // SharedPreferences'ı güncelle
-        final prefs = await SharedPreferences.getInstance();
+        final accounts = await _authService.getLinkedAccounts(_emailController.text);
         
-        // Beni Hatırla seçili ise e-postayı kaydet
-        if (_rememberMe) {
-          await prefs.setString('remembered_email', _emailController.text);
+        if (accounts.length > 1) {
+          // Birden fazla hesap varsa hesap seçme dialogunu göster
+          if (!mounted) return;
+          final selectedAccount = await _showAccountSelectionDialog(accounts);
+          if (selectedAccount != null) {
+            // Seçilen hesabı SharedPreferences'a kaydet
+            final prefs = await SharedPreferences.getInstance();
+            await prefs.setString('user_data', jsonEncode(selectedAccount.toJson()));
+            
+            if (!mounted) return;
+            Navigator.pushReplacementNamed(context, '/home');
+          }
+        } else if (accounts.isNotEmpty) {
+          // Tek hesap varsa direkt o hesapla devam et
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('user_data', jsonEncode(accounts.first.toJson()));
+          
+          if (!mounted) return;
+          Navigator.pushReplacementNamed(context, '/home');
         }
-        
-        // Firestore'da rememberMe tercihini güncelle
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userCredential.user!.uid)
-            .update({'rememberMe': _rememberMe});
-
-        // 3. SharedPreferences'ı temizle ve yeni verileri kaydet
-        await prefs.clear(); // Önceki tüm verileri temizle
-        
-        // Sadece login durumunu ve aktif kullanıcı verisini kaydet
-        await prefs.setBool('is_logged_in', true);
-        await prefs.setString('user_data', jsonEncode(userDoc.data()));
-        await prefs.setString('current_user_id', userCredential.user!.uid);
-
-        // 4. Ana sayfaya yönlendir
-        Navigator.pushReplacementNamed(context, '/home');
+      } on FirebaseAuthException catch (e) {
+        _handleFirebaseAuthError(e);
+      } finally {
+        if (mounted) {
+          setState(() => _isLoading = false);
+        }
       }
-    } on FirebaseAuthException catch (e) {
-      String message = 'Bir hata oluştu';
-      if (e.code == 'user-not-found') {
-        message = S.of(context).userNotFound;
-      } else if (e.code == 'wrong-password') {
-        message = S.of(context).wrongPassword;
-      }
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message)),
-      );
-    } finally {
-      setState(() => _isLoading = false);
     }
   }
+
+  Future<UserModel?> _showAccountSelectionDialog(List<UserModel> accounts) {
+    return showDialog<UserModel>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Row(
+            children: [
+              Icon(Icons.account_circle, color: Theme.of(context).primaryColor),
+              SizedBox(width: 10),
+              Text(S.of(context).selectAccount),
+            ],
+          ),
+          content: Container(
+            width: double.maxFinite,
+            child: ListView.separated(
+              shrinkWrap: true,
+              itemCount: accounts.length,
+              separatorBuilder: (context, index) => Divider(height: 1),
+              itemBuilder: (context, index) {
+                final account = accounts[index];
+                return ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: account.role == UserRole.doctor ? Colors.blue : Colors.teal,
+                    child: Icon(
+                      account.role == UserRole.doctor ? Icons.medical_services : Icons.person,
+                      color: Colors.white,
+                    ),
+                  ),
+                  title: Text(
+                    '${account.firstName} ${account.lastName}',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(account.role == UserRole.doctor 
+                          ? '${account.doctorTitle} (${account.specialization})' 
+                          : account.accountType ?? 'Standard'),
+                      if (account.hospitalId != null)
+                        FutureBuilder<HospitalModel?>(
+                          future: HospitalService(context).getHospitalById(account.hospitalId!),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return Text('Loading hospital...');
+                            }
+                            final hospital = snapshot.data;
+                            return Text(
+                              hospital?.name ?? 'Unknown Hospital',
+                              style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                            );
+                          },
+                        ),
+                    ],
+                  ),
+                  onTap: () => Navigator.of(context).pop(account),
+                );
+              },
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(null),
+              child: Text(S.of(context).cancel),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> _resetPassword() async {
     // Create a TextEditingController for the dialog
     final resetEmailController = TextEditingController();
@@ -200,6 +264,24 @@ class _LoginPageState extends State<LoginPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(message)),
     );
+  }
+
+  void _handleFirebaseAuthError(FirebaseAuthException e) {
+    String errorMessage;
+    switch (e.code) {
+      case 'user-not-found':
+        errorMessage = S.of(context).userNotFound;
+        break;
+      case 'wrong-password':
+        errorMessage = S.of(context).wrongPassword;
+        break;
+      case 'invalid-email':
+        errorMessage = S.of(context).invalidEmail;
+        break;
+      default:
+        errorMessage = e.message ?? S.of(context).basicErrorMessage;
+    }
+    _showError(errorMessage);
   }
 
   @override
@@ -270,7 +352,7 @@ class _LoginPageState extends State<LoginPage> {
               _isLoading 
                 ? CircularProgressIndicator()
                 : ElevatedButton(
-                    onPressed: _login,
+                    onPressed: _handleLogin,
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(double.infinity, 50),
                     ),

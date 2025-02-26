@@ -11,25 +11,15 @@ class ProfileImageService {
       final user = _auth.currentUser;
       if (user == null) return null;
 
-      final ref = _storage.ref().child('profile_images/${user.uid}');
+      final fileName = 'profile_${user.uid}.jpg';
+      final ref = _storage.ref().child('profile_images/$fileName');
+      
       await ref.putFile(imageFile);
       final url = await ref.getDownloadURL();
+      
       return url;
     } catch (e) {
       print('Error uploading profile image: $e');
-      return null;
-    }
-  }
-
-  Future<String?> getProfileImageUrl() async {
-    try {
-      final user = _auth.currentUser;
-      if (user == null) return null;
-
-      final ref = _storage.ref().child('profile_images/${user.uid}');
-      return await ref.getDownloadURL();
-    } catch (e) {
-      print('Error getting profile image: $e');
       return null;
     }
   }
@@ -39,7 +29,8 @@ class ProfileImageService {
       final user = _auth.currentUser;
       if (user == null) return;
 
-      final ref = _storage.ref().child('profile_images/${user.uid}');
+      final fileName = 'profile_${user.uid}.jpg';
+      final ref = _storage.ref().child('profile_images/$fileName');
       await ref.delete();
     } catch (e) {
       print('Error deleting profile image: $e');

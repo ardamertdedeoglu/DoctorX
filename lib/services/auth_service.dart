@@ -2,6 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:doctorx/models/user_model.dart';
+import 'package:doctorx/models/role_model.dart';
+
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -67,6 +70,69 @@ class AuthService {
       await prefs.clear(); // Tüm local verileri temizle
     } catch (e) {
       print("Error signing out: $e");
+    }
+  }
+
+  Future<List<UserModel>> getLinkedAccounts(String email) async {
+    try {
+      final querySnapshot = await _firestore
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .get();
+
+      return querySnapshot.docs
+          .map((doc) => UserModel.fromJson({...doc.data(), 'id': doc.id}))
+          .toList();
+    } catch (e) {
+      print("Error getting linked accounts: $e");
+      return [];
+    }
+  }
+
+  Future<UserModel?> createDoctorAccount(UserModel baseUser, {
+    required String doctorTitle,
+    required String specialization,
+    required String licenseNumber,
+    required String hospitalId, // Add this parameter
+  }) async {
+    try {
+      // Yeni doktor hesabı için Firestore'da belge oluştur
+      final docRef = await _firestore.collection('users').add({
+        'email': baseUser.email,
+        'firstName': baseUser.firstName,
+        'lastName': baseUser.lastName,
+        'role': UserRole.doctor.toString(),
+        'accountType': 'doctor',
+        'doctorTitle': doctorTitle,
+        'specialization': specialization,
+        'licenseNumber': licenseNumber,
+        'originalAccountId': baseUser.id,
+        'profileImageUrl': baseUser.profileImageUrl,
+        'hospitalId': hospitalId, // Add hospital ID
+      });
+
+      // Ana hesabın linkedAccounts listesini güncelle
+      await _firestore.collection('users').doc(baseUser.id).update({
+        'linkedAccounts': FieldValue.arrayUnion([docRef.id])
+      });
+
+      return UserModel.fromJson({
+        'id': docRef.id,
+        'email': baseUser.email,
+        'firstName': baseUser.firstName,
+        'lastName': baseUser.lastName,
+        'role': UserRole.doctor.toString(),
+        'accountType': 'doctor',
+        'doctorTitle': doctorTitle,
+        'specialization': specialization,
+        'licenseNumber': licenseNumber,
+        'originalAccountId': baseUser.id,
+        'profileImageUrl': baseUser.profileImageUrl,
+        'hospitalId': hospitalId, // Add hospital ID
+      });
+    } catch (e) {
+      print("Error creating doctor account: $e");
+      return null;
     }
   }
 }

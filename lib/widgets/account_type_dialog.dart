@@ -20,7 +20,7 @@ class AccountTypeDialog extends StatelessWidget {
             title: Text(S.of(context).mother),
             onTap: () {
               Navigator.pop(context);
-              onTypeSelected('parent');
+              onTypeSelected(S.of(context).parent);
               _showAddChildDialog(context);
             },
           ),
@@ -29,7 +29,7 @@ class AccountTypeDialog extends StatelessWidget {
             title: Text(S.of(context).father),
             onTap: () {
               Navigator.pop(context);
-              onTypeSelected('parent');
+              onTypeSelected(S.of(context).parent);
               _showAddChildDialog(context);
             },
           ),

@@ -1,110 +1,144 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/hospital_model.dart';
 import '../services/hospital_service.dart';
-import 'package:doctorx/generated/l10n.dart';
+import '../generated/l10n.dart';
 
 class HospitalSelector extends StatefulWidget {
-  final Function(HospitalModel hospital, DoctorModel doctor) onSelectionComplete;
+  final Function(HospitalModel, DoctorModel?) onSelectionComplete;
+  final bool showDoctors;
 
   const HospitalSelector({
-    super.key,
+    Key? key,
     required this.onSelectionComplete,
-  });
+    this.showDoctors = true,
+  }) : super(key: key);
 
   @override
   _HospitalSelectorState createState() => _HospitalSelectorState();
 }
 
 class _HospitalSelectorState extends State<HospitalSelector> {
-  HospitalModel? _selectedHospital;
-  DoctorModel? _selectedDoctor;
-  late List<HospitalModel> _hospitals;
+  HospitalModel? selectedHospital;
+  DoctorModel? selectedDoctor;
+  bool _isLoadingDoctors = false;
 
-  @override
-  void initState() {
-    super.initState();
-    // Başlangıç listesini direkt oluştur
-    _hospitals = HospitalService.baseHospitals;
-  }
+  void _handleDoctorSelection(DoctorModel? doctor) {
+    if (!mounted) return;
+    
+    setState(() {
+      selectedDoctor = doctor;
+    });
 
-  List<HospitalModel> _getLocalizedHospitals() {
-    return _hospitals.map((hospital) {
-      String name = hospital.name;
-      if (name.contains('Merkez')) {
-        return HospitalModel(
-          id: hospital.id,
-          name: 'Merkez ${S.of(context).hospital}',
-          address: hospital.address,
-          departments: hospital.departments,
-        );
-      } else if (name.contains('Şehir')) {
-        return HospitalModel(
-          id: hospital.id,
-          name: 'Şehir ${S.of(context).hospital}',
-          address: hospital.address,
-          departments: hospital.departments,
-        );
-      }
-      return hospital;
-    }).toList();
+    if (selectedHospital != null) {
+      widget.onSelectionComplete(selectedHospital!, doctor);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final localizedHospitals = _getLocalizedHospitals();
-    
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // Hastane Seçimi
-        DropdownButtonFormField<HospitalModel>(
-          value: _selectedHospital,
-          hint: Text(S.of(context).chooseHospitalLabel),
-          isExpanded: true,
-          items: localizedHospitals.map((hospital) => DropdownMenuItem(
-            value: hospital,
-            child: Text(
-              hospital.name,
-              overflow: TextOverflow.ellipsis,
-            ),
-          )).toList(),
-          onChanged: (newValue) {
-            setState(() {
-              _selectedHospital = newValue;
-              _selectedDoctor = null; // Hastane değişince doktoru sıfırla
-            });
-          },
-        ),
-        
-        SizedBox(height: 16),
-        
-        // Doktor Seçimi
-        if (_selectedHospital != null) ...[
-          DropdownButtonFormField<DoctorModel>(
-            value: _selectedDoctor,
-            hint: Text(S.of(context).chooseDoctor),
-            isExpanded: true,
-            items: _selectedHospital!.departments
-                .expand((dept) => dept.doctors)
-                .map((doctor) => DropdownMenuItem(
-                      value: doctor,
-                      child: Text(
-                        '${doctor.title} ${doctor.name}',
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ))
-                .toList(),
-            onChanged: (doctor) {
-              setState(() {
-                _selectedDoctor = doctor;
-                if (doctor != null) {
-                  widget.onSelectionComplete(_selectedHospital!, doctor);
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: FutureBuilder<List<HospitalModel>>(
+              future: HospitalService(context).getHospitals(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
                 }
-              });
-            },
+
+                final hospitals = snapshot.data ?? [];
+
+                return InputDecorator(
+                  decoration: InputDecoration(
+                    labelText: S.of(context).hospital,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<HospitalModel>(
+                      value: selectedHospital,
+                      isExpanded: true,
+                      hint: Text(S.of(context).chooseHospitalLabel),
+                      items: hospitals.map((hospital) {
+                        return DropdownMenuItem(
+                          value: hospital,
+                          child: Text(
+                            hospital.name,
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (hospital) {
+                        if (hospital != null) {
+                          setState(() {
+                            selectedHospital = hospital;
+                            selectedDoctor = null;
+                            _isLoadingDoctors = false;
+                          });
+                          widget.onSelectionComplete(hospital, null);
+                        }
+                      },
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
+          if (widget.showDoctors && selectedHospital != null) ...[
+            SizedBox(height: 16),
+            if (_isLoadingDoctors)
+              Center(child: CircularProgressIndicator())
+            else
+              InputDecorator(
+                decoration: InputDecoration(
+                  labelText: S.of(context).chooseDoctor,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<DoctorModel>(
+                    value: selectedDoctor,
+                    isExpanded: true,
+                    hint: Text(S.of(context).chooseDoctor),
+                    items: selectedHospital?.departments
+                        .expand((dept) => dept.doctors)
+                        .map((doctor) {
+                          return DropdownMenuItem(
+                            value: doctor,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  '${doctor.title} ${doctor.name}',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList() ?? [],
+                    onChanged: _handleDoctorSelection,
+                  ),
+                ),
+              ),
+          ],
         ],
-      ],
+      ),
     );
   }
 }

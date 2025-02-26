@@ -44,6 +44,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Kullanıcı oturumu bulunamadı. Lütfen tekrar giriş yapın.",
     ),
     "aboutUsTitle": MessageLookupByLibrary.simpleMessage("Hakkımızda"),
+    "accountRemoveError": MessageLookupByLibrary.simpleMessage(
+      "Hesap kaldırılırken bir hata oluştu",
+    ),
+    "accountRemoved": MessageLookupByLibrary.simpleMessage(
+      "Hesap başarıyla kaldırıldı",
+    ),
     "accountSwitcher": MessageLookupByLibrary.simpleMessage("Hesap Değiştir"),
     "accountType": MessageLookupByLibrary.simpleMessage("Hesap Türü:"),
     "accountTypeDialog": MessageLookupByLibrary.simpleMessage(
@@ -107,6 +113,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "cancelAppointmentConfirmation": MessageLookupByLibrary.simpleMessage(
       "Bu randevuyu iptal etmek istediğinizden emin misiniz?",
     ),
+    "cannotRemoveCurrentAccount": MessageLookupByLibrary.simpleMessage(
+      "Şu anki hesabınızı kaldıramazsınız",
+    ),
     "cantEditAppointmentWithin3Days": MessageLookupByLibrary.simpleMessage(
       "Randevu tarihine 3 günden az kaldığı için randevuyu düzenleyemezsiniz.",
     ),
@@ -162,6 +171,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "continueToRegistration": MessageLookupByLibrary.simpleMessage(
       "Kayda Devam Et",
     ),
+    "createDoctorAccount": MessageLookupByLibrary.simpleMessage(
+      "Doktor Hesabı Oluştur",
+    ),
     "darkMode": MessageLookupByLibrary.simpleMessage("Koyu Tema"),
     "dateSelection": MessageLookupByLibrary.simpleMessage("Tarih Seçin"),
     "december": MessageLookupByLibrary.simpleMessage("ARA"),
@@ -174,6 +186,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "Rapor başarıyla silindi",
     ),
     "deleteReportTitle": MessageLookupByLibrary.simpleMessage("Raporu Sil"),
+    "department1name": MessageLookupByLibrary.simpleMessage("Kardiyoloji"),
+    "department2name": MessageLookupByLibrary.simpleMessage("Ortopedi"),
+    "department3name": MessageLookupByLibrary.simpleMessage("Dahiliye"),
+    "department4name": MessageLookupByLibrary.simpleMessage("Nöroloji"),
     "diabetes": MessageLookupByLibrary.simpleMessage("Diyabet"),
     "dietician": MessageLookupByLibrary.simpleMessage("Diyetisyen"),
     "dieticianDesc": MessageLookupByLibrary.simpleMessage(
@@ -186,6 +202,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Hem fiziksel hem mental sağlığınız için kombine paket.",
     ),
     "doctorAccount": MessageLookupByLibrary.simpleMessage("Doktor Hesabı"),
+    "doctorAccountCreated": MessageLookupByLibrary.simpleMessage(
+      "Doktor hesabı başarıyla oluşturuldu",
+    ),
+    "doctorAccountCreationError": MessageLookupByLibrary.simpleMessage(
+      "Doktor hesabı oluşturulurken bir hata oluştu",
+    ),
     "doctorAccountInfo": MessageLookupByLibrary.simpleMessage(
       "Doktor hesabı oluşturmak için medikal lisansınızı ve diğer profesyonel bilgilerinizi sağlayınız.",
     ),
@@ -273,6 +295,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "enteringSentence": MessageLookupByLibrary.simpleMessage(
       "Uygulamaya yönlendiriliyorsunuz...",
     ),
+    "errorSwitchingAccount": MessageLookupByLibrary.simpleMessage(
+      "Hesap değiştirilirken bir hata oluştu",
+    ),
     "eveningDose": MessageLookupByLibrary.simpleMessage("Akşam Dozu (20:00)"),
     "familyService": MessageLookupByLibrary.simpleMessage("Aile Servisi"),
     "father": MessageLookupByLibrary.simpleMessage("Baba"),
@@ -299,6 +324,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "insulineTracking": MessageLookupByLibrary.simpleMessage("İnsülin Takibi"),
     "invalidCardMessage": MessageLookupByLibrary.simpleMessage(
       "Lütfen geçerli kart bilgileri girin",
+    ),
+    "invalidEmail": MessageLookupByLibrary.simpleMessage(
+      "Geçersiz e-posta adresi",
     ),
     "invalidEmailMessage": MessageLookupByLibrary.simpleMessage(
       "Geçerli bir e-posta adresi girin",
@@ -350,8 +378,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "newsDetailPageTitle": MessageLookupByLibrary.simpleMessage("Haberler"),
     "newsTitle": MessageLookupByLibrary.simpleMessage("Sağlık Haberi"),
     "noButton": MessageLookupByLibrary.simpleMessage("Hayır"),
+    "noDoctorsAvailable": MessageLookupByLibrary.simpleMessage(
+      "Mevcut doktor bulunamadı",
+    ),
     "noLinkedAccountsMessage": MessageLookupByLibrary.simpleMessage(
       "Bağlı hesap bulunamadı",
+    ),
+    "noPackagesAvailable": MessageLookupByLibrary.simpleMessage(
+      "Mevcut paket bulunamadı",
     ),
     "noPastAppointments": MessageLookupByLibrary.simpleMessage(
       "Geçmiş randevunuz bulunmamaktadır.",
@@ -381,6 +415,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Bu bölümde:\n• Sağlık hizmet paketlerimizi inceleyebilirsiniz.\n• Online randevu alabilirsiniz.\n• Bağış yapabilirsiniz.\n• Normalden ucuz fiyata paket satın alabilirsiniz.",
     ),
     "packagesTitle": MessageLookupByLibrary.simpleMessage("Paketler"),
+    "parent": MessageLookupByLibrary.simpleMessage("Ebeveyn"),
     "parentAccount": MessageLookupByLibrary.simpleMessage("Ebeveyn"),
     "password": MessageLookupByLibrary.simpleMessage("Şifre"),
     "passwordMinLength": MessageLookupByLibrary.simpleMessage(
@@ -420,6 +455,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Profil Bilgileri",
     ),
     "profileImage": MessageLookupByLibrary.simpleMessage("Profil Resmi"),
+    "profilePhotoUpdateSuccess": MessageLookupByLibrary.simpleMessage(
+      "Profil resmi başarıyla güncellendi",
+    ),
     "quickAccessTitle": MessageLookupByLibrary.simpleMessage("Hızlı İşlemler"),
     "quickAppointment": MessageLookupByLibrary.simpleMessage("Randevu Al"),
     "quickAppointmentsList": MessageLookupByLibrary.simpleMessage(
@@ -427,6 +465,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "remainingTime": MessageLookupByLibrary.simpleMessage("Kalan süre:"),
     "rememberMe": MessageLookupByLibrary.simpleMessage("Beni Hatırla"),
+    "removeAccount": MessageLookupByLibrary.simpleMessage("Hesabı Kaldır"),
+    "removeAccountConfirmation": MessageLookupByLibrary.simpleMessage(
+      "Bu hesabı kaldırmak istediğinizden emin misiniz?",
+    ),
     "removePhotoButton": MessageLookupByLibrary.simpleMessage(
       "Fotoğrafı Kaldır",
     ),
@@ -482,6 +524,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchItemDiabetesDesc": MessageLookupByLibrary.simpleMessage(
       "Diyabet değerlerinizi takip edin",
     ),
+    "searchItemDiabetesTitle": MessageLookupByLibrary.simpleMessage(
+      "Diyabet Takibi",
+    ),
     "searchItemDocumentsDesc": MessageLookupByLibrary.simpleMessage(
       "Sağlık ile ilgili bilgilendirici dokümanlar",
     ),
@@ -503,6 +548,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchReports": MessageLookupByLibrary.simpleMessage(
       "Rapor veya doktor ara...",
     ),
+    "selectAccount": MessageLookupByLibrary.simpleMessage("Hesap Seç"),
     "sendButton": MessageLookupByLibrary.simpleMessage("Gönder"),
     "sendMessage": MessageLookupByLibrary.simpleMessage("Mesaj Gönder"),
     "september": MessageLookupByLibrary.simpleMessage("EYL"),
@@ -529,6 +575,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tooMuchGlucose": MessageLookupByLibrary.simpleMessage(
       "Glikoz seviyesi azaltılmalı!",
     ),
+    "tryAgain": MessageLookupByLibrary.simpleMessage("Tekrar Dene"),
     "unexpectedError": MessageLookupByLibrary.simpleMessage(
       "Beklenmedik bir hata oluştu:",
     ),
@@ -560,7 +607,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "weakPassword": MessageLookupByLibrary.simpleMessage("Şifre çok zayıf."),
     "welcomeMainMenu": MessageLookupByLibrary.simpleMessage("Merhaba"),
-    "welcomeMessage": MessageLookupByLibrary.simpleMessage("Hoşgeldin!"),
+    "welcomeMessage": MessageLookupByLibrary.simpleMessage("Hoşgeldin"),
     "wrongPassword": MessageLookupByLibrary.simpleMessage("Hatalı şifre"),
     "yesButton": MessageLookupByLibrary.simpleMessage("Evet"),
     "yogurt": MessageLookupByLibrary.simpleMessage("Yoğurt"),
