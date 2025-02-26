@@ -342,6 +342,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Örn: 123456",
     ),
     "lightMode": MessageLookupByLibrary.simpleMessage("Açık Tema"),
+    "linkedAccounts": MessageLookupByLibrary.simpleMessage("Bağlı Hesaplar"),
     "loadErrorAccountSwitcher": MessageLookupByLibrary.simpleMessage(
       "Bağlı hesaplar yüklenemedi",
     ),
@@ -362,6 +363,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "mother": MessageLookupByLibrary.simpleMessage("Anne"),
     "newEmailLabel": MessageLookupByLibrary.simpleMessage("Yeni E-posta"),
     "newPassword": MessageLookupByLibrary.simpleMessage("Yeni Şifre"),
+    "newlyCreatedDoctorAccountNotFound": MessageLookupByLibrary.simpleMessage(
+      "Yeni oluşturulan doktor hesabı bulunamadı",
+    ),
     "news": MessageLookupByLibrary.simpleMessage("Haberler"),
     "newsContainer": MessageLookupByLibrary.simpleMessage("Sağlık Haberleri"),
     "newsContentPlaceholder": MessageLookupByLibrary.simpleMessage(

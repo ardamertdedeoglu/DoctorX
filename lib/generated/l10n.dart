@@ -2699,6 +2699,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Linked Accounts`
+  String get linkedAccounts {
+    return Intl.message(
+      'Linked Accounts',
+      name: 'linkedAccounts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Newly created doctor account not found`
+  String get newlyCreatedDoctorAccountNotFound {
+    return Intl.message(
+      'Newly created doctor account not found',
+      name: 'newlyCreatedDoctorAccountNotFound',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -2613,41 +2613,42 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (context) => AlertDialog(
         title: Text(S.of(context).addDoctorAccount),
         content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: titleController,
-                decoration: InputDecoration(
-                  labelText: S.of(context).doctorTitle,
-                  border: OutlineInputBorder(),
+          child: StatefulBuilder(
+            builder: (context, setState) => Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: titleController,
+                  decoration: InputDecoration(
+                    labelText: S.of(context).doctorTitle,
+                    border: OutlineInputBorder(),
+                  ),
                 ),
-              ),
-              SizedBox(height: 8),
-              TextField(
-                controller: specializationController,
-                decoration: InputDecoration(
-                  labelText: S.of(context).specialization,
-                  border: OutlineInputBorder(),
+                SizedBox(height: 8),
+                TextField(
+                  controller: specializationController,
+                  decoration: InputDecoration(
+                    labelText: S.of(context).specialization,
+                    border: OutlineInputBorder(),
+                  ),
                 ),
-              ),
-              SizedBox(height: 8),
-              TextField(
-                controller: licenseController,
-                decoration: InputDecoration(
-                  labelText: S.of(context).licenseNumber,
-                  border: OutlineInputBorder(),
+                SizedBox(height: 8),
+                TextField(
+                  controller: licenseController,
+                  decoration: InputDecoration(
+                    labelText: S.of(context).licenseNumber,
+                    border: OutlineInputBorder(),
+                  ),
                 ),
-              ),
-              SizedBox(height: 16),
-              // Use hospital-only selector
-              HospitalSelector(
-                showDoctors: false, // Don't show doctor selection
-                onSelectionComplete: (hospital, _) {
-                  selectedHospital = hospital;
-                },
-              ),
-            ],
+                SizedBox(height: 16),
+                HospitalSelector(
+                  showDoctors: false,
+                  onSelectionComplete: (hospital, _) {
+                    setState(() => selectedHospital = hospital);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
         actions: [
@@ -2660,28 +2661,38 @@ class _MyHomePageState extends State<MyHomePage> {
               if (titleController.text.isNotEmpty &&
                   specializationController.text.isNotEmpty &&
                   licenseController.text.isNotEmpty &&
-                  selectedHospital != null) {
-                final newDoctorAccount = await _authService.createDoctorAccount(
-                  _userData!,
-                  doctorTitle: titleController.text,
-                  specialization: specializationController.text,
-                  licenseNumber: licenseController.text,
-                  hospitalId: selectedHospital!.id, // Add hospital ID
-                );
-
-                if (newDoctorAccount != null) {
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(S.of(context).doctorAccountCreated)),
+                  selectedHospital != null &&
+                  _userData != null) {
+                
+                try {
+                  final newDoctorAccount = await _authService.createDoctorAccount(
+                    _userData!,
+                    doctorTitle: titleController.text,
+                    specialization: specializationController.text,
+                    licenseNumber: licenseController.text,
+                    hospitalId: selectedHospital!.id,
+                    context: context
                   );
 
-                  // Yeni hesaba geç
-                  final prefs = await SharedPreferences.getInstance();
-                  await prefs.setString('user_data', jsonEncode(newDoctorAccount.toJson()));
-                  setState(() => _userData = newDoctorAccount);
-                } else {
+                  if (newDoctorAccount != null) {
+                    // Başarılı olduğunda dialog'u kapat
+                    Navigator.pop(context);
+                    
+                    // Kullanıcıya bilgi ver
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(S.of(context).doctorAccountCreated)),
+                    );
+                    
+                    // Başarılı oluşturmadan sonra verileri yenile
+                    await _loadInitialData();
+                  }
+                } catch (e) {
+                  // Hata durumunda kullanıcıya bilgi ver
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(S.of(context).doctorAccountCreationError)),
+                    SnackBar(
+                      content: Text('${S.of(context).doctorAccountCreationError}: ${e.toString()}'),
+                      duration: Duration(seconds: 5),
+                    ),
                   );
                 }
               } else {

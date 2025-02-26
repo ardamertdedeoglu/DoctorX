@@ -4,6 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:doctorx/models/user_model.dart';
 import 'package:doctorx/models/role_model.dart';
+import 'package:doctorx/generated/l10n.dart';
+import 'package:flutter/material.dart';
+
 
 
 class AuthService {
@@ -93,46 +96,64 @@ class AuthService {
     required String doctorTitle,
     required String specialization,
     required String licenseNumber,
-    required String hospitalId, // Add this parameter
+    required String hospitalId,
+    required BuildContext context, // Add context parameter
   }) async {
     try {
-      // Yeni doktor hesabı için Firestore'da belge oluştur
+      // 1. Önce mevcut linkedAccounts listesini al
+      final baseUserDoc = await _firestore.collection('users').doc(baseUser.id).get();
+      List<String> currentLinkedAccounts = [];
+      if (baseUserDoc.exists && baseUserDoc.data()?['linkedAccounts'] != null) {
+        currentLinkedAccounts = List<String>.from(baseUserDoc.data()?['linkedAccounts'] ?? []);
+      }
+
+      // 2. Yeni doktor hesabı oluştur
       final docRef = await _firestore.collection('users').add({
         'email': baseUser.email,
         'firstName': baseUser.firstName,
         'lastName': baseUser.lastName,
-        'role': UserRole.doctor.toString(),
+        'role': 'UserRole.doctor',
         'accountType': 'doctor',
         'doctorTitle': doctorTitle,
         'specialization': specialization,
         'licenseNumber': licenseNumber,
         'originalAccountId': baseUser.id,
+        'hospitalId': hospitalId,
         'profileImageUrl': baseUser.profileImageUrl,
-        'hospitalId': hospitalId, // Add hospital ID
+        'linkedAccounts': [], // Boş array olarak başlat
       });
 
-      // Ana hesabın linkedAccounts listesini güncelle
+      // 3. Ana hesabın linkedAccounts listesini güncelle
+      currentLinkedAccounts.add(docRef.id);
       await _firestore.collection('users').doc(baseUser.id).update({
-        'linkedAccounts': FieldValue.arrayUnion([docRef.id])
+        'linkedAccounts': currentLinkedAccounts
       });
 
-      return UserModel.fromJson({
-        'id': docRef.id,
-        'email': baseUser.email,
-        'firstName': baseUser.firstName,
-        'lastName': baseUser.lastName,
-        'role': UserRole.doctor.toString(),
-        'accountType': 'doctor',
-        'doctorTitle': doctorTitle,
-        'specialization': specialization,
-        'licenseNumber': licenseNumber,
-        'originalAccountId': baseUser.id,
-        'profileImageUrl': baseUser.profileImageUrl,
-        'hospitalId': hospitalId, // Add hospital ID
-      });
+      // 4. Oluşturulan doktor hesabının tam verisini al
+      final newDoctorDoc = await docRef.get();
+      if (!newDoctorDoc.exists) {
+        throw Exception(S.of(context).newlyCreatedDoctorAccountNotFound);
+      }
+
+      // 5. UserModel nesnesini oluştur ve döndür
+      return UserModel(
+        id: docRef.id,
+        role: UserRole.doctor,
+        firstName: baseUser.firstName,
+        lastName: baseUser.lastName,
+        email: baseUser.email,
+        accountType: 'doctor',
+        doctorTitle: doctorTitle,
+        specialization: specialization,
+        licenseNumber: licenseNumber,
+        originalAccountId: baseUser.id,
+        hospitalId: hospitalId,
+        profileImageUrl: baseUser.profileImageUrl,
+        linkedAccounts: [],
+      );
     } catch (e) {
       print("Error creating doctor account: $e");
-      return null;
+      rethrow; // Hatayı yukarı fırlat
     }
   }
 }

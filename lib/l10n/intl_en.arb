@@ -311,5 +311,7 @@
   "department2name": "Orthopedics",
   "department3name": "Internal Medicine",
   "department1name": "Cardiology",
-  "profilePhotoUpdateSuccess": "Profile photo updated successfully."
+  "profilePhotoUpdateSuccess": "Profile photo updated successfully.",
+  "linkedAccounts": "Linked Accounts",
+  "newlyCreatedDoctorAccountNotFound": "Newly created doctor account not found"
 }

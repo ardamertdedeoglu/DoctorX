@@ -314,5 +314,7 @@
   "department2name": "Ortopedi",
   "department3name": "Dahiliye",
   "department1name": "Kardiyoloji",
-  "profilePhotoUpdateSuccess": "Profil resmi başarıyla güncellendi"
+  "profilePhotoUpdateSuccess": "Profil resmi başarıyla güncellendi",
+  "linkedAccounts": "Bağlı Hesaplar",
+  "newlyCreatedDoctorAccountNotFound": "Yeni oluşturulan doktor hesabı bulunamadı"
 }

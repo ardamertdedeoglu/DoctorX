@@ -358,6 +358,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "e.g. 123456",
     ),
     "lightMode": MessageLookupByLibrary.simpleMessage("Light Mode"),
+    "linkedAccounts": MessageLookupByLibrary.simpleMessage("Linked Accounts"),
     "loadErrorAccountSwitcher": MessageLookupByLibrary.simpleMessage(
       "Linked accounts could not be loaded.",
     ),
@@ -378,6 +379,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "mother": MessageLookupByLibrary.simpleMessage("Mother"),
     "newEmailLabel": MessageLookupByLibrary.simpleMessage("New E-mail"),
     "newPassword": MessageLookupByLibrary.simpleMessage("New Password"),
+    "newlyCreatedDoctorAccountNotFound": MessageLookupByLibrary.simpleMessage(
+      "Newly created doctor account not found",
+    ),
     "news": MessageLookupByLibrary.simpleMessage("News"),
     "newsContainer": MessageLookupByLibrary.simpleMessage("Health News"),
     "newsContentPlaceholder": MessageLookupByLibrary.simpleMessage(
