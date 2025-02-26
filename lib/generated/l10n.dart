@@ -100,6 +100,10 @@ class S {
     return Intl.message('Search', name: 'search', desc: '', args: []);
   }
 
+  /// 'Unknown hospital'
+  String get unknownHospital {
+    return Intl.message('Unknown hospital', name: 'unknownHospital', desc: '', args: []);
+  }
   /// `Appointments`
   String get appointments {
     return Intl.message(

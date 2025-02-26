@@ -50,6 +50,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "accountRemoved": MessageLookupByLibrary.simpleMessage(
       "Account removed successfully.",
     ),
+    "unknownHospital": MessageLookupByLibrary.simpleMessage("Unknown Hospital"),
     "accountSwitcher": MessageLookupByLibrary.simpleMessage("Switch Account"),
     "accountType": MessageLookupByLibrary.simpleMessage("Account Type:"),
     "accountTypeDialog": MessageLookupByLibrary.simpleMessage(

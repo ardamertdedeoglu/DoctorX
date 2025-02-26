@@ -1,0 +1,2 @@
+C:/Users/User/Desktop/doctorX_last/DoctorX/android/app/.cxx/RelWithDebInfo/2k2m5930/x86/CMakeFiles/edit_cache.dir
+C:/Users/User/Desktop/doctorX_last/DoctorX/android/app/.cxx/RelWithDebInfo/2k2m5930/x86/CMakeFiles/rebuild_cache.dir

@@ -316,5 +316,6 @@
   "department1name": "Kardiyoloji",
   "profilePhotoUpdateSuccess": "Profil resmi başarıyla güncellendi",
   "linkedAccounts": "Bağlı Hesaplar",
-  "newlyCreatedDoctorAccountNotFound": "Yeni oluşturulan doktor hesabı bulunamadı"
+  "newlyCreatedDoctorAccountNotFound": "Yeni oluşturulan doktor hesabı bulunamadı",
+  "unknownHospital": "Bilinmeyen Hastane"
 }

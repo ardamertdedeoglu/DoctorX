@@ -4,6 +4,7 @@ import 'generated/l10n.dart';
 import 'models/user_model.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'models/role_model.dart';
 
 class DoctorHomePage extends StatefulWidget {
   const DoctorHomePage({super.key});
@@ -19,41 +20,24 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
   @override
   void initState() {
     super.initState();
-    _loadUserData();
-    Future.delayed(Duration(milliseconds: 1500), () {
-      if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) => MyHomePage(title: 'DoctorX'),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              return FadeTransition(opacity: animation, child: child);
-            },
-            transitionDuration: Duration(milliseconds: 500),
-          ),
-        );
-      }
-    });
+    _loadDoctorData();
   }
 
-  Future<void> _loadUserData() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      final userStr = prefs.getString('user_data');
-      
-      if (!mounted) return;
+  Future<void> _loadDoctorData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userDataStr = prefs.getString('user_data');
+    
+    if (userDataStr != null) {
+      final userData = UserModel.fromJson(jsonDecode(userDataStr));
+      if (userData.role != UserRole.doctor) {
+        // Eğer doktor değilse ana sayfaya yönlendir
+        Navigator.pushReplacementNamed(context, '/home');
+        return;
+      }
       
       setState(() {
-        if (userStr != null) {
-          _userData = UserModel.fromJson(jsonDecode(userStr));
-        }
-        _isLoading = false;
+        _userData = userData;
       });
-    } catch (e) {
-      print('Error loading user data: $e');
-      if (mounted) {
-        setState(() => _isLoading = false);
-      }
     }
   }
 

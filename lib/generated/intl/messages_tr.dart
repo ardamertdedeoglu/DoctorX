@@ -34,6 +34,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "AIGreetingResponse": MessageLookupByLibrary.simpleMessage(
       "Merhaba! Size nasıl yardımcı olabilirim?",
     ),
+    "unknownHospital": MessageLookupByLibrary.simpleMessage("Bilinmeyen Hastane"),
     "AIPriceResponse": MessageLookupByLibrary.simpleMessage(
       "Fiyatlarımızı paketler sekmesinde görebilirsiniz.",
     ),

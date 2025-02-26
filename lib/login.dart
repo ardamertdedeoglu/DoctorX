@@ -111,6 +111,8 @@ class _LoginPageState extends State<LoginPage> {
             await prefs.setString('user_data', jsonEncode(selectedAccount.toJson()));
             
             if (!mounted) return;
+            //doktor hesabı seçilirse doktor sayfasına yönlendir
+            
             Navigator.pushReplacementNamed(context, '/home');
           }
         } else if (accounts.isNotEmpty) {
@@ -179,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                             }
                             final hospital = snapshot.data;
                             return Text(
-                              hospital?.name ?? 'Unknown Hospital',
+                              hospital?.name ?? S.of(context).unknownHospital,
                               style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                             );
                           },

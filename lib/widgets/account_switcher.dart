@@ -50,6 +50,23 @@ class AccountSwitcher extends StatelessWidget {
     return accounts;
   }
 
+  Future<String> _getHospitalName(String hospitalId) async {
+    try {
+      final hospitalDoc = await FirebaseFirestore.instance
+          .collection('hospitals')
+          .doc(hospitalId)
+          .get();
+
+      if (hospitalDoc.exists) {
+        return hospitalDoc.data()?['name'] ?? S.current.unknownHospital;
+      }
+      return 'Unknown hospital';
+    } catch (e) {
+      print('Error fetching hospital name: $e');
+      return 'Unknown hospital';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<UserModel>>(
@@ -86,34 +103,44 @@ class AccountSwitcher extends StatelessWidget {
                 final account = accounts[index];
                 final isCurrentAccount = account.id == currentUser.id;
 
-                return ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: account.role == UserRole.doctor 
-                        ? Colors.blue 
-                        : Colors.green,
-                    child: Icon(
-                      account.role == UserRole.doctor 
-                          ? Icons.medical_services 
-                          : Icons.person,
-                      color: Colors.white,
-                    ),
-                  ),
-                  title: Text(
-                    '${account.firstName} ${account.lastName}',
-                    style: TextStyle(
-                      fontWeight: isCurrentAccount ? FontWeight.bold : null,
-                    ),
-                  ),
-                  subtitle: Text(account.role == UserRole.doctor 
-                      ? '${account.doctorTitle ?? ''} (${account.specialization ?? ''})'
-                      : account.accountType ?? 'Standard'),
-                  trailing: isCurrentAccount 
-                      ? Icon(Icons.check_circle, color: Colors.green)
-                      : null,
-                  onTap: () {
-                    if (!isCurrentAccount) {
-                      onAccountChanged(account);
+                return FutureBuilder<String>(
+                  future: account.hospitalId != null ? _getHospitalName(account.hospitalId!) : Future.value(''),
+                  builder: (context, snapshot) {
+                    String hospitalInfo = '';
+                    if (account.role == UserRole.doctor) {
+                      hospitalInfo = snapshot.hasData ? ' (${snapshot.data})' : ' (Loading...)';
                     }
+
+                    return ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: account.role == UserRole.doctor 
+                            ? Colors.blue 
+                            : Colors.green,
+                        child: Icon(
+                          account.role == UserRole.doctor 
+                              ? Icons.medical_services 
+                              : Icons.person,
+                          color: Colors.white,
+                        ),
+                      ),
+                      title: Text(
+                        '${account.firstName} ${account.lastName}',
+                        style: TextStyle(
+                          fontWeight: isCurrentAccount ? FontWeight.bold : null,
+                        ),
+                      ),
+                      subtitle: Text(account.role == UserRole.doctor 
+                          ? '${account.doctorTitle ?? ''} (${account.specialization ?? ''})$hospitalInfo'
+                          : account.accountType ?? 'Standard'),
+                      trailing: isCurrentAccount 
+                          ? Icon(Icons.check_circle, color: Colors.green)
+                          : null,
+                      onTap: () {
+                        if (!isCurrentAccount) {
+                          onAccountChanged(account);
+                        }
+                      },
+                    );
                   },
                 );
               },

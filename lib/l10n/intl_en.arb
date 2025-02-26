@@ -313,5 +313,6 @@
   "department1name": "Cardiology",
   "profilePhotoUpdateSuccess": "Profile photo updated successfully.",
   "linkedAccounts": "Linked Accounts",
-  "newlyCreatedDoctorAccountNotFound": "Newly created doctor account not found"
+  "newlyCreatedDoctorAccountNotFound": "Newly created doctor account not found",
+  "unknownHospital": "Unknown Hospital"
 }
